@@ -1,0 +1,16 @@
+archive/
+build-peb-*/
+resources/app/perl
+src/tmp
+
+.qmake.stash
+*.autosave
+Makefile
+peb.pro.*
+
+peb
+peb.exe
+*.AppImage
+
+backup
+upgit
