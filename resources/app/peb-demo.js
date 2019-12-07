@@ -131,7 +131,6 @@ function about() {
     "MERCHANTABILITY or\n"+
     "FITNESS FOR A PARTICULAR PURPOSE.\n\n"+
 
-    "Dimitar D. Mitov, 2018 - 2019\n"+
-    "Valcho Nedelchev, 2014 - 2016"
+    "Dimitar D. Mitov, 2018 - 2019\n"
   );
 }
