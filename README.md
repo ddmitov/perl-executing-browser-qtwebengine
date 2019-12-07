@@ -2,7 +2,8 @@
 
 Perl Executing Browser (PEB) is an HTML5 user interface for [Perl 5](https://www.perl.org/) desktop applications. It is a C++ [Qt 5](https://www.qt.io/) application running local Perl 5 scripts as child processes without server. Inspired by [Electron](http://electron.atom.io/) and [NW.js](http://nwjs.io/), PEB is another reuse of web technologies in desktop applications with Perl doing the heavy lifting instead of [Node.js](https://nodejs.org/en/).
 
-PEB QtWebEngine is an experimental version of [Perl Executing Browser](https://github.com/ddmitov/perl-executing-browser) using [QtWebEngine](https://wiki.qt.io/QtWebEngine) instead of [QtWebkit](https://doc.qt.io/archives/qt-5.5/qtwebkit-index.html). It is not recommended for production use due to the following additional issues and limitations:
+PEB QtWebEngine is an experimental version of [Perl Executing Browser](https://github.com/ddmitov/perl-executing-browser) using [QtWebEngine](https://wiki.qt.io/QtWebEngine) instead of [QtWebkit](https://doc.qt.io/archives/qt-5.5/qtwebkit-index.html).  
+It is not recommended for production use due to the following additional issues and limitations:
 
 * High memory usage
 * Larger number of dependencies
@@ -65,6 +66,6 @@ either version 3 of the License, or (at your option) any later version.
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;  
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-## Authors
+## Author
 
-Dimitar D. Mitov, 2017 - 2019  
+Dimitar D. Mitov, 2018 - 2019  

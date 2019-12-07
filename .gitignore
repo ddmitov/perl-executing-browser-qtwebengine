@@ -9,8 +9,6 @@ Makefile
 peb.pro.*
 
 peb
-peb.exe
-*.AppImage
 
 backup
 upgit

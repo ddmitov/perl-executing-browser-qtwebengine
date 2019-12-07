@@ -1,4 +1,4 @@
-# Perl Executing Browser Project File
+# Perl Executing Browser QtWebEngine Project File
 
 # This program is free software;
 # you can redistribute it and/or modify it under the terms of the
@@ -9,16 +9,15 @@
 # but WITHOUT ANY WARRANTY;
 # without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.
-# Dimitar D. Mitov, 2013 - 2019
-# Valcho Nedelchev, 2014 - 2016
-# https://github.com/ddmitov/perl-executing-browser
+# Dimitar D. Mitov, 2018 - 2019
+# https://github.com/ddmitov/perl-executing-browser-qtwebengine
 
 lessThan (QT_MAJOR_VERSION, 5) {
-    error ("Perl Executing Browser requires minimal Qt version 5.2.")
+    error ("Perl Executing Browser QtWebEngine requires minimal Qt version 5.6.")
 }
 
 lessThan (QT_MINOR_VERSION, 6) {
-    error ("Perl Executing Browser requires minimal Qt version 5.2.")
+    error ("Perl Executing Browser QtWebEngine requires minimal Qt version 5.6.")
 }
 
 # Binary basics:
