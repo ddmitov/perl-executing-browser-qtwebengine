@@ -1,4 +1,4 @@
-/*
+﻿/*
  Perl Executing Browser QtWebEngine
 
  This program is free software;
@@ -61,27 +61,27 @@ public slots:
                             [&](QVariant result){
                     qGetPageSettings(result);
                 });
+
+                // Send signal to the html-viewing class that a page is loaded:
+                emit pageLoadedSignal();
+
+                QString applicationVersion =
+                        "peb.browser_version = '" +
+                        qApp->applicationVersion().toLatin1() + "';";
+                QPage::runJavaScript(applicationVersion);
+
+                QString qtVersion =
+                        "peb.qt_version = '" + QString(QT_VERSION_STR) + "';";
+                QPage::runJavaScript(qtVersion);
+
+                QString applicationVersionMessage =
+                        "console.log('Browser version: ' + peb.browser_version);";
+                QPage::runJavaScript(applicationVersionMessage);
+
+                QString qtVersionMessage =
+                        "console.log('Qt version: ' + peb.qt_version);";
+                QPage::runJavaScript(qtVersionMessage);
             }
-
-            // Send signal to the html-viewing class that a page is loaded:
-            emit pageLoadedSignal();
-
-            QString applicationVersion =
-                    "peb.browser_version = '" +
-                    qApp->applicationVersion().toLatin1() + "';";
-            QPage::runJavaScript(applicationVersion);
-
-            QString qtVersion =
-                    "peb.qt_version = '" + QString(QT_VERSION_STR) + "';";
-            QPage::runJavaScript(qtVersion);
-
-            QString applicationVersionMessage =
-                    "console.log('Browser version: ' + peb.browser_version);";
-            QPage::runJavaScript(applicationVersionMessage);
-
-            QString qtVersionMessage =
-                    "console.log('Qt version: ' + peb.qt_version);";
-            QPage::runJavaScript(qtVersionMessage);
         }
     }
 

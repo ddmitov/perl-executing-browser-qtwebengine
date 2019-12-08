@@ -24,6 +24,7 @@ Compiled and tested successfully using:
 
 * Qt 5 libraries.  
 * Perl 5 distribution - any Linux or Windows Perl relocatable or standard distribution.  
+  Tested with Linux 64-bit [Relocatable Perl](https://github.com/skaji/relocatable-perl) versions 5.24.1, 5.26.1.  
   PEB will use the first Perl on PATH if a relocatable Perl distribution is not available.
 
 ## Logging
