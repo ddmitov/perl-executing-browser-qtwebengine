@@ -295,13 +295,26 @@ public slots:
 
     void qFeedScript(QJsonObject scriptJsonObject)
     {
-        QString scriptInput = scriptJsonObject["scriptInput"].toString();
+        if (closeRequested == false) {
+            QString scriptInput = scriptJsonObject["scriptInput"].toString();
 
-        if (scriptInput.length() > 0) {
+            if (scriptInput.length() > 0) {
+                QScriptHandler *handler =
+                        runningScripts.value(scriptJsonObject["id"].toString());
+                if (handler->scriptProcess.isOpen()) {
+                    handler->scriptProcess.write(scriptInput.toUtf8());
+                    handler->scriptProcess.write(QString("\n").toLatin1());
+                }
+            }
+        }
+
+        if (closeRequested == true) {
+            QString exitCommand = scriptJsonObject["exitCommand"].toString();
+
             QScriptHandler *handler =
                     runningScripts.value(scriptJsonObject["id"].toString());
             if (handler->scriptProcess.isOpen()) {
-                handler->scriptProcess.write(scriptInput.toUtf8());
+                handler->scriptProcess.write(exitCommand.toUtf8());
                 handler->scriptProcess.write(QString("\n").toLatin1());
             }
         }
