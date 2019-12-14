@@ -112,17 +112,14 @@ public slots:
 
             qApp->setProperty("perlInterpreter", perlInterpreter);
 
-            // Get onStart scripts:
-            QJsonArray onStartScripts =
-                    settingsJsonObject["onStartScripts"].toArray();
+            // Get all autostarting scripts:
+            QJsonArray autoStartScripts =
+                    settingsJsonObject["autoStartScripts"].toArray();
 
-            foreach (const QJsonValue &value, onStartScripts) {
+            foreach (const QJsonValue &value, autoStartScripts) {
                 QString autoStartScript = value.toString();
-                qHandleScripts(autoStartScript);
+                qHandleScript(autoStartScript);
             }
-
-            // Get onExit scripts:
-            onExitScripts = settingsJsonObject["onExitScripts"].toArray();
 
             // Get dialog and context menu labels:
             if (settingsJsonObject["okLabel"].toString().length() > 0) {
@@ -237,7 +234,7 @@ public slots:
     // ==============================
     // Perl scripts:
     // ==============================
-    void qHandleScripts(QString scriptObjectName)
+    void qHandleScript(QString scriptObjectName)
     {
         if (QPage::url().scheme() == "file") {
             QPage::runJavaScript(
@@ -295,15 +292,19 @@ public slots:
 
     void qFeedScript(QJsonObject scriptJsonObject)
     {
+        QString tempFileFullPath =
+                temporaryFiles.value(scriptJsonObject["id"].toString());
+
         if (closeRequested == false) {
             QString scriptInput = scriptJsonObject["scriptInput"].toString();
 
             if (scriptInput.length() > 0) {
-                QScriptHandler *handler =
-                        runningScripts.value(scriptJsonObject["id"].toString());
-                if (handler->scriptProcess.isOpen()) {
-                    handler->scriptProcess.write(scriptInput.toUtf8());
-                    handler->scriptProcess.write(QString("\n").toLatin1());
+                if (tempFileFullPath.length() == 0) {
+                    qWriteOnScriptStdin(scriptJsonObject, scriptInput);
+                }
+
+                if (tempFileFullPath.length() > 0) {
+                    qWriteInScriptTempFile(tempFileFullPath, scriptInput);
                 }
             }
         }
@@ -311,22 +312,54 @@ public slots:
         if (closeRequested == true) {
             QString exitCommand = scriptJsonObject["exitCommand"].toString();
 
-            QScriptHandler *handler =
-                    runningScripts.value(scriptJsonObject["id"].toString());
-            if (handler->scriptProcess.isOpen()) {
-                handler->scriptProcess.write(exitCommand.toUtf8());
-                handler->scriptProcess.write(QString("\n").toLatin1());
+            if (tempFileFullPath.length() == 0) {
+                qWriteOnScriptStdin(scriptJsonObject, exitCommand);
             }
+
+            if (tempFileFullPath.length() > 0) {
+                qWriteInScriptTempFile(tempFileFullPath, exitCommand);
+            }
+        }
+    }
+
+    void qWriteOnScriptStdin(QJsonObject scriptJsonObject, QString scriptInput)
+    {
+        QScriptHandler *handler =
+                runningScripts.value(scriptJsonObject["id"]
+                .toString());
+        if (handler->scriptProcess.isOpen()) {
+            handler->scriptProcess.write(scriptInput.toUtf8());
+            handler->scriptProcess.write(QString("\n").toLatin1());
+        }
+    }
+
+    void qWriteInScriptTempFile(QString tempFileFullPath, QString scriptInput)
+    {
+        QFile file(tempFileFullPath);
+        if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+            QTextStream fileStream(&file);
+            fileStream << scriptInput <<endl;
+            file.close();
         }
     }
 
     void qDisplayScriptOutputSlot(QString id, QString output)
     {
         if (QPage::url().scheme() == "file") {
-            QString outputInsertionJavaScript =
-                    id + ".stdoutFunction('" + output + "'); null";
+            if (output.contains("tempfile")) {
+                QJsonDocument tempFileJsonDocument =
+                        QJsonDocument::fromJson(output.toUtf8());
+                QJsonObject tempFileJsonObject = tempFileJsonDocument.object();
+                QString tempFileFullPath =
+                        tempFileJsonObject["tempfile"].toString();
 
-            QPage::runJavaScript(outputInsertionJavaScript);
+                temporaryFiles.insert(id, tempFileFullPath);
+            } else {
+                QString outputInsertionJavaScript =
+                        id + ".stdoutFunction('" + output + "'); null";
+
+                QPage::runJavaScript(outputInsertionJavaScript);
+            }
         }
     }
 
@@ -347,9 +380,9 @@ public slots:
         }
     }
 
-    void qScriptFinishedSlot(QString scriptId)
+    void qScriptFinishedSlot(QString id)
     {
-        runningScripts.remove(scriptId);
+        runningScripts.remove(id);
 
         if (closeRequested == true and runningScripts.isEmpty()) {
             emit closeWindowSignal();
@@ -397,9 +430,17 @@ public slots:
         if (runningScripts.isEmpty()) {
             emit closeWindowSignal();
         } else {
-            foreach (const QJsonValue &value, onExitScripts) {
-                QString onExitScript = value.toString();
-                qHandleScripts(onExitScript);
+            QHash<QString, QScriptHandler*>::iterator iterator;
+            for (iterator = runningScripts.begin();
+                 iterator != runningScripts.end();
+                 ++iterator) {
+
+                QString scriptObjectName = iterator.key();
+                QScriptHandler *handler = iterator.value();
+
+                if (handler->scriptProcess.isOpen()) {
+                    qHandleScript(scriptObjectName);
+                }
             }
 
             int maximumTimeMilliseconds = 3000;
@@ -500,9 +541,9 @@ private:
     QString noLabel;
 
     QHash<QString, QScriptHandler*> runningScripts;
+    QHash<QString, QString> temporaryFiles;
 
     bool closeRequested;
-    QJsonArray onExitScripts;
 
 public:
     QPage();

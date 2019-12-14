@@ -50,7 +50,7 @@ my $input = AnyEvent->io(
     my $input = get_input($stdin);
     $user_input  = decode('UTF-8', $input->{user_input});
 
-    if ($user_input =~ "peb-exit") {
+    if ($user_input =~ "exit") {
       shutdown_procedure();
     }
   }
@@ -62,11 +62,11 @@ my $clock = AnyEvent->timer(
   cb => sub {
     my $time;
 
-    if ($mode =~ "unix-epoch") {
+    if ($mode =~ "unix_epoch") {
       $time = "Seconds from the Unix epoch: ".time;
     }
 
-    if ($mode =~ "local-time") {
+    if ($mode =~ "local_time") {
       my $time_string = strftime('%d %B %Y %H:%M:%S', localtime);
       $time = "Local date and time: ".$time_string;
     }

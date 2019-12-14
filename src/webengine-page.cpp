@@ -78,7 +78,7 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
 
             // Handle local Perl scripts after local link is clicked:
             if (url.fileName().contains(".script")) {
-                qHandleScripts(url.fileName().replace(".script", ""));
+                qHandleScript(url.fileName().replace(".script", ""));
                 return false;
             }
         }
@@ -86,7 +86,7 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
         // Handle local Perl scripts after local form is submitted:
         if (navType == QWebEnginePage::NavigationTypeFormSubmitted and
                 url.fileName().contains(".script")) {
-            qHandleScripts(url.fileName().replace(".script", ""));
+            qHandleScript(url.fileName().replace(".script", ""));
             return false;
         }
     }
