@@ -345,7 +345,12 @@ public slots:
 
     void qDisplayScriptOutputSlot(QString id, QString output)
     {
-        if (QPage::url().scheme() == "file") {
+        if (QPage::mainFrame()->url().scheme() == "file") {
+            QString outputInsertionJavaScript =
+                    id + ".stdoutFunction('" + output + "'); null";
+
+            mainFrame()->evaluateJavaScript(outputInsertionJavaScript);
+
             if (output.contains("tempfile")) {
                 QJsonDocument tempFileJsonDocument =
                         QJsonDocument::fromJson(output.toUtf8());
@@ -353,12 +358,10 @@ public slots:
                 QString tempFileFullPath =
                         tempFileJsonObject["tempfile"].toString();
 
-                temporaryFiles.insert(id, tempFileFullPath);
-            } else {
-                QString outputInsertionJavaScript =
-                        id + ".stdoutFunction('" + output + "'); null";
-
-                QPage::runJavaScript(outputInsertionJavaScript);
+                QFileInfo tempFileInfo(tempFileFullPath);
+                if (tempFileInfo.isFile()) {
+                    temporaryFiles.insert(id, tempFileFullPath);
+                }
             }
         }
     }
