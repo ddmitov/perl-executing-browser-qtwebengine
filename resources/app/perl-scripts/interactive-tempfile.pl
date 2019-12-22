@@ -22,12 +22,13 @@ use Encode qw(decode);
 use English;
 
 use AnyEvent;
+use File::Temp;
 use JSON::PP;
 
 # Disable output buffering:
 $OUTPUT_AUTOFLUSH = 1;
 
-# Defaults:
+# Global defaults:
 my $mode = "unix_epoch";
 my $user_input = "";
 
@@ -36,31 +37,57 @@ my $stdin = <STDIN>;
 chomp $stdin;
 
 my $initial_input = get_input($stdin);
-$mode = $initial_input->{mode};
+eval{
+  $mode = $initial_input->{mode};
+} or do {
+  1;
+};
+
+# Send the full pathname of the temporary file:
+my $tempfile_handle = File::Temp->new();
+$tempfile_handle->unlink_on_destroy(1);
+my $tempfile = $tempfile_handle->filename;
+
+my $tempfile_output = {tempfile => "$tempfile"};
+
+my $tempfile_output_json = JSON::PP->new->utf8->encode($tempfile_output);
+print $tempfile_output_json or shutdown_procedure();
 
 # Set the event loop:
 my $event_loop = AnyEvent->condvar;
 
-my $input = AnyEvent->io(
-  fh => \*STDIN,
-  poll => "r",
+my $timer = AnyEvent->timer(
+  after => 0,
+  interval => 0.5,
   cb => sub {
-    my $stdin = <STDIN>;
-    chomp $stdin;
+    my $data;
 
-    my $input = get_input($stdin);
-    $user_input = decode('UTF-8', $input->{user_input});
+    # Open tempfile, if it exists,
+    # read it, if it is readable,
+    # delete it to prevent any garbage left in case of a crash
+    # and continue without errors if tempfile is missing or corrupted:
+    if (-e $tempfile) {
+      eval{
+        open $tempfile_handle, '<', $tempfile;
+        $data = <$tempfile_handle>;
+        close $tempfile_handle;
+        unlink $tempfile;
+      } or do {
+        1;
+      }
+    }
+
+    my $input = get_input($data);
+    eval{
+      $user_input = decode('UTF-8', $input->{user_input});
+    } or do {
+      1;
+    };
 
     if ($user_input =~ "exit") {
       shutdown_procedure();
     }
-  }
-);
 
-my $clock = AnyEvent->timer(
-  after => 0,
-  interval => 0.5,
-  cb => sub {
     my $time;
 
     if ($mode =~ "unix_epoch") {
@@ -86,9 +113,15 @@ $event_loop->recv;
 
 # Get JSON input:
 sub get_input {
-  my ($stdin) = @_;
+  my ($data) = @_;
   my $json_object = new JSON::PP;
-  my $input = $json_object->decode($stdin);
+  my $input;
+  # Do not give errors if JSON data is corrupted:
+  eval{
+    $input = $json_object->decode($data);
+  } or do {
+    $input = "";
+  };
   return $input;
 }
 

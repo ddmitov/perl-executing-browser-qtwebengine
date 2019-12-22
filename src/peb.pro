@@ -38,6 +38,7 @@ QT += widgets webenginewidgets
 SOURCES += \
     main.cpp \
     file-reader.cpp \
+    file-writer.cpp \
     main-window.cpp \
     script-handler.cpp \
     webengine-page.cpp \
@@ -47,6 +48,7 @@ SOURCES += \
 HEADERS += \
     file-reader.h \
     script-handler.h \
+    file-writer.h \
     webengine-main-window.h \
     webengine-page.h \
     webengine-view.h

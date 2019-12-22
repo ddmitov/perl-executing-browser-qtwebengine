@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# Perl Executing Browser QtWebEngine Demo
+# Perl Executing Browser Demo
 
 # This program is free software;
 # you can redistribute it and/or modify it under the terms of the
@@ -11,8 +11,9 @@
 # but WITHOUT ANY WARRANTY;
 # without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.
-# Dimitar D. Mitov, 2018 - 2019
-# https://github.com/ddmitov/perl-executing-browser-qtwebengine
+# Dimitar D. Mitov, 2013 - 2019
+# Valcho Nedelchev, 2014 - 2016
+# https://github.com/ddmitov/perl-executing-browser
 
 # UTF-8 encoded file
 

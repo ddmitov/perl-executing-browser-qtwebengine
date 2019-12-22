@@ -29,6 +29,7 @@
 #include <QWebEnginePage>
 
 #include "file-reader.h"
+#include "file-writer.h"
 #include "script-handler.h"
 
 // ==============================
@@ -335,21 +336,16 @@ public slots:
 
     void qWriteInScriptTempFile(QString tempFileFullPath, QString scriptInput)
     {
-        QFile file(tempFileFullPath);
-        if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
-            QTextStream fileStream(&file);
-            fileStream << scriptInput <<endl;
-            file.close();
-        }
+        QFileWriter(tempFileFullPath, scriptInput);
     }
 
     void qDisplayScriptOutputSlot(QString id, QString output)
     {
-        if (QPage::mainFrame()->url().scheme() == "file") {
+        if (QPage::url().scheme() == "file") {
             QString outputInsertionJavaScript =
                     id + ".stdoutFunction('" + output + "'); null";
 
-            mainFrame()->evaluateJavaScript(outputInsertionJavaScript);
+            QPage::runJavaScript(outputInsertionJavaScript);
 
             if (output.contains("tempfile")) {
                 QJsonDocument tempFileJsonDocument =
