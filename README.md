@@ -7,8 +7,6 @@ It is not recommended for production use due to the following additional issues 
 
 * High memory usage
 * Larger number of dependencies
-* Larger package size:  
-  more than 100 MB for a minimal PEB-based application  
 * Can not be packed as a 64-bit Linux AppImage  
 * Can not be compiled on any Windows OS
 
