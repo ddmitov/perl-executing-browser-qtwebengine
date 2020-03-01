@@ -25,22 +25,6 @@ Compiled and tested successfully using:
   Tested with Linux 64-bit [Relocatable Perl](https://github.com/skaji/relocatable-perl) versions 5.24.1, 5.26.1.  
   PEB will use the first Perl on PATH if a relocatable Perl distribution is not available.
 
-## Logging
-
-PEB has unified logging of Perl and JavaScript errors in the JavaScript console.  
-All you need to read Perl errors is to open the JavaScript console by  
-starting PEB with the following command-line argument supplying an arbitrary private port:
-
-```bash
-./peb --remote-debugging-port=8080
-```
-
-and open the local URL with the supplied port using another browser  
-
-``http://localhost:8080``
-
-to access the ``QtWebEngine Developer Tools``, then go to the ``Console`` tab.
-
 ## Credits
 
 http://www.iconarchive.com/show/animal-icons-by-jen/Camel-icon.html  
@@ -54,7 +38,6 @@ https://doc.qt.io/qt-5/qwebenginepage.html#fullScreenRequested
 https://doc.qt.io/qt-5/qwebenginepage.html#windowCloseRequested  
 https://doc.qt.io/qt-5/qtwebengine-webenginewidgets-simplebrowser-example.html#adding-context-menu-items  
 https://doc.qt.io/qt-5/qwebenginefullscreenrequest.html  
-https://doc.qt.io/qt-5.11/qtwebengine-debugging.html  
 
 ## [License](./LICENSE.md)
 
