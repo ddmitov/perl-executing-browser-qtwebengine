@@ -2,7 +2,7 @@
 
 Perl Executing Browser (PEB) is an HTML5 user interface for [Perl 5](https://www.perl.org/) desktop applications. It is a C++ [Qt 5](https://www.qt.io/) application running local Perl 5 scripts as child processes without server. Inspired by [Electron](http://electron.atom.io/) and [NW.js](http://nwjs.io/), PEB is another reuse of web technologies in desktop applications with Perl doing the heavy lifting instead of [Node.js](https://nodejs.org/en/).
 
-PEB QtWebEngine is an experimental version of [Perl Executing Browser](https://github.com/ddmitov/perl-executing-browser) using [QtWebEngine](https://wiki.qt.io/QtWebEngine) instead of [QtWebkit](https://doc.qt.io/archives/qt-5.5/qtwebkit-index.html).  
+PEB QtWebEngine is an experimental Linux version of [Perl Executing Browser](https://github.com/ddmitov/perl-executing-browser) using [QtWebEngine](https://wiki.qt.io/QtWebEngine) instead of [QtWebkit](https://doc.qt.io/archives/qt-5.5/qtwebkit-index.html).  
 It is not recommended for production use due to the following additional issues and limitations:
 
 * High memory usage
@@ -21,8 +21,8 @@ Compiled and tested successfully using:
 ## Runtime Requirements
 
 * Qt 5 libraries.  
-* Perl 5 distribution - any Linux or Windows Perl relocatable or standard distribution.  
-  Tested with Linux 64-bit [Relocatable Perl](https://github.com/skaji/relocatable-perl) versions 5.24.1, 5.26.1.  
+* Perl 5 relocatable or standard distribution.  
+  Tested with 64-bit [Relocatable Perl](https://github.com/skaji/relocatable-perl) versions 5.24.1 and 5.26.1.  
   PEB will use the first Perl on PATH if a relocatable Perl distribution is not available.
 
 ## Credits
