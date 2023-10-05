@@ -1,39 +1,72 @@
 # Perl Executing Browser QtWebEngine
 
+PEB QtWebEngine is a Linux version of the [Perl Executing Browser](https://github.com/ddmitov/perl-executing-browser) using [QtWebEngine](https://wiki.qt.io/QtWebEngine).
 
-PEB QtWebEngine is a Linux version of [Perl Executing Browser](https://github.com/ddmitov/perl-executing-browser) using [QtWebEngine](https://wiki.qt.io/QtWebEngine).
+Perl Executing Browser (PEB) is an HTML user interface for [Perl 5](https://www.perl.org/) desktop applications. It is a C++ [Qt 5](https://www.qt.io/) application running local Perl scripts as child processes without server. Inspired by [Electron](http://electron.atom.io/) and [NW.js](http://nwjs.io/), PEB is another reuse of web technologies in desktop applications with Perl doing the heavy lifting instead of [Node.js](https://nodejs.org/en/).
 
-Perl Executing Browser (PEB) is an HTML5 user interface for [Perl 5](https://www.perl.org/) desktop applications. It is a C++ [Qt 5](https://www.qt.io/) application running local Perl 5 scripts as child processes without server. Inspired by [Electron](http://electron.atom.io/) and [NW.js](http://nwjs.io/), PEB is another reuse of web technologies in desktop applications with Perl doing the heavy lifting instead of [Node.js](https://nodejs.org/en/).
+![PEB Screenshot](https://github.com/ddmitov/perl-executing-browser/raw/master/doc/screenshot.png "PEB Screenshot")  
 
-## Compile-Time Requirement
+## Contents
 
-Linux Qt development bundle version 5.6 or higher
+* [Design Objectives](#design-objectives)
+* [Features](#features)
+* [Security](#security)
+* [Limitations](#limitations)
+* REQUIREMENTS
+  * [Compile-Time Requirements](./doc/REQUIREMENTS.md#compile-time-requirements)
+  * [Runtime Requirements](./doc/REQUIREMENTS.md#runtime-requirements)
+* FILES AND FOLDERS
+  * [Application Executable](./doc/FILES.md#application-executable)
+  * [Application Files and Folders](./doc/FILES.md#application-files-and-folders)
+* SETTINGS
+  * [Global Settings API](./doc/SETTINGS.md#global-settings-api)
+  * [Perl Scripts API](./doc/SETTINGS.md#perl-scripts-api)
+  * [Files and Folders Dialogs API](./doc/SETTINGS.md#files-and-folders-dialogs-api)
+* [History](#history)
+* [License](./LICENSE.md)
+* [Thanks and Credits](./CREDITS.md)
+* [Authors](#authors)
 
-Compiled and tested successfully using:
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",  
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY" and "OPTIONAL"  
+in the documentation of this project are to be interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).  
 
-* [Qt 5.8.0](http://download.qt.io/archive/qt/5.8/5.8.0/) on 64-bit Lubuntu 16.04
-* [Qt 5.9.1](http://download.qt.io/archive/qt/5.9/5.9.1/) on 64-bit Lubuntu 16.04
+## Design Objectives
 
-## Runtime Requirements
+* **1. Easy and beautiful graphical user interface for Perl 5 desktop applications**  
+* **2. Secure solution with no server process**  
+* **3. Maximal reuse of existing web technologies and standards**
 
-* Qt 5 libraries.  
-* Perl 5 relocatable or standard distribution.  
-  Tested with 64-bit [Relocatable Perl](https://github.com/skaji/relocatable-perl) versions 5.24.1 and 5.26.1.  
-  PEB will use the first Perl on PATH if a relocatable Perl distribution is not available.
+## Features
 
-## Credits
+* No limitation on how long a Perl script can run.
+* [Perl script output is seamlessly inserted in a nice HTML user interface.](./doc/SETTINGS.md#perl-scripts-api)
+* [Any version of Perl 5 can be used.](./doc/REQUIREMENTS.md#runtime-requirements)
+* [Single file or multiple files, new filename, existing or new directory can be selected by user.](./doc/SETTINGS.md#selecting-files-and-folders)  
+* [Unified logging of Perl and JavaScript errors in the JavaScript console]  
+* [Optional warning for unsaved data in HTML forms](./doc/SETTINGS.md#html-page-api)
+* [Optional labels for all JavaScript popup boxes and context menus](./doc/SETTINGS.md#html-page-api)
+* [Optional icon for the main window and all dialog boxes](./doc/FILES.md#icon)
 
-http://www.iconarchive.com/show/animal-icons-by-jen/Camel-icon.html  
+## Security
 
-https://github.com/OtterBrowser/otter-browser/blob/master/src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp  
-https://github.com/OtterBrowser/otter-browser/blob/master/src/modules/backends/web/qtwebengine/QtWebEnginePage.h  
+* PEB does not need administrative privileges.
+* PEB does not need and does not implement any server process.
+* PEB Perl scripts can not be called from web pages.
+* PEB Perl scripts are executed locally with no sandbox.
 
-https://doc.qt.io/qt-5/qtwebenginewidgets-qtwebkitportingguide.html  
-https://doc.qt.io/qt-5/qwebenginepage.html#runJavaScript  
-https://doc.qt.io/qt-5/qwebenginepage.html#fullScreenRequested  
-https://doc.qt.io/qt-5/qwebenginepage.html#windowCloseRequested  
-https://doc.qt.io/qt-5/qtwebengine-webenginewidgets-simplebrowser-example.html#adding-context-menu-items  
-https://doc.qt.io/qt-5/qwebenginefullscreenrequest.html  
+## Limitations
+
+* No Perl scripting inside frames
+* No pop-up windows
+* No printing
+* No AppImage support
+
+## History
+
+PEB was started in 2013 by Dimitar D. Mitov as a simple user interface for personal database applications.
+
+## [Thanks and Credits](./CREDITS.md)
 
 ## [License](./LICENSE.md)
 
@@ -46,4 +79,4 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 
 ## Author
 
-Dimitar D. Mitov, 2018 - 2019  
+Dimitar D. Mitov, 2018 - 2019, 2023
