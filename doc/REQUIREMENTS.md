@@ -20,7 +20,7 @@ make
 
 * Qt 5 and QtWebEngine libraries
 
-* Perl 5 distribution - any Linux or Windows Perl relocatable or standard distribution
+* Perl 5 distribution - any Linux Perl relocatable or standard distribution
 
   Tested with [Relocatable Perl](https://github.com/skaji/relocatable-perl) versions 5.24.1 and 5.26.1.
 
