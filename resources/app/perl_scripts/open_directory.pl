@@ -11,25 +11,14 @@
 # but WITHOUT ANY WARRANTY;
 # without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.
-# Dimitar D. Mitov, 2013 - 2019
+# Dimitar D. Mitov, 2013 - 2020, 2023
 # Valcho Nedelchev, 2014 - 2016
 # https://github.com/ddmitov/perl-executing-browser
 
 use strict;
 use warnings;
 
-my $input = <STDIN>;
-chomp $input;
+my $directory_name = <STDIN>;
+chomp $directory_name;
 
-my @files = split(/;/, $input);
-
-my $number_of_lines;
-
-foreach my $file (@files) {
-  open my $filehandle, '<', $file or warn "Unable to open $!";
-  my @file_contents = <$filehandle>;
-  close $filehandle;
-
-  my $number_of_lines = scalar(@file_contents);
-  print "File: $file Lines: $number_of_lines<br>";
-}
+print "Selected directory: $directory_name";

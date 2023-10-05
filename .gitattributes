@@ -1,4 +1,2 @@
 src/resources/icon/* linguist-vendored
 resources/app/bootstrap/*.css linguist-vendored
-resources/app/bootstrap/*.js linguist-vendored
-resources/app/jquery/* linguist-vendored

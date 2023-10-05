@@ -11,19 +11,17 @@
 # but WITHOUT ANY WARRANTY;
 # without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.
-# Dimitar D. Mitov, 2013 - 2019
+# Dimitar D. Mitov, 2013 - 2020, 2023
 # Valcho Nedelchev, 2014 - 2016
 # https://github.com/ddmitov/perl-executing-browser
 
 use strict;
 use warnings;
-use Cwd;
-use English;
 
-my $cwd = cwd();
+my $input = <STDIN>;
+chomp $input;
 
-print "Perl $PERL_VERSION<br>";
-print "Working Directory: $cwd<br><br>";
+my @files = split(/;/, $input);
 
-print "\@INC Array:<br>";
-print join "<br>", @INC;
+my $number_of_files = scalar(@files);
+print "Number of selected files: $number_of_files";
