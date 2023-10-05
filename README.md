@@ -64,7 +64,8 @@ in the documentation of this project are to be interpreted as described in [RFC 
 
 ## History
 
-PEB was started in 2013 by Dimitar D. Mitov as a simple user interface for personal database applications. PEB QtWebEngine became a separate application in 2018.
+PEB was started in 2013 by Dimitar D. Mitov as a simple user interface for personal database applications.  
+PEB QtWebEngine became a separate application in 2018.
 
 ## [Thanks and Credits](./CREDITS.md)
 
