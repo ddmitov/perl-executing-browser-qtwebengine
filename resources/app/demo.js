@@ -1,4 +1,4 @@
-// Perl Executing Browser Demo
+// Perl Executing Browser QtWebEngine Demo
 
 // This program is free software;
 // you can redistribute it and/or modify it under the terms of the
@@ -9,9 +9,8 @@
 // but WITHOUT ANY WARRANTY;
 // without even the implied warranty of MERCHANTABILITY or
 // FITNESS FOR A PARTICULAR PURPOSE.
-// Dimitar D. Mitov, 2013 - 2020, 2023
-// Valcho Nedelchev, 2014 - 2016
-// https://github.com/ddmitov/perl-executing-browser
+// Dimitar D. Mitov, 2018 - 2019, 2023
+// https://github.com/ddmitov/perl-executing-browser-qtwebengine
 
 // Settings objects for Perl scripts:
 var perl_info = {};
