@@ -33,20 +33,20 @@ in the documentation of this project are to be interpreted as described in [RFC 
 
 ## Design Objectives
 
-* **1. Easy and beautiful graphical user interface for Perl 5 desktop applications**  
+* **1. Easy graphical user interface for Perl 5 desktop applications**  
 * **2. Secure solution with no server process**  
 * **3. Maximal reuse of existing web technologies and standards**
 
 ## Features
 
 * No limitation on how long a Perl script can run.
-* [Perl script output is seamlessly inserted in a nice HTML user interface.](./doc/SETTINGS.md#perl-scripts-api)
+* [Perl script output is seamlessly inserted in an HTML user interface.](./doc/SETTINGS.md#perl-scripts-api)
 * [Any version of Perl 5 can be used.](./doc/REQUIREMENTS.md#runtime-requirements)
-* [Single file or multiple files, new filename, existing or new directory can be selected by user.](./doc/SETTINGS.md#selecting-files-and-folders)
-* Unified logging of Perl and JavaScript errors in the JavaScript console
+* [Select files and folders.](./doc/SETTINGS.md#selecting-files-and-folders)  
+* [Logging of Perl errors in the JavaScript console](#logging)  
 * [Optional warning for unsaved data in HTML forms](./doc/SETTINGS.md#html-page-api)
-* [Optional labels for all JavaScript popup boxes and context menus](./doc/SETTINGS.md#html-page-api)
-* [Optional icon for the main window and all dialog boxes](./doc/FILES.md#icon)
+* [Optional labels for the JavaScript popup boxes and context menus](./doc/SETTINGS.md#html-page-api)
+* [Optional icon](./doc/FILES.md#icon)
 
 ## Security
 
@@ -64,7 +64,7 @@ in the documentation of this project are to be interpreted as described in [RFC 
 
 ## History
 
-PEB was started in 2013 by Dimitar D. Mitov as a simple user interface for personal database applications.  
+PEB was started in 2013 as a simple user interface for personal database applications.  
 PEB QtWebEngine became a separate application in 2018.
 
 ## [Thanks and Credits](./CREDITS.md)
