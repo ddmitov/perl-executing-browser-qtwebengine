@@ -32,6 +32,11 @@ QPage::QPage()
 
     QWebEngineSettings::globalSettings()->
             setAttribute(
+                QWebEngineSettings::FullScreenSupportEnabled, false
+                );
+
+    QWebEngineSettings::globalSettings()->
+            setAttribute(
                 QWebEngineSettings::JavascriptCanOpenWindows, false
                 );
 
@@ -43,11 +48,6 @@ QPage::QPage()
     QWebEngineSettings::globalSettings()->
             setAttribute(
                 QWebEngineSettings::AutoLoadImages, true
-                );
-
-    QWebEngineSettings::globalSettings()->
-            setAttribute(
-                QWebEngineSettings::FullScreenSupportEnabled, true
                 );
 
     QWebEngineSettings::globalSettings()->
@@ -92,12 +92,14 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
             // Handle filesystem dialogs:
             if (url.fileName().contains(".dialog")) {
                 qHandleDialogs(url.fileName().replace(".dialog", ""));
+
                 return false;
             }
 
             // Handle local Perl scripts after local link is clicked:
             if (url.fileName().contains(".script")) {
                 qStartScript(url.fileName().replace(".script", ""));
+
                 return false;
             }
         }
@@ -106,6 +108,7 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
         if (navType == QWebEnginePage::NavigationTypeFormSubmitted) {
             if (url.fileName().contains(".script")) {
                 qStartScript(url.fileName().replace(".script", ""));
+
                 return false;
             }
         }

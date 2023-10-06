@@ -10,7 +10,7 @@
  but WITHOUT ANY WARRANTY;
  without even the implied warranty of MERCHANTABILITY or
  FITNESS FOR A PARTICULAR PURPOSE.
- Dimitar D. Mitov, 2018 - 2019
+ Dimitar D. Mitov, 2018 - 2019, 2023
  https://github.com/ddmitov/perl-executing-browser-qtwebengine
 */
 
@@ -34,6 +34,7 @@ class QViewWidget : public QWebEngineView
     Q_OBJECT
 
 public slots:
+
     // ==============================
     // Action taken after page is loaded:
     // ==============================
@@ -70,6 +71,7 @@ public slots:
         if (QWebEngineView::page()->url().scheme() == "file") {
             QWebEngineContextMenuData contextMenuTest =
                     QWebEngineView::page()->contextMenuData();
+
             Q_ASSERT(contextMenuTest.isValid());
 
             if (!contextMenuTest.isContentEditable() and
@@ -78,10 +80,15 @@ public slots:
 
                 QAction *copyAct = menu
                         .addAction(qApp->property("copyLabel").toString());
-                QObject::connect(copyAct, SIGNAL(triggered()),
-                                 this, SLOT(qCopyAction()));
+
+                QObject::connect(copyAct,
+                                 SIGNAL(triggered()),
+                                 this,
+                                 SLOT(qCopyAction())
+                                 );
 
                 menu.exec(mapToGlobal(event->pos()));
+
                 this->focusWidget();
             }
 
@@ -90,25 +97,42 @@ public slots:
 
                 QAction *cutAct = menu
                         .addAction(qApp->property("cutLabel").toString());
-                QObject::connect(cutAct, SIGNAL(triggered()),
-                                 this, SLOT(qCutAction()));
+
+                QObject::connect(cutAct,
+                                 SIGNAL(triggered()),
+                                 this,
+                                 SLOT(qCutAction())
+                                 );
 
                 QAction *copyAct = menu
                         .addAction(qApp->property("copyLabel").toString());
-                QObject::connect(copyAct, SIGNAL(triggered()),
-                                 this, SLOT(qCopyAction()));
+
+                QObject::connect(copyAct,
+                                 SIGNAL(triggered()),
+                                 this,
+                                 SLOT(qCopyAction())
+                                 );
 
                 QAction *pasteAct = menu
                         .addAction(qApp->property("pasteLabel").toString());
-                QObject::connect(pasteAct, SIGNAL(triggered()),
-                                 this, SLOT(qPasteAction()));
+
+                QObject::connect(pasteAct,
+                                 SIGNAL(triggered()),
+                                 this,
+                                 SLOT(qPasteAction())
+                                 );
 
                 QAction *selectAllAct = menu
                         .addAction(qApp->property("selectAllLabel").toString());
-                QObject::connect(selectAllAct, SIGNAL(triggered()),
-                                 this, SLOT(qSelectAllAction()));
+
+                QObject::connect(selectAllAct,
+                                 SIGNAL(triggered()),
+                                 this,
+                                 SLOT(qSelectAllAction())
+                                 );
 
                 menu.exec(mapToGlobal(event->pos()));
+
                 this->focusWidget();
             }
         }
@@ -135,14 +159,6 @@ public slots:
     }
 
     // ==============================
-    // Hide window:
-    // ==============================
-    void qHideWindowSlot()
-    {
-        this->parentWidget()->hide();
-    }
-
-    // ==============================
     // Close window:
     // ==============================
     void qCloseWindowSlot()
@@ -152,9 +168,11 @@ public slots:
     }
 
 public:
+
     QViewWidget();
 
 private:
+
     QPage *mainPage;
 };
 

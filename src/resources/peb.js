@@ -10,8 +10,7 @@
 // without even the implied warranty of MERCHANTABILITY or
 // FITNESS FOR A PARTICULAR PURPOSE.
 // Dimitar D. Mitov, 2013 - 2020, 2023
-// Valcho Nedelchev, 2014 - 2016
-// https://github.com/ddmitov/perl-executing-browser
+// https://github.com/ddmitov/perl-executing-browser-qtwebengine
 
 // PEB embedded JavaScript code:
 var peb = {};
@@ -44,8 +43,7 @@ peb.checkUserInputBeforeClose = function() {
     var textEntered = false;
     var close = true;
 
-    var textFields = [];
-    textFields = document.getElementsByTagName('textarea');
+    var textFields = document.getElementsByTagName('textarea');
 
     for (index = 0; index < textFields.length; index++) {
         if (textFields[index].value.length > 0) {
@@ -53,8 +51,7 @@ peb.checkUserInputBeforeClose = function() {
         }
     }
 
-    var inputBoxes = [];
-    inputBoxes = document.querySelectorAll('input[type=text]');
+    var inputBoxes = document.querySelectorAll('input[type=text]');
 
     for (index = 0; index < inputBoxes.length; index++) {
         if (inputBoxes[index].value.length > 0) {

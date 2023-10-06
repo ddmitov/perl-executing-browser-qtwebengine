@@ -39,11 +39,12 @@ class QPage : public QWebEnginePage
     Q_OBJECT
 
 signals:
+
     void pageLoadedSignal();
-    void hideWindowSignal();
     void closeWindowSignal();
 
 public slots:
+
     void qPageLoadedSlot(bool ok)
     {
         if (ok) {
@@ -51,6 +52,7 @@ public slots:
                 // Inject all browser-specific Javascript:
                 QFileReader *resourceReader =
                         new QFileReader(QString(":/peb.js"));
+
                 QString pebJavaScript = resourceReader->fileContents;
 
                 QPage::runJavaScript(pebJavaScript);
@@ -151,6 +153,7 @@ public slots:
             if (!dialogJsonDocument.isEmpty()) {
                 QJsonObject dialogJsonObject = dialogJsonDocument.object();
                 dialogJsonObject["id"] = dialogObjectName;
+
                 qReadDialogSettings(dialogJsonObject);
             }
         });
@@ -182,6 +185,7 @@ public slots:
         }
 
         QStringList selectedInodes;
+
         if (inodesDialog.exec()) {
             selectedInodes = inodesDialog.selectedFiles();
         }
@@ -191,10 +195,12 @@ public slots:
 
         if (!selectedInodes.isEmpty()) {
             QString inodesFormatted;
+
             foreach (QString userSelectedInode, selectedInodes) {
                 inodesFormatted.append(userSelectedInode);
                 inodesFormatted.append(";");
             }
+
             inodesFormatted.replace(QRegularExpression(";$"), "");
 
             QString outputInsertionJavaScript =
@@ -244,12 +250,6 @@ public slots:
                                      SLOT(qDisplayScriptErrorsSlot(QString))
                                      );
 
-                    QObject::connect(scriptHandler,
-                                     SIGNAL(scriptFinishedSignal(QString, int)),
-                                     this,
-                                     SLOT(qScriptFinishedSlot(QString, int))
-                                     );
-
                     QString scriptInput =
                             scriptJsonObject["scriptInput"].toString();
 
@@ -293,16 +293,6 @@ public slots:
         }
     }
 
-    void qScriptFinishedSlot(QString id, int exitCode)
-    {
-        if (QPage::url().scheme() == "file") {
-            QString exitInsertionJavaScript =
-                        id + ".exitFunction('" + exitCode + "'); null";
-
-            QPage::runJavaScript(exitInsertionJavaScript);
-        }
-    }
-
     // ==============================
     // Page-closing routine:
     // ==============================
@@ -324,6 +314,7 @@ public slots:
     }
 
 protected:
+
     bool acceptNavigationRequest(const QUrl &url,
                                  QWebEnginePage::NavigationType navType,
                                  bool isMainFrame
@@ -337,6 +328,7 @@ protected:
         Q_UNUSED(url);
 
         QMessageBox javaScriptAlertMessageBox (qApp->activeWindow());
+
         javaScriptAlertMessageBox.setWindowModality(Qt::WindowModal);
         javaScriptAlertMessageBox.setWindowTitle(title());
         javaScriptAlertMessageBox.setText(msg);
@@ -353,6 +345,7 @@ protected:
         Q_UNUSED(url);
 
         QMessageBox javaScriptConfirmMessageBox (qApp->activeWindow());
+
         javaScriptConfirmMessageBox.setWindowModality(Qt::WindowModal);
         javaScriptConfirmMessageBox.setWindowTitle(title());
         javaScriptConfirmMessageBox.setText(msg);
@@ -374,6 +367,7 @@ protected:
         bool ok = false;
 
         QInputDialog dialog;
+
         dialog.setModal(true);
         dialog.setWindowTitle(title());
         dialog.setLabelText(msg);
@@ -385,6 +379,7 @@ protected:
         if (dialog.exec() == QDialog::Accepted) {
             *result = dialog.textValue();
             ok = true;
+
             return ok;
         }
 
@@ -392,12 +387,14 @@ protected:
     }
 
 private:
+
     QString okLabel;
     QString cancelLabel;
     QString yesLabel;
     QString noLabel;
 
 public:
+
     QPage();
 
 };

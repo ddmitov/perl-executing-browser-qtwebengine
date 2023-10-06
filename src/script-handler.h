@@ -10,7 +10,7 @@
  but WITHOUT ANY WARRANTY;
  without even the implied warranty of MERCHANTABILITY or
  FITNESS FOR A PARTICULAR PURPOSE.
- Dimitar D. Mitov, 2018 - 2019
+ Dimitar D. Mitov, 2018 - 2019, 2023
  https://github.com/ddmitov/perl-executing-browser-qtwebengine
 */
 
@@ -28,11 +28,12 @@ class QScriptHandler : public QObject
     Q_OBJECT
 
 signals:
+
     void displayScriptOutputSignal(QString id, QString output);
     void displayScriptErrorsSignal(QString errors);
-    void scriptFinishedSignal(QString id, int exitCode);
 
 public slots:
+
     void qScriptOutputSlot()
     {
         QString scriptOutput = process.readAllStandardOutput();
@@ -45,16 +46,12 @@ public slots:
         emit displayScriptErrorsSignal(scriptErrors);
     }
 
-    void qScriptFinishedSlot()
-    {
-        int exitCode = process.exitCode();
-        emit scriptFinishedSignal(this->id, exitCode);
-    }
-
 private:
+
     QString scriptFullFilePath;
 
 public:
+
     QScriptHandler(QJsonObject);
     QProcess process;
     QString id;

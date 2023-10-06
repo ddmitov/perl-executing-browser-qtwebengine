@@ -10,7 +10,7 @@
  but WITHOUT ANY WARRANTY;
  without even the implied warranty of MERCHANTABILITY or
  FITNESS FOR A PARTICULAR PURPOSE.
- Dimitar D. Mitov, 2018 - 2019
+ Dimitar D. Mitov, 2018 - 2019, 2023
  https://github.com/ddmitov/perl-executing-browser-qtwebengine
 */
 
@@ -43,15 +43,9 @@ QScriptHandler::QScriptHandler(QJsonObject scriptJsonObject)
                      SLOT(qScriptErrorsSlot())
                      );
 
-//    QObject::connect(&scriptProcess,
-//                     SIGNAL(finished(int, QProcess::ExitStatus)),
-//                     this,
-//                     SLOT(qScriptFinishedSlot())
-//                     );
-
     process.setWorkingDirectory(qApp->property("appDir").toString());
 
     process.start((qApp->property("perlInterpreter").toString()),
-                        QStringList() << scriptFullFilePath,
-                        QProcess::Unbuffered | QProcess::ReadWrite);
+                  QStringList() << scriptFullFilePath,
+                  QProcess::Unbuffered | QProcess::ReadWrite);
 }

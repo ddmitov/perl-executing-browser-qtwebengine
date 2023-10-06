@@ -10,7 +10,7 @@
  but WITHOUT ANY WARRANTY;
  without even the implied warranty of MERCHANTABILITY or
  FITNESS FOR A PARTICULAR PURPOSE.
- Dimitar D. Mitov, 2018 - 2019
+ Dimitar D. Mitov, 2018 - 2019, 2023
  https://github.com/ddmitov/perl-executing-browser-qtwebengine
 */
 
@@ -32,16 +32,18 @@ QViewWidget::QViewWidget()
     // Starting of a QPage instance:
     mainPage = new QPage();
 
-    // Signal and slot for changing window title:
-    QObject::connect(mainPage, SIGNAL(pageLoadedSignal()),
-                     this, SLOT(qPageLoadedSlot()));
+    // Signal and slot:
+    QObject::connect(mainPage,
+                     SIGNAL(pageLoadedSignal()),
+                     this,
+                     SLOT(qPageLoadedSlot())
+                     );
 
-    // Signals and slots for closing windows:
-    QObject::connect(mainPage, SIGNAL(hideWindowSignal()),
-                     this, SLOT(qHideWindowSlot()));
-
-    QObject::connect(mainPage, SIGNAL(closeWindowSignal()),
-                     this, SLOT(qCloseWindowSlot()));
+    QObject::connect(mainPage,
+                     SIGNAL(closeWindowSignal()),
+                     this,
+                     SLOT(qCloseWindowSlot())
+                     );
 
     // Installing of the started QPage instance:
     setPage(mainPage);

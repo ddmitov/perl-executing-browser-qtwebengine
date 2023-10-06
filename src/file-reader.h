@@ -10,7 +10,7 @@
  but WITHOUT ANY WARRANTY;
  without even the implied warranty of MERCHANTABILITY or
  FITNESS FOR A PARTICULAR PURPOSE.
- Dimitar D. Mitov, 2018 - 2019
+ Dimitar D. Mitov, 2018 - 2019, 2023
  https://github.com/ddmitov/perl-executing-browser-qtwebengine
 */
 
@@ -28,6 +28,7 @@ class QFileReader : public QObject
     Q_OBJECT
 
 public:
+
     explicit QFileReader(QString filePath);
     QString fileContents;
 };

@@ -10,7 +10,7 @@
  but WITHOUT ANY WARRANTY;
  without even the implied warranty of MERCHANTABILITY or
  FITNESS FOR A PARTICULAR PURPOSE.
- Dimitar D. Mitov, 2018 - 2019
+ Dimitar D. Mitov, 2018 - 2019, 2023
  https://github.com/ddmitov/perl-executing-browser-qtwebengine
 */
 
@@ -57,6 +57,7 @@ int main(int argc, char **argv)
 
     QPixmap icon(32, 32);
     QFile iconFile(iconPathName);
+
     if (iconFile.exists()) {
         icon.load(iconPathName);
         QApplication::setWindowIcon(icon);
@@ -71,6 +72,7 @@ int main(int argc, char **argv)
     // MAIN WINDOW INITIALIZATION:
     // ==============================
     QMainBrowserWindow mainWindow;
+
     mainWindow.setWindowIcon(icon);
     mainWindow.setCentralWidget(mainWindow.webViewWidget);
 
@@ -82,13 +84,6 @@ int main(int argc, char **argv)
                      SIGNAL(titleChanged(QString)),
                      &mainWindow,
                      SLOT(setMainWindowTitleSlot(QString))
-                     );
-
-    // Signal and slot for QtWebEngine fullscreen signal:
-    QObject::connect(mainWindow.webViewWidget->page(),
-                     SIGNAL(fullScreenRequested(QWebEngineFullScreenRequest)),
-                     &mainWindow,
-                     SLOT(qGoFullscreen(QWebEngineFullScreenRequest))
                      );
 
     // Signal and slot for closing the main window:

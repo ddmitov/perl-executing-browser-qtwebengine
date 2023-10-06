@@ -15,6 +15,7 @@
 // Settings objects for Perl scripts:
 var perl_info = {};
 perl_info.scriptRelativePath = 'perl_scripts/perl_info.pl';
+
 perl_info.stdoutFunction = function (stdout) {
   var newElement = document.createElement("pre");
   newElement.innerHTML = stdout;
@@ -24,6 +25,7 @@ perl_info.stdoutFunction = function (stdout) {
 
 var sqlite = {};
 sqlite.scriptRelativePath = 'perl_scripts/sqlite.pl';
+
 sqlite.stdoutFunction = function (stdout) {
   var newElement = document.createElement("pre");
   newElement.innerHTML = stdout;
