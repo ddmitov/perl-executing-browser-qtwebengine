@@ -28,27 +28,27 @@ class QScriptHandler : public QObject
     Q_OBJECT
 
 signals:
-    void displayScriptOutputSignal(QString scriptId, QString output);
+    void displayScriptOutputSignal(QString id, QString output);
     void displayScriptErrorsSignal(QString errors);
-    void scriptFinishedSignal(QString scriptId);
+    void scriptFinishedSignal(QString id, int exitCode);
 
 public slots:
     void qScriptOutputSlot()
     {
-        QString scriptOutput = scriptProcess.readAllStandardOutput();
-        emit displayScriptOutputSignal(scriptId, scriptOutput);
+        QString scriptOutput = process.readAllStandardOutput();
+        emit displayScriptOutputSignal(this->id, scriptOutput);
     }
 
     void qScriptErrorsSlot()
     {
-        QString scriptErrors = scriptProcess.readAllStandardError();
+        QString scriptErrors = process.readAllStandardError();
         emit displayScriptErrorsSignal(scriptErrors);
     }
 
     void qScriptFinishedSlot()
     {
-        scriptProcess.close();
-        emit scriptFinishedSignal(scriptId);
+        int exitCode = process.exitCode();
+        emit scriptFinishedSignal(this->id, exitCode);
     }
 
 private:
@@ -56,8 +56,8 @@ private:
 
 public:
     QScriptHandler(QJsonObject);
-    QProcess scriptProcess;
-    QString scriptId;
+    QProcess process;
+    QString id;
 };
 
 #endif // SCRIPT_HANDLER_H

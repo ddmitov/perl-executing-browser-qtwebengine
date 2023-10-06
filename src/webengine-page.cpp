@@ -31,34 +31,53 @@ QPage::QPage()
             setDefaultTextEncoding(QString("utf-8"));
 
     QWebEngineSettings::globalSettings()->
-            setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, false);
+            setAttribute(
+                QWebEngineSettings::JavascriptCanOpenWindows, false
+                );
 
     QWebEngineSettings::globalSettings()->
-            setAttribute(QWebEngineSettings::AutoLoadImages, true);
+            setAttribute(
+                QWebEngineSettings::LocalContentCanAccessRemoteUrls, false
+                );
+
     QWebEngineSettings::globalSettings()->
-            setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
+            setAttribute(
+                QWebEngineSettings::AutoLoadImages, true
+                );
+
     QWebEngineSettings::globalSettings()->
-            setAttribute(QWebEngineSettings::JavascriptEnabled, true);
+            setAttribute(
+                QWebEngineSettings::FullScreenSupportEnabled, true
+                );
+
     QWebEngineSettings::globalSettings()->
-            setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls,
-                         true);
+            setAttribute(
+                QWebEngineSettings::JavascriptEnabled, true
+                );
+
     QWebEngineSettings::globalSettings()->
-            setAttribute(QWebEngineSettings::PluginsEnabled, true);
+            setAttribute(
+                QWebEngineSettings::PluginsEnabled, true
+                );
+
     QWebEngineSettings::globalSettings()->
-            setAttribute(QWebEngineSettings::XSSAuditingEnabled, true);
+            setAttribute(
+                QWebEngineSettings::XSSAuditingEnabled, true
+                );
 
     // Signal and slot for actions taken after page is loaded:
-    QObject::connect(this, SIGNAL(loadFinished(bool)),
-                     this, SLOT(qPageLoadedSlot(bool)));
+    QObject::connect(
+                this,
+                SIGNAL(loadFinished(bool)),
+                this,
+                SLOT(qPageLoadedSlot(bool))
+                );
 
     // Default dialog and context menu labels:
     okLabel = "Ok";
     cancelLabel = "Cancel";
     yesLabel = "Yes";
     noLabel = "No";
-
-    // Close requested indicator:
-    closeRequested = false;
 }
 
 // ==============================
@@ -78,16 +97,17 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
 
             // Handle local Perl scripts after local link is clicked:
             if (url.fileName().contains(".script")) {
-                qHandleScript(url.fileName().replace(".script", ""));
+                qStartScript(url.fileName().replace(".script", ""));
                 return false;
             }
         }
 
         // Handle local Perl scripts after local form is submitted:
-        if (navType == QWebEnginePage::NavigationTypeFormSubmitted and
-                url.fileName().contains(".script")) {
-            qHandleScript(url.fileName().replace(".script", ""));
-            return false;
+        if (navType == QWebEnginePage::NavigationTypeFormSubmitted) {
+            if (url.fileName().contains(".script")) {
+                qStartScript(url.fileName().replace(".script", ""));
+                return false;
+            }
         }
     }
 

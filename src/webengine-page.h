@@ -24,12 +24,10 @@
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QRegularExpression>
-#include <QTimer>
 #include <QUrl>
 #include <QWebEnginePage>
 
 #include "file-reader.h"
-#include "file-writer.h"
 #include "script-handler.h"
 
 // ==============================
@@ -57,31 +55,13 @@ public slots:
 
                 QPage::runJavaScript(pebJavaScript);
 
-                QPage::runJavaScript(
-                            QString("peb.getPageSettings()"),
-                            [&](QVariant result){
+                QPage::runJavaScript(QString("peb.getPageSettings()"),
+                                     [&](QVariant result){
                     qGetPageSettings(result);
                 });
 
                 // Send signal to the html-viewing class that a page is loaded:
                 emit pageLoadedSignal();
-
-                QString applicationVersion =
-                        "peb.browser_version = '" +
-                        qApp->applicationVersion().toLatin1() + "';";
-                QPage::runJavaScript(applicationVersion);
-
-                QString qtVersion =
-                        "peb.qt_version = '" + QString(QT_VERSION_STR) + "';";
-                QPage::runJavaScript(qtVersion);
-
-                QString applicationVersionMessage =
-                        "console.log('Browser version: ' + peb.browser_version);";
-                QPage::runJavaScript(applicationVersionMessage);
-
-                QString qtVersionMessage =
-                        "console.log('Qt version: ' + peb.qt_version);";
-                QPage::runJavaScript(qtVersionMessage);
             }
         }
     }
@@ -112,15 +92,6 @@ public slots:
             }
 
             qApp->setProperty("perlInterpreter", perlInterpreter);
-
-            // Get all autostarting scripts:
-            QJsonArray autoStartScripts =
-                    settingsJsonObject["autoStartScripts"].toArray();
-
-            foreach (const QJsonValue &value, autoStartScripts) {
-                QString autoStartScript = value.toString();
-                qHandleScript(autoStartScript);
-            }
 
             // Get dialog and context menu labels:
             if (settingsJsonObject["okLabel"].toString().length() > 0) {
@@ -167,10 +138,11 @@ public slots:
     // ==============================
     void qHandleDialogs(QString dialogObjectName)
     {
-        QPage::runJavaScript(
-                    QString("peb.getDialogSettings(" +
-                            dialogObjectName + ")"),
-                    [dialogObjectName, this](QVariant dialogSettings)
+        QString dialogSettingsJavaScript =
+                "peb.getDialogSettings(" + dialogObjectName + ")";
+
+        QPage::runJavaScript(dialogSettingsJavaScript,
+                             [dialogObjectName, this](QVariant dialogSettings)
         {
             QJsonDocument dialogJsonDocument =
                     QJsonDocument::fromJson(
@@ -235,130 +207,72 @@ public slots:
     // ==============================
     // Perl scripts:
     // ==============================
-    void qHandleScript(QString scriptObjectName)
+
+    void qStartScript(QString scriptObjectName)
     {
         if (QPage::url().scheme() == "file") {
-            QPage::runJavaScript(
-                        QString("peb.getScriptSettings(" +
-                                scriptObjectName + ")"),
-                        [scriptObjectName, this](QVariant scriptSettings)
+            QString scriptSettingsJavaScript =
+                    "peb.getScriptSettings(" + scriptObjectName + ")";
+
+            QPage::runJavaScript(scriptSettingsJavaScript,
+                                 [scriptObjectName, this]
+                                 (QVariant scriptSettings)
             {
                 QJsonDocument scriptJsonDocument =
-                        QJsonDocument::fromJson(
-                            scriptSettings.toString().toUtf8());
+                        QJsonDocument::fromJson(scriptSettings
+                                                .toString().toUtf8());
 
                 if (!scriptJsonDocument.isEmpty()) {
                     QJsonObject scriptJsonObject = scriptJsonDocument.object();
-                    scriptJsonObject["id"] = scriptObjectName;
-                    qScriptStartedCheck(scriptJsonObject);
+
+                    QScriptHandler *scriptHandler =
+                            new QScriptHandler(scriptJsonObject);
+
+                    scriptHandler->id = scriptObjectName;
+
+                    QObject::connect(scriptHandler,
+                                     SIGNAL(displayScriptOutputSignal(QString,
+                                                                      QString)),
+                                     this,
+                                     SLOT(qDisplayScriptOutputSlot(QString,
+                                                                   QString))
+                                     );
+
+                    QObject::connect(scriptHandler,
+                                     SIGNAL(displayScriptErrorsSignal(QString)),
+                                     this,
+                                     SLOT(qDisplayScriptErrorsSlot(QString))
+                                     );
+
+                    QObject::connect(scriptHandler,
+                                     SIGNAL(scriptFinishedSignal(QString, int)),
+                                     this,
+                                     SLOT(qScriptFinishedSlot(QString, int))
+                                     );
+
+                    QString scriptInput =
+                            scriptJsonObject["scriptInput"].toString();
+
+                    if (scriptInput.length() > 0) {
+                        if (scriptHandler->process.isOpen()) {
+                            scriptHandler->process
+                                    .write(scriptInput.toUtf8());
+                            scriptHandler->process
+                                    .write(QString("\n").toLatin1());
+                        }
+                    }
                 }
             });
         }
-    }
-
-    void qScriptStartedCheck(QJsonObject scriptJsonObject)
-    {
-        // Start the script if it is not yet started:
-        if (!runningScripts.contains(scriptJsonObject["id"].toString())) {
-            qStartScript(scriptJsonObject);
-        }
-
-        // Feed the script with data if it is already started:
-        if (runningScripts.contains(scriptJsonObject["id"].toString())) {
-            qFeedScript(scriptJsonObject);
-        }
-    }
-
-    void qStartScript(QJsonObject scriptJsonObject)
-    {
-        QScriptHandler *scriptHandler = new QScriptHandler(scriptJsonObject);
-
-        QObject::connect(scriptHandler,
-                         SIGNAL(displayScriptOutputSignal(QString,
-                                                          QString)),
-                         this,
-                         SLOT(qDisplayScriptOutputSlot(QString,
-                                                       QString)));
-
-        QObject::connect(scriptHandler,
-                         SIGNAL(displayScriptErrorsSignal(QString)),
-                         this,
-                         SLOT(qDisplayScriptErrorsSlot(QString)));
-
-        QObject::connect(scriptHandler, SIGNAL(scriptFinishedSignal(QString)),
-                         this, SLOT(qScriptFinishedSlot(QString)));
-
-        runningScripts.insert(scriptJsonObject["id"].toString(), scriptHandler);
-    }
-
-    void qFeedScript(QJsonObject scriptJsonObject)
-    {
-        QString tempFileFullPath =
-                temporaryFiles.value(scriptJsonObject["id"].toString());
-
-        if (closeRequested == false) {
-            QString scriptInput = scriptJsonObject["scriptInput"].toString();
-
-            if (scriptInput.length() > 0) {
-                if (tempFileFullPath.length() == 0) {
-                    qWriteOnScriptStdin(scriptJsonObject, scriptInput);
-                }
-
-                if (tempFileFullPath.length() > 0) {
-                    qWriteInScriptTempFile(tempFileFullPath, scriptInput);
-                }
-            }
-        }
-
-        if (closeRequested == true) {
-            QString exitCommand = scriptJsonObject["exitCommand"].toString();
-
-            if (tempFileFullPath.length() == 0) {
-                qWriteOnScriptStdin(scriptJsonObject, exitCommand);
-            }
-
-            if (tempFileFullPath.length() > 0) {
-                qWriteInScriptTempFile(tempFileFullPath, exitCommand);
-            }
-        }
-    }
-
-    void qWriteOnScriptStdin(QJsonObject scriptJsonObject, QString scriptInput)
-    {
-        QScriptHandler *handler =
-                runningScripts.value(scriptJsonObject["id"]
-                .toString());
-        if (handler->scriptProcess.isOpen()) {
-            handler->scriptProcess.write(scriptInput.toUtf8());
-            handler->scriptProcess.write(QString("\n").toLatin1());
-        }
-    }
-
-    void qWriteInScriptTempFile(QString tempFileFullPath, QString scriptInput)
-    {
-        QFileWriter(tempFileFullPath, scriptInput);
     }
 
     void qDisplayScriptOutputSlot(QString id, QString output)
     {
         if (QPage::url().scheme() == "file") {
             QString outputInsertionJavaScript =
-                    id + ".stdoutFunction('" + output + "'); null";
+                        id + ".stdoutFunction('" + output + "'); null";
 
             QPage::runJavaScript(outputInsertionJavaScript);
-
-            if (output.contains("tempfile")) {
-                QJsonDocument tempFileJsonDocument =
-                        QJsonDocument::fromJson(output.toUtf8());
-                QJsonObject tempFileJsonObject = tempFileJsonDocument.object();
-                QString tempFileFullPath =
-                        tempFileJsonObject["tempfile"].toString();
-
-                QFileInfo tempFileInfo(tempFileFullPath);
-                if (tempFileInfo.isFile()) {
-                    temporaryFiles.insert(id, tempFileFullPath);
-                }
-            }
         }
     }
 
@@ -371,105 +285,49 @@ public slots:
                 errors.replace("\n", "\\n");
                 errors.replace("\r", "");
 
-                QString perlScriptErrorsMessage =
-                        "console.log('" + errors + "'); null";
+                QString perlScriptErrorMessage =
+                        "console.error('" + errors + "'); null";
 
-                QPage::runJavaScript(perlScriptErrorsMessage);
+                QPage::runJavaScript(perlScriptErrorMessage);
             }
         }
     }
 
-    void qScriptFinishedSlot(QString id)
+    void qScriptFinishedSlot(QString id, int exitCode)
     {
-        runningScripts.remove(id);
+        if (QPage::url().scheme() == "file") {
+            QString exitInsertionJavaScript =
+                        id + ".exitFunction('" + exitCode + "'); null";
 
-        if (closeRequested == true and runningScripts.isEmpty()) {
-            emit closeWindowSignal();
+            QPage::runJavaScript(exitInsertionJavaScript);
         }
     }
 
     // ==============================
-    // Page-closing routines:
+    // Page-closing routine:
     // ==============================
     void qStartWindowClosingSlot()
     {
         if (QPage::url().scheme() == "file") {
-            QPage::runJavaScript(
-                        QString("peb.checkUserInputBeforeClose()"),
-                        [&](QVariant jsResult){
-                qCloseWindow(jsResult);
+            QPage::runJavaScript(QString("peb.checkUserInputBeforeClose()"),
+                                 [&](QVariant jsResult){
+
+                if (jsResult.toByteArray().length() > 0) {
+                    bool jsCloseDecision = jsResult.toBool();
+
+                    if (jsCloseDecision == true) {
+                        emit closeWindowSignal();
+                    }
+                }
             });
-        } else {
-            qCloseAllScriptsSlot();
         }
-    }
-
-    void qCloseWindow(QVariant jsResult)
-    {
-        bool jsCloseDecision = true;
-
-        if (jsResult.toByteArray().length() > 0) {
-            jsCloseDecision = jsResult.toBool();
-        }
-
-        if (jsCloseDecision == true) {
-            if (!runningScripts.isEmpty()){
-                qCloseAllScriptsSlot();
-            } else {
-                emit closeWindowSignal();
-            }
-        }
-    }
-
-    void qCloseAllScriptsSlot()
-    {
-        closeRequested = true;
-        emit hideWindowSignal();
-
-        if (runningScripts.isEmpty()) {
-            emit closeWindowSignal();
-        } else {
-            QHash<QString, QScriptHandler*>::iterator iterator;
-            for (iterator = runningScripts.begin();
-                 iterator != runningScripts.end();
-                 ++iterator) {
-
-                QString scriptObjectName = iterator.key();
-                QScriptHandler *handler = iterator.value();
-
-                if (handler->scriptProcess.isOpen()) {
-                    qHandleScript(scriptObjectName);
-                }
-            }
-
-            int maximumTimeMilliseconds = 3000;
-            QTimer::singleShot(maximumTimeMilliseconds,
-                               this, SLOT(qScriptsTimeoutSlot()));
-        }
-    }
-
-    void qScriptsTimeoutSlot()
-    {
-        if (!runningScripts.isEmpty()) {
-            QHash<QString, QScriptHandler*>::iterator iterator;
-            for (iterator = runningScripts.begin();
-                 iterator != runningScripts.end();
-                 ++iterator) {
-                QScriptHandler *handler = iterator.value();
-
-                if (handler->scriptProcess.isOpen()) {
-                    handler->scriptProcess.kill();
-                }
-            }
-        }
-
-        emit closeWindowSignal();
     }
 
 protected:
     bool acceptNavigationRequest(const QUrl &url,
                                  QWebEnginePage::NavigationType navType,
-                                 bool isMainFrame) override;
+                                 bool isMainFrame
+                                 ) override;
 
     // ==============================
     // JavaScript Alert:
@@ -538,11 +396,6 @@ private:
     QString cancelLabel;
     QString yesLabel;
     QString noLabel;
-
-    QHash<QString, QScriptHandler*> runningScripts;
-    QHash<QString, QString> temporaryFiles;
-
-    bool closeRequested;
 
 public:
     QPage();

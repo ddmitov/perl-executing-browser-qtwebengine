@@ -1,4 +1,4 @@
-// Perl Executing Browser QtWebEngine
+// Perl Executing Browser
 
 // This program is free software;
 // you can redistribute it and/or modify it under the terms of the
@@ -9,8 +9,9 @@
 // but WITHOUT ANY WARRANTY;
 // without even the implied warranty of MERCHANTABILITY or
 // FITNESS FOR A PARTICULAR PURPOSE.
-// Dimitar D. Mitov, 2018 - 2019
-// https://github.com/ddmitov/perl-executing-browser-qtwebengine
+// Dimitar D. Mitov, 2013 - 2020, 2023
+// Valcho Nedelchev, 2014 - 2016
+// https://github.com/ddmitov/perl-executing-browser
 
 // PEB embedded JavaScript code:
 var peb = {};
@@ -33,12 +34,6 @@ peb.getScriptSettings = function(scriptSettings) {
             scriptSettings.scriptInput = scriptSettings.inputData();
         } else {
             scriptSettings.scriptInput = scriptSettings.inputData;
-        }
-
-        if (typeof scriptSettings.exitData === 'function') {
-            scriptSettings.exitCommand = scriptSettings.exitData();
-        } else {
-            scriptSettings.exitCommand = scriptSettings.exitData;
         }
 
         return JSON.stringify(scriptSettings);

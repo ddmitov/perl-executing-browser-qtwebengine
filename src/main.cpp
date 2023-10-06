@@ -18,7 +18,7 @@
 #include <QTextCodec>
 #include <QtGlobal>
 
-#include "webengine-main-window.h"
+#include "main-window.h"
 
 // ==============================
 // MAIN APPLICATION DEFINITION:
@@ -74,9 +74,6 @@ int main(int argc, char **argv)
     mainWindow.setWindowIcon(icon);
     mainWindow.setCentralWidget(mainWindow.webViewWidget);
 
-    // Application property used when closing the browser window is requested:
-    qApp->setProperty("windowCloseRequested", false);
-
     // ==============================
     // Signals and slots:
     // ==============================
@@ -84,19 +81,22 @@ int main(int argc, char **argv)
     QObject::connect(mainWindow.webViewWidget,
                      SIGNAL(titleChanged(QString)),
                      &mainWindow,
-                     SLOT(setMainWindowTitleSlot(QString)));
+                     SLOT(setMainWindowTitleSlot(QString))
+                     );
 
     // Signal and slot for QtWebEngine fullscreen signal:
     QObject::connect(mainWindow.webViewWidget->page(),
                      SIGNAL(fullScreenRequested(QWebEngineFullScreenRequest)),
                      &mainWindow,
-                     SLOT(qGoFullscreen(QWebEngineFullScreenRequest)));
+                     SLOT(qGoFullscreen(QWebEngineFullScreenRequest))
+                     );
 
     // Signal and slot for closing the main window:
     QObject::connect(&mainWindow,
                      SIGNAL(startMainWindowClosingSignal()),
                      mainWindow.webViewWidget->page(),
-                     SLOT(qStartWindowClosingSlot()));
+                     SLOT(qStartWindowClosingSlot())
+                     );
 
     // ==============================
     // Start page:

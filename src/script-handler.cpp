@@ -24,27 +24,34 @@
 QScriptHandler::QScriptHandler(QJsonObject scriptJsonObject)
     : QObject(0)
 {
-    scriptId = scriptJsonObject["id"].toString();
+    id = scriptJsonObject["id"].toString();
 
     scriptFullFilePath =
             qApp->property("appDir").toString() + "/" +
             scriptJsonObject["scriptRelativePath"].toString();
 
     // Signals and slots for local Perl scripts:
-    QObject::connect(&scriptProcess, SIGNAL(readyReadStandardOutput()),
-                     this, SLOT(qScriptOutputSlot()));
-
-    QObject::connect(&scriptProcess, SIGNAL(readyReadStandardError()),
-                     this, SLOT(qScriptErrorsSlot()));
-
-    QObject::connect(&scriptProcess,
-                     SIGNAL(finished(int, QProcess::ExitStatus)),
+    QObject::connect(&process,
+                     SIGNAL(readyReadStandardOutput()),
                      this,
-                     SLOT(qScriptFinishedSlot()));
+                     SLOT(qScriptOutputSlot())
+                     );
 
-    scriptProcess.setWorkingDirectory(qApp->property("appDir").toString());
+    QObject::connect(&process,
+                     SIGNAL(readyReadStandardError()),
+                     this,
+                     SLOT(qScriptErrorsSlot())
+                     );
 
-    scriptProcess.start((qApp->property("perlInterpreter").toString()),
+//    QObject::connect(&scriptProcess,
+//                     SIGNAL(finished(int, QProcess::ExitStatus)),
+//                     this,
+//                     SLOT(qScriptFinishedSlot())
+//                     );
+
+    process.setWorkingDirectory(qApp->property("appDir").toString());
+
+    process.start((qApp->property("perlInterpreter").toString()),
                         QStringList() << scriptFullFilePath,
                         QProcess::Unbuffered | QProcess::ReadWrite);
 }

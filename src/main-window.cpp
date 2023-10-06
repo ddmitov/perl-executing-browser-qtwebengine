@@ -16,7 +16,7 @@
 
 #include <QtGlobal>
 
-#include "webengine-main-window.h"
+#include "main-window.h"
 
 // ==============================
 // MAIN WINDOW CLASS CONSTRUCTOR:

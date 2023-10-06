@@ -9,7 +9,7 @@
 # but WITHOUT ANY WARRANTY;
 # without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.
-# Dimitar D. Mitov, 2018 - 2019
+# Dimitar D. Mitov, 2018 - 2019, 2023
 # https://github.com/ddmitov/perl-executing-browser-qtwebengine
 
 lessThan (QT_MAJOR_VERSION, 5) {
@@ -38,7 +38,6 @@ QT += widgets webenginewidgets
 SOURCES += \
     main.cpp \
     file-reader.cpp \
-    file-writer.cpp \
     main-window.cpp \
     script-handler.cpp \
     webengine-page.cpp \
@@ -48,8 +47,7 @@ SOURCES += \
 HEADERS += \
     file-reader.h \
     script-handler.h \
-    file-writer.h \
-    webengine-main-window.h \
+    main-window.h \
     webengine-page.h \
     webengine-view.h
 
