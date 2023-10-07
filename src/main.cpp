@@ -64,7 +64,7 @@ int main(int argc, char **argv)
     } else {
         // Set the embedded default icon
         // in case no external icon file is found:
-        icon.load(":/icon/camel.png");
+        icon.load(":/camel.png");
         QApplication::setWindowIcon(icon);
     }
 

@@ -2,7 +2,8 @@
 
 Perl Executing Browser QtWebEngine is a Linux version of the [Perl Executing Browser](https://github.com/ddmitov/perl-executing-browser) using [QtWebEngine](https://wiki.qt.io/QtWebEngine).
 
-Perl Executing Browser (PEB) is an HTML user interface for [Perl 5](https://www.perl.org/) desktop applications. It is a C++ [Qt 5](https://www.qt.io/) application running local Perl scripts as child processes without server. Inspired by [Electron](http://electron.atom.io/) and [NW.js](http://nwjs.io/), PEB is another reuse of web technologies in desktop applications with Perl doing the heavy lifting instead of [Node.js](https://nodejs.org/en/).
+Perl Executing Browser (PEB) is an HTML user interface for [Perl 5](https://www.perl.org/) desktop applications.  
+It is a C++ [Qt 5](https://www.qt.io/) application running local Perl scripts as child processes without server.  
 
 ![PEB Screenshot](https://github.com/ddmitov/perl-executing-browser/raw/master/doc/screenshot.png "PEB Screenshot")  
 
@@ -40,10 +41,9 @@ in the documentation of this project are to be interpreted as described in [RFC 
 ## Features
 
 * No limitation on how long a Perl script can run.
-* [Perl script output is seamlessly inserted in an HTML user interface.](./doc/SETTINGS.md#perl-scripts-api)
+* [Perl script output is seamlessly inserted in web-like user interface.](./doc/SETTINGS.md#perl-scripts-api)
 * [Any version of Perl 5 can be used.](./doc/REQUIREMENTS.md#runtime-requirements)
-* [Select files and folders.](./doc/SETTINGS.md#selecting-files-and-folders)  
-* [Logging of Perl errors in the JavaScript console](#logging)  
+* [Local files and folders can be selected and accessed.](./doc/SETTINGS.md#selecting-files-and-folders)  
 * [Optional warning for unsaved data in HTML forms](./doc/SETTINGS.md#html-page-api)
 * [Optional labels for the JavaScript popup boxes and context menus](./doc/SETTINGS.md#html-page-api)
 * [Optional icon](./doc/FILES.md#icon)

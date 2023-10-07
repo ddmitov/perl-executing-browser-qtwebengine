@@ -13,55 +13,57 @@
 // https://github.com/ddmitov/perl-executing-browser-qtwebengine
 
 // PEB embedded JavaScript code:
-var peb = {};
+const peb = {}
 
-peb.getPageSettings = function() {
-    if (window[pebSettings] !== null) {
-        return JSON.stringify(pebSettings);
-    }
+peb.getPageSettings = function () {
+  if (window.pebSettings !== null) {
+    return JSON.stringify(window.pebSettings)
+  }
 }
 
-peb.getDialogSettings = function(dialogSettings) {
-    if (window[dialogSettings] !== null) {
-        return JSON.stringify(dialogSettings);
-    }
+peb.getDialogSettings = function (dialogSettings) {
+  if (window[dialogSettings] !== null) {
+    return JSON.stringify(dialogSettings)
+  }
 }
 
-peb.getScriptSettings = function(scriptSettings) {
-    if (window[scriptSettings] !== null) {
-        if (typeof scriptSettings.inputData === 'function') {
-            scriptSettings.scriptInput = scriptSettings.inputData();
-        } else {
-            scriptSettings.scriptInput = scriptSettings.inputData;
-        }
-
-        return JSON.stringify(scriptSettings);
+peb.getScriptSettings = function (scriptSettings) {
+  if (window[scriptSettings] !== null) {
+    if (typeof scriptSettings.inputData === 'function') {
+      scriptSettings.scriptInput = scriptSettings.inputData()
+    } else {
+      scriptSettings.scriptInput = scriptSettings.inputData
     }
+
+    return JSON.stringify(scriptSettings)
+  }
 }
 
-peb.checkUserInputBeforeClose = function() {
-    var textEntered = false;
-    var close = true;
+peb.checkUserInputBeforeClose = function () {
+  let textEntered = false
+  let close = true
 
-    var textFields = document.getElementsByTagName('textarea');
+  const textFields = document.getElementsByTagName('textarea')
 
-    for (index = 0; index < textFields.length; index++) {
-        if (textFields[index].value.length > 0) {
-            textEntered = true;
-        }
+  for (let index = 0; index < textFields.length; index++) {
+    if (textFields[index].value.length > 0) {
+      textEntered = true
     }
+  }
 
-    var inputBoxes = document.querySelectorAll('input[type=text]');
+  const inputBoxes = document.querySelectorAll('input[type=text]')
 
-    for (index = 0; index < inputBoxes.length; index++) {
-        if (inputBoxes[index].value.length > 0) {
-            textEntered = true;
-        }
+  for (let index = 0; index < inputBoxes.length; index++) {
+    if (inputBoxes[index].value.length > 0) {
+      textEntered = true
     }
+  }
 
-    if (textEntered === true && pebSettings.closeConfirmation !== null) {
-        close = confirm(pebSettings.closeConfirmation);
+  if (textEntered === true && window.pebSettings.closeConfirmation !== null) {
+    if (typeof window.pebSettings.closeConfirmation === 'function') {
+      close = confirm(window.pebSettings.closeConfirmation)
     }
+  }
 
-    return close;
+  return close
 }

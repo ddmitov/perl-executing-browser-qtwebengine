@@ -22,8 +22,7 @@ https://github.com/ddmitov/perl-executing-browser-qtwebengine
     <meta charset="utf-8">
 
     <script>
-      var pebSettings = {};
-      pebSettings.perlInterpreter = 'perl/bin/perl';
+      var pebSettings = {}
     </script>
 
     <script src="demo.js"></script>
@@ -39,28 +38,23 @@ https://github.com/ddmitov/perl-executing-browser-qtwebengine
 
       <div class="row">
         <div class="col-lg-12 introduction">
-          Perl Executing Browser (PEB) is an HTML user interface for Perl 5 desktop applications.
+          Perl Executing Browser (PEB) is an HTML user interface for Perl 5 desktop applications.<br>
           It is a C++ Qt 5 application running local Perl scripts as child processes without server.
-          Inspired by Electron and NW.js, PEB is another reuse of web technologies in
-          desktop applications with Perl doing the heavy lifting instead of Node.js.
         </div>
       </div>
 
       <div class="row">
-        <a class="btn btn-primary" href="select_file.dialog" role="button">Open File</a>
-        <a class="btn btn-primary" href="new_filename.dialog" role="button">New File</a>
-        <a class="btn btn-primary" href="select_files.dialog">Open Multiple Files</a>
-        <a class="btn btn-primary" href="select_directory.dialog">Open Directory</a>
+        <a class="btn btn-primary" href="selectFile.dialog">Open File</a>
+        <a class="btn btn-primary" href="newFilename.dialog">New File</a>
+        <a class="btn btn-primary" href="selectFiles.dialog">Open Multiple Files</a>
+        <a class="btn btn-primary" href="selectDirectory.dialog">Open Directory</a>
       </div>
 
       <div class="row">
-        <a class="btn btn-primary" id="perl-info-button" href="perl_info.script">Perl Basic Information</a>
-        <a class="btn btn-primary" id="sqlite-button" href="sqlite.script">SQLite Test</a>
+        <a class="btn btn-primary" id="perl-info-button" href="perlInfo.script">Perl Basic Information</a>
       </div>
 
       <div id="perl-info-output" class="tests"></div>
-
-      <div id="sqlite-output" class="tests"></div>
 
       <div id="filesystem-tests" class="tests"></div>
     </div>

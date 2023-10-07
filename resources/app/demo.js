@@ -13,120 +13,112 @@
 // https://github.com/ddmitov/perl-executing-browser-qtwebengine
 
 // Settings objects for Perl scripts:
-var perl_info = {};
-perl_info.scriptRelativePath = 'perl_scripts/perl_info.pl';
+const perlInfo = {}
+perlInfo.scriptRelativePath = 'perl_scripts/perl_info.pl'
 
-perl_info.stdoutFunction = function (stdout) {
-  var newElement = document.createElement("pre");
-  newElement.innerHTML = stdout;
-  document.getElementById('perl-info-output').appendChild(newElement);
-  document.getElementById('perl-info-button').style.display = 'none';;
+perlInfo.stdoutFunction = function (stdout) {
+  const newElement = document.createElement('pre')
+  newElement.innerHTML = stdout
+  document.getElementById('perl-info-output').appendChild(newElement)
+  document.getElementById('perl-info-button').style.display = 'none'
 }
 
-var sqlite = {};
-sqlite.scriptRelativePath = 'perl_scripts/sqlite.pl';
-
-sqlite.stdoutFunction = function (stdout) {
-  var newElement = document.createElement("pre");
-  newElement.innerHTML = stdout;
-  document.getElementById('sqlite-output').appendChild(newElement);
-  document.getElementById('sqlite-button').style.display = 'none';
+const openFile = {}
+openFile.scriptRelativePath = 'perl_scripts/open_file.pl'
+openFile.stdoutFunction = function (stdout) {
+  displayTestResult('open-file', stdout)
 }
 
-var open_file = {};
-open_file.scriptRelativePath = 'perl_scripts/open_file.pl';
-open_file.stdoutFunction = function (stdout) {
-  displayTestResult('open-file', stdout);
+const newFile = {}
+newFile.scriptRelativePath = 'perl_scripts/new_file.pl'
+newFile.stdoutFunction = function (stdout) {
+  displayTestResult('new-file', stdout)
 }
 
-var new_file = {};
-new_file.scriptRelativePath = 'perl_scripts/new_file.pl';
-new_file.stdoutFunction = function (stdout) {
-  displayTestResult('new-file', stdout);
+const openFiles = {}
+openFiles.scriptRelativePath = 'perl_scripts/open_files.pl'
+openFiles.stdoutFunction = function (stdout) {
+  displayTestResult('open-files', stdout)
 }
 
-var open_files = {};
-open_files.scriptRelativePath = 'perl_scripts/open_files.pl';
-open_files.stdoutFunction = function (stdout) {
-  displayTestResult('open-files', stdout);
-}
-
-var open_directory = {};
-open_directory.scriptRelativePath = 'perl_scripts/open_directory.pl';
-open_directory.stdoutFunction = function (stdout) {
-  displayTestResult('open-directory', stdout);
+const openDirectory = {}
+openDirectory.scriptRelativePath = 'perl_scripts/open_directory.pl'
+openDirectory.stdoutFunction = function (stdout) {
+  displayTestResult('open-directory', stdout)
 }
 
 // Settings objects for filesystem dialogs:
-var select_file = {};
-select_file.type = 'single-file';
-select_file.receiverFunction = function (fileName) {
-  open_file.inputData = fileName;
+const selectFile = {}
+selectFile.type = 'single-file'
+selectFile.receiverFunction = function (fileName) {
+  openFile.inputData = fileName
 
-  clearTestData();
+  clearTestData()
 
-  var form = document.createElement('form');
-  form.setAttribute('action', 'open_file.script');
-  document.body.appendChild(form);
-  form.submit();
+  const form = document.createElement('form')
+  form.setAttribute('action', 'openFile.script')
+  document.body.appendChild(form)
+  form.submit()
 }
 
-var new_filename = {};
-new_filename.type = 'new-file-name';
-new_filename.receiverFunction = function (fileName) {
-  new_file.inputData = fileName;
+const newFilename = {}
+newFilename.type = 'new-file-name'
+newFilename.receiverFunction = function (fileName) {
+  newFile.inputData = fileName
 
-  clearTestData();
+  clearTestData()
 
-  var form = document.createElement('form');
-  form.setAttribute('action', 'new_file.script');
-  document.body.appendChild(form);
-  form.submit();
+  const form = document.createElement('form')
+  form.setAttribute('action', 'newFile.script')
+  document.body.appendChild(form)
+  form.submit()
 }
 
-var select_files = {};
-select_files.type = 'multiple-files';
-select_files.receiverFunction = function (fileNames) {
-  open_files.inputData = fileNames;
+const selectFiles = {}
+selectFiles.type = 'multiple-files'
+selectFiles.receiverFunction = function (fileNames) {
+  openFiles.inputData = fileNames
 
-  clearTestData();
+  clearTestData()
 
-  var form = document.createElement('form');
-  form.setAttribute('action', 'open_files.script');
-  document.body.appendChild(form);
-  form.submit();
+  const form = document.createElement('form')
+  form.setAttribute('action', 'openFiles.script')
+  document.body.appendChild(form)
+  form.submit()
 }
 
-var select_directory = {};
-select_directory.type = 'directory';
-select_directory.receiverFunction = function (directoryName) {
-  open_directory.inputData = directoryName;
+const selectDirectory = {}
+selectDirectory.type = 'directory'
+selectDirectory.receiverFunction = function (directoryName) {
+  openDirectory.inputData = directoryName
 
-  clearTestData();
+  clearTestData()
 
-  var form = document.createElement('form');
-  form.setAttribute('action', 'open_directory.script');
-  document.body.appendChild(form);
-  form.submit();
+  const form = document.createElement('form')
+  form.setAttribute('action', 'openDirectory.script')
+  document.body.appendChild(form)
+  form.submit()
 }
 
-function clearTestData() {
-  var container = document.getElementById('filesystem-tests');
+function clearTestData () {
+  const container = document.getElementById('filesystem-tests')
+
   while (container.firstChild) {
-    container.removeChild(container.firstChild);
+    container.removeChild(container.firstChild)
   }
 }
 
-function displayTestResult(id, stdout) {
-  var existingElement = document.getElementById(id);
-  if (existingElement === null) {
-    clearTestData();
+function displayTestResult (id, stdout) {
+  const existingElement = document.getElementById(id)
 
-    var newElement = document.createElement("pre");
-    newElement.id = id;
-    newElement.innerHTML = stdout;
-    document.getElementById('filesystem-tests').appendChild(newElement);
+  if (existingElement === null) {
+    clearTestData()
+
+    const newElement = document.createElement('pre')
+    newElement.id = id
+    newElement.innerHTML = stdout
+    document.getElementById('filesystem-tests').appendChild(newElement)
   } else {
-    existingElement.innerHTML = existingElement.innerHTML + stdout;
+    existingElement.innerHTML = existingElement.innerHTML + stdout
   }
 }

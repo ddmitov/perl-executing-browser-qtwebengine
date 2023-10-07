@@ -39,8 +39,7 @@ public slots:
 
     void qDisplayErrorSlot(QString errorMessage)
     {
-        QFileReader *resourceReader =
-                new QFileReader(QString(":/html/error.html"));
+        QFileReader *resourceReader = new QFileReader(QString(":/error.html"));
         QString htmlErrorContents = resourceReader->fileContents;
         htmlErrorContents.replace("ERROR_MESSAGE", errorMessage);
 
@@ -60,11 +59,6 @@ public slots:
 
     void closeEvent(QCloseEvent *event)
     {
-        if (qApp->property("windowCloseRequested").toBool() == false) {
-            event->ignore();
-            emit startMainWindowClosingSignal();
-        }
-
         if (qApp->property("windowCloseRequested").toBool() == true) {
             event->accept();
         }
