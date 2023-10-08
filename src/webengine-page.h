@@ -327,14 +327,16 @@ protected:
     {
         Q_UNUSED(url);
 
-        QMessageBox javaScriptAlertMessageBox (qApp->activeWindow());
+        QMessageBox alert (qApp->activeWindow());
 
-        javaScriptAlertMessageBox.setWindowModality(Qt::WindowModal);
-        javaScriptAlertMessageBox.setWindowTitle(title());
-        javaScriptAlertMessageBox.setText(msg);
-        javaScriptAlertMessageBox.setButtonText(QMessageBox::Ok, okLabel);
-        javaScriptAlertMessageBox.setDefaultButton(QMessageBox::Ok);
-        javaScriptAlertMessageBox.exec();
+        alert.setParent(qApp->activeWindow());
+        alert.setWindowModality(Qt::WindowModal);
+        alert.setWindowTitle(title());
+        alert.setText(msg);
+        alert.setButtonText(QMessageBox::Ok, okLabel);
+        alert.setDefaultButton(QMessageBox::Ok);
+
+        alert.exec();
     }
 
     // ==============================
@@ -344,16 +346,17 @@ protected:
     {
         Q_UNUSED(url);
 
-        QMessageBox javaScriptConfirmMessageBox (qApp->activeWindow());
+        QMessageBox messageBox (qApp->activeWindow());
 
-        javaScriptConfirmMessageBox.setWindowModality(Qt::WindowModal);
-        javaScriptConfirmMessageBox.setWindowTitle(title());
-        javaScriptConfirmMessageBox.setText(msg);
-        javaScriptConfirmMessageBox
-                .setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        javaScriptConfirmMessageBox.setButtonText(QMessageBox::Yes, yesLabel);
-        javaScriptConfirmMessageBox.setButtonText(QMessageBox::No, noLabel);
-        return QMessageBox::Yes == javaScriptConfirmMessageBox.exec();
+        messageBox.setParent(qApp->activeWindow());
+        messageBox.setWindowModality(Qt::WindowModal);
+        messageBox.setWindowTitle(title());
+        messageBox.setText(msg);
+        messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        messageBox.setButtonText(QMessageBox::Yes, yesLabel);
+        messageBox.setButtonText(QMessageBox::No, noLabel);
+
+        return QMessageBox::Yes == messageBox.exec();
     }
 
     // ==============================
@@ -366,18 +369,19 @@ protected:
 
         bool ok = false;
 
-        QInputDialog dialog;
+        QInputDialog prompt;
 
-        dialog.setModal(true);
-        dialog.setWindowTitle(title());
-        dialog.setLabelText(msg);
-        dialog.setInputMode(QInputDialog::TextInput);
-        dialog.setTextValue(defaultValue);
-        dialog.setOkButtonText(okLabel);
-        dialog.setCancelButtonText(cancelLabel);
+        prompt.setParent(qApp->activeWindow());
+        prompt.setModal(true);
+        prompt.setWindowTitle(title());
+        prompt.setLabelText(msg);
+        prompt.setInputMode(QInputDialog::TextInput);
+        prompt.setTextValue(defaultValue);
+        prompt.setOkButtonText(okLabel);
+        prompt.setCancelButtonText(cancelLabel);
 
-        if (dialog.exec() == QDialog::Accepted) {
-            *result = dialog.textValue();
+        if (prompt.exec() == QDialog::Accepted) {
+            *result = prompt.textValue();
             ok = true;
 
             return ok;

@@ -41,16 +41,16 @@ in the documentation of this project are to be interpreted as described in [RFC 
 ## Features
 
 * No limitation on how long a Perl script can run.
-* [Perl script output is seamlessly inserted in web-like user interface.](./doc/SETTINGS.md#perl-scripts-api)
+* [Output from Perl scripts is seamlessly inserted in a web-like user interface.](./doc/SETTINGS.md#perl-scripts-api)
 * [Any version of Perl 5 can be used.](./doc/REQUIREMENTS.md#runtime-requirements)
 * [Local files and folders can be selected and accessed.](./doc/SETTINGS.md#selecting-files-and-folders)  
 * [Optional warning for unsaved data in HTML forms](./doc/SETTINGS.md#html-page-api)
-* [Optional labels for the JavaScript popup boxes and context menus](./doc/SETTINGS.md#html-page-api)
+* [Optional labels for the JavaScript popup boxes](./doc/SETTINGS.md#html-page-api)
+* [Optional labels for the context menus](./doc/SETTINGS.md#html-page-api)
 * [Optional icon](./doc/FILES.md#icon)
 
 ## Security
 
-* PEB does not need administrative privileges.
 * PEB does not need and does not implement any server process.
 * PEB Perl scripts can not be called from web pages.
 * PEB Perl scripts are executed locally with no sandbox.
