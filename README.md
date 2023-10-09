@@ -5,7 +5,7 @@ Perl Executing Browser QtWebEngine is a Linux version of the [Perl Executing Bro
 Perl Executing Browser (PEB) is an HTML user interface for [Perl 5](https://www.perl.org/) desktop applications.  
 It is a C++ [Qt 5](https://www.qt.io/) application running local Perl scripts as child processes without server.  
 
-![PEB Screenshot](https://github.com/ddmitov/perl-executing-browser/raw/master/doc/screenshot.png "PEB Screenshot")  
+![PEB Screenshot](./doc/screenshot.png "PEB Screenshot")  
 
 ## Contents
 
@@ -42,16 +42,16 @@ in the documentation of this project are to be interpreted as described in [RFC 
 
 * No limitation on how long a Perl script can run.
 * [Output from Perl scripts is seamlessly inserted in a web-like user interface.](./doc/SETTINGS.md#perl-scripts-api)
-* [Any version of Perl 5 can be used.](./doc/REQUIREMENTS.md#runtime-requirements)
-* [Local files and folders can be selected and accessed.](./doc/SETTINGS.md#selecting-files-and-folders)  
+* Any version of Perl 5 can be used.
+* [Local full paths can be selected and passed to Perl scripts.](./doc/SETTINGS.md#selecting-files-and-folders)  
 * [Optional warning for unsaved data in HTML forms](./doc/SETTINGS.md#html-page-api)
 * [Optional labels for the JavaScript popup boxes](./doc/SETTINGS.md#html-page-api)
 * [Optional labels for the context menus](./doc/SETTINGS.md#html-page-api)
-* [Optional icon](./doc/FILES.md#icon)
+* [Optional icon](./doc/FILES.md)
 
 ## Security
 
-* PEB does not need and does not implement any server process.
+* PEB does not need and does not implement a server process.
 * PEB Perl scripts can not be called from web pages.
 * PEB Perl scripts are executed locally with no sandbox.
 

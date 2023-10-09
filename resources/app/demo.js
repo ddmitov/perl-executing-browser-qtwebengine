@@ -14,6 +14,7 @@
 
 // Settings objects for Perl scripts:
 const perlInfo = {}
+
 perlInfo.scriptRelativePath = 'perl_scripts/perl_info.pl'
 
 perlInfo.stdoutFunction = function (stdout) {
@@ -24,32 +25,42 @@ perlInfo.stdoutFunction = function (stdout) {
 }
 
 const openFile = {}
+
 openFile.scriptRelativePath = 'perl_scripts/open_file.pl'
+
 openFile.stdoutFunction = function (stdout) {
   displayTestResult('open-file', stdout)
 }
 
 const newFile = {}
+
 newFile.scriptRelativePath = 'perl_scripts/new_file.pl'
+
 newFile.stdoutFunction = function (stdout) {
   displayTestResult('new-file', stdout)
 }
 
 const openFiles = {}
+
 openFiles.scriptRelativePath = 'perl_scripts/open_files.pl'
+
 openFiles.stdoutFunction = function (stdout) {
   displayTestResult('open-files', stdout)
 }
 
 const openDirectory = {}
+
 openDirectory.scriptRelativePath = 'perl_scripts/open_directory.pl'
+
 openDirectory.stdoutFunction = function (stdout) {
   displayTestResult('open-directory', stdout)
 }
 
 // Settings objects for filesystem dialogs:
 const selectFile = {}
+
 selectFile.type = 'single-file'
+
 selectFile.receiverFunction = function (fileName) {
   openFile.inputData = fileName
 
@@ -62,7 +73,9 @@ selectFile.receiverFunction = function (fileName) {
 }
 
 const newFilename = {}
+
 newFilename.type = 'new-file-name'
+
 newFilename.receiverFunction = function (fileName) {
   newFile.inputData = fileName
 
@@ -75,7 +88,9 @@ newFilename.receiverFunction = function (fileName) {
 }
 
 const selectFiles = {}
+
 selectFiles.type = 'multiple-files'
+
 selectFiles.receiverFunction = function (fileNames) {
   openFiles.inputData = fileNames
 
@@ -88,7 +103,9 @@ selectFiles.receiverFunction = function (fileNames) {
 }
 
 const selectDirectory = {}
+
 selectDirectory.type = 'directory'
+
 selectDirectory.receiverFunction = function (directoryName) {
   openDirectory.inputData = directoryName
 

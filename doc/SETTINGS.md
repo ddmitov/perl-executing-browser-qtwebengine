@@ -2,24 +2,27 @@
 
 ## Global Settings API
 
-All global PEB settings are stored in a single JavaScript object named ``pebSettings``.  
-This name is mandatory and it is hard-coded in C++ code.  
+All global PEB settings are stored in a JavaScript object, which must be named ``pebSettings``.  
 If ``pebSettings`` JavaScript object is not found, the PEB Perl interpreter is the first Perl interpreter on PATH.
 
 ```javascript
-var pebSettings = {};
-pebSettings.perlInterpreter = 'perl/bin/perl';
-pebSettings.cutLabel = "Custom Cut Label";
-pebSettings.copyLabel = "Custom Copy Label";
-pebSettings.pasteLabel = "Custom Paste Label";
-pebSettings.selectAllLabel = "Custom Select All Label";
-pebSettings.okLabel = "Custom Ok Label";
-pebSettings.cancelLabel = "Custom Cancel Label";
-pebSettings.yesLabel = "Custom Yes Label";
-pebSettings.noLabel = "Custom No Label";
+const pebSettings = {}
+
+pebSettings.perlInterpreter = 'perl/bin/perl'
+
+pebSettings.cutLabel = "Custom Cut Label"
+pebSettings.copyLabel = "Custom Copy Label"
+pebSettings.pasteLabel = "Custom Paste Label"
+pebSettings.selectAllLabel = "Custom Select All Label"
+
+pebSettings.okLabel = "Custom Ok Label"
+pebSettings.cancelLabel = "Custom Cancel Label"
+pebSettings.yesLabel = "Custom Yes Label"
+pebSettings.noLabel = "Custom No Label"
+
 pebSettings.closeConfirmation =
   'Text was entered in a form and it is going to be lost!\n' +
-  'Are you sure you want to close the window?';
+  'Are you sure you want to close the window?'
 ```
 
 The ``pebSettings`` JavaScript object may have the following properties:
@@ -32,7 +35,7 @@ The ``pebSettings`` JavaScript object may have the following properties:
 
 * **cutLabel**  
   ``String`` displayed as a label for the 'Cut' action on context menus.
-
+This name is mandatory and it is hard-coded in C++ code.  
 * **copyLabel**  
   ``String`` displayed as a label for the 'Copy' action on context menus.
 
@@ -59,12 +62,11 @@ The ``pebSettings`` JavaScript object may have the following properties:
 
 ## Perl Scripts API
 
-Every Perl script run by PEB has a JavaScript settings object with an arbitrary name and fixed object properties. The name of the JavaScript settings object with a ``.script`` extension forms a pseudo link used to start the Perl script.  
+Every Perl script run by PEB must have a JavaScript settings object with an arbitrary name and fixed object properties. The name of the JavaScript settings object with a ``.script`` extension forms a pseudo link used to start the corresponding Perl script.  
 
 There are two methods to start a local Perl script:  
 
 * **Clicking a pseudo link:**  
-* [PEB can be started from any folder without installation procedure.](./doc/CONSTANTS.md#files-and-folders)
   ```html
   <a href="example.script">Start Perl script</a>
   ```
@@ -80,11 +82,13 @@ There are two methods to start a local Perl script:
 An example of a JavaScript settings object for a Perl script run by PEB:  
 
 ```javascript
-var example = {};
-example.scriptRelativePath = 'perl/test.pl';
+const example = {}
+
+example.scriptRelativePath = 'perl/test.pl'
+
 example.stdoutFunction = function (stdout) {
-  var container = document.getElementById('tests');
-  container.innerText = stdout;
+  const container = document.getElementById('tests')
+  container.innerText = stdout
 }
 ```
 
@@ -99,7 +103,7 @@ A JavaScript settings object for a Perl script run by PEB has the following prop
   *This object property is mandatory.*  
 
   ```javascript
-  example.script = "relative/path/to/script.pl";
+  scriptRelativePath = 'relative/path/to/script.pl'
   ```
 
 * **stdoutFunction**  
@@ -110,19 +114,19 @@ A JavaScript settings object for a Perl script run by PEB has the following prop
 
   ```javascript
   example.stdoutFunction = function (stdout) {
-    document.getElementById("DOM-element-id").textContent = stdout;
-  };
+    document.getElementById('DOM-element-id').textContent = stdout
+  }
   ```
 
   Please note that many Perl scripts do not give their STDOUT data in a single shot.  
   If several chunks of output have to be combined, this should be done at JavaScript level:  
 
   ```javascript
-  var accumulatedOutput;
+  let accumulatedOutput
 
   example.stdoutFunction = function (stdout) {
-    accumulatedOutput = accumulatedOutput + stdout;
-    document.getElementById("DOM-element-id").textContent = accumulatedOutput;
+    accumulatedOutput = accumulatedOutput + stdout
+    document.getElementById('DOM-element-id').textContent = accumulatedOutput
   };
   ```
 
@@ -130,12 +134,11 @@ A JavaScript settings object for a Perl script run by PEB has the following prop
   ``String`` or ``Function`` supplying user data as its return value  
   ``inputData`` is written on script STDIN.  
 
-  ``inputData`` function with no dependencies:  
+  ``inputData`` function example:  
 
   ```javascript
   example.inputData = function () {
-    var data = document.getElementById("input-box-id").value;
-    return data;
+    return document.getElementById('input-box-id').value
   }
   ```
 
@@ -173,10 +176,12 @@ An example code of a dialog for selecting a single file:
 ```
 
 ```javascript
-var select_file = {};
-select_file.type = 'single-file';
+const select_file = {}
+
+select_file.type = 'single-file'
+
 select_file.receiverFunction = function (file) {
-  var container = document.getElementById('single-file-test');
-  container.innerText = file;
+  const container = document.getElementById('single-file-test')
+  container.innerText = file
 }
 ```
