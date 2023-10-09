@@ -32,11 +32,6 @@ QPage::QPage()
 
     QWebEngineSettings::globalSettings()->
             setAttribute(
-                QWebEngineSettings::FullScreenSupportEnabled, false
-                );
-
-    QWebEngineSettings::globalSettings()->
-            setAttribute(
                 QWebEngineSettings::JavascriptCanOpenWindows, false
                 );
 
@@ -47,17 +42,7 @@ QPage::QPage()
 
     QWebEngineSettings::globalSettings()->
             setAttribute(
-                QWebEngineSettings::AutoLoadImages, true
-                );
-
-    QWebEngineSettings::globalSettings()->
-            setAttribute(
                 QWebEngineSettings::JavascriptEnabled, true
-                );
-
-    QWebEngineSettings::globalSettings()->
-            setAttribute(
-                QWebEngineSettings::PluginsEnabled, true
                 );
 
     QWebEngineSettings::globalSettings()->
