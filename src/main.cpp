@@ -21,38 +21,28 @@
 #include "main-window.h"
 
 // ==============================
-// MAIN APPLICATION DEFINITION:
+// APPLICATION DEFINITION:
 // ==============================
 int main(int argc, char **argv)
 {
     QApplication application(argc, argv);
 
-    // ==============================
     // Application version:
-    // ==============================
     application.setApplicationVersion("1.1.0");
 
-    // ==============================
     // UTF-8 encoding application-wide:
-    // ==============================
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF8"));
 
-    // ==============================
     // Directory of the browser executable:
-    // ==============================
     QDir executableDirectory = application.applicationDirPath();
     QString browserDirectory = executableDirectory.absolutePath().toLatin1();
     application.setProperty("browserDir", browserDirectory);
 
-    // ==============================
     // Application directory:
-    // ==============================
     QString applicationDirName = browserDirectory + "/resources/app";
     application.setProperty("appDir", applicationDirName);
 
-    // ==============================
     // Application icon:
-    // ==============================
     QString iconPathName = applicationDirName + "/app.png";
 
     QPixmap icon(32, 32);
@@ -76,9 +66,6 @@ int main(int argc, char **argv)
     mainWindow.setWindowIcon(icon);
     mainWindow.setCentralWidget(mainWindow.webViewWidget);
 
-    // ==============================
-    // Signals and slots:
-    // ==============================
     // Signal and slot for setting the main window title:
     QObject::connect(mainWindow.webViewWidget,
                      SIGNAL(titleChanged(QString)),
@@ -93,9 +80,7 @@ int main(int argc, char **argv)
                      SLOT(qStartWindowClosingSlot())
                      );
 
-    // ==============================
     // Start page:
-    // ==============================
     QString startPageFilePath = applicationDirName + "/index.html";
     QFile startPageFile(startPageFilePath);
 

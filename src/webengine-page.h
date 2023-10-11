@@ -303,9 +303,7 @@ public slots:
                                  [&](QVariant jsResult){
 
                 if (jsResult.toByteArray().length() > 0) {
-                    bool jsCloseDecision = jsResult.toBool();
-
-                    if (jsCloseDecision == true) {
+                    if (jsResult.toBool() == true) {
                         emit closeWindowSignal();
                     }
                 }
@@ -324,6 +322,7 @@ protected:
     // JavaScript Alert:
     // ==============================
     virtual void javaScriptAlert(const QUrl &url, const QString &msg)
+    override
     {
         Q_UNUSED(url);
 
@@ -343,6 +342,7 @@ protected:
     // JavaScript Confirm:
     // ==============================
     virtual bool javaScriptConfirm(const QUrl &url, const QString &msg)
+    override
     {
         Q_UNUSED(url);
 
@@ -364,6 +364,7 @@ protected:
     // ==============================
     virtual bool javaScriptPrompt(const QUrl &url, const QString &msg,
                                   const QString &defaultValue, QString *result)
+    override
     {
         Q_UNUSED(url);
 

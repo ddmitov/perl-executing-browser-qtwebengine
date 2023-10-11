@@ -66,12 +66,12 @@ Every Perl script run by PEB must have a JavaScript settings object with an arbi
 
 There are two methods to start a local Perl script:  
 
-* **Clicking a pseudo link:**  
+* **Click a pseudo link:**  
   ```html
   <a href="example.script">Start Perl script</a>
   ```
 
-* **Submitting a form to a pseudo link:**  
+* **Submit a form to a pseudo link:**  
 
   ```html
   <form action="example.script">

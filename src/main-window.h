@@ -53,10 +53,6 @@ public slots:
         showMaximized();
     }
 
-    void qGoFullscreen(QWebEngineFullScreenRequest request) {
-        request.accept();
-    }
-
     void closeEvent(QCloseEvent *event)
     {
         if (qApp->property("windowCloseRequested").toBool() == true) {
