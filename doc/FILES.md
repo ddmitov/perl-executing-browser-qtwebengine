@@ -13,21 +13,20 @@ A minimal ``{PEB_executable_directory}`` looks like this:
 ```bash
 .
 ├── {PEB_executable}
-└── resources
-    └── app
-        ├── index.html
-        └── app.png
+└── app
+    ├── index.html
+    └── app.png
 ```
 
-The application directory path must be: ``{PEB_executable_directory}/resources/app``  
+The application directory path must be: ``{PEB_executable_directory}/app``  
 All Perl scripts started by PEB must be located within this directory and its subdirectories.  
 The working directory of all PEB Perl scripts is the application directory.  
 
 * **Start Page:**  
-  Start page pathname must be: ``{PEB_executable_directory}/resources/app/index.html``  
+  Start page pathname must be: ``{PEB_executable_directory}/app/index.html``  
   If start page is missing, an error message is displayed.  
 
 * **Icon:**
-  Icon pathname must be: ``{PEB_executable_directory}/resources/app/app.png``  
+  Icon pathname must be: ``{PEB_executable_directory}/app/app.png``  
   If icon file is found on application startup, it is used as application icon.  
   If icon file is not found, the default icon embedded in the resources of the browser binary is used.

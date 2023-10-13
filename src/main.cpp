@@ -33,13 +33,10 @@ int main(int argc, char **argv)
     // UTF-8 encoding application-wide:
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF8"));
 
-    // Directory of the browser executable:
-    QDir executableDirectory = application.applicationDirPath();
-    QString browserDirectory = executableDirectory.absolutePath().toLatin1();
-    application.setProperty("browserDir", browserDirectory);
-
     // Application directory:
-    QString applicationDirName = browserDirectory + "/resources/app";
+    QString browserDirectory = application.applicationDirPath().toLatin1();
+    QString applicationDirName = browserDirectory + "/app";
+
     application.setProperty("appDir", applicationDirName);
 
     // Application icon:
