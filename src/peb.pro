@@ -25,12 +25,6 @@ CONFIG += release
 TEMPLATE = app
 TARGET = peb
 
-# Network support:
-QT += network
-
-# HTTPS support:
-CONFIG += openssl-linked
-
 # HTML engine:
 QT += widgets webenginewidgets
 
