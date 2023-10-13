@@ -26,7 +26,7 @@
 QPage::QPage()
     : QWebEnginePage()
 {
-    // QWebPage settings:
+    // QWebEnginePage settings:
     QWebEngineSettings::globalSettings()->
             setDefaultTextEncoding(QString("utf-8"));
 

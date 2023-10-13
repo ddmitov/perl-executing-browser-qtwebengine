@@ -32,17 +32,11 @@ QViewWidget::QViewWidget()
     // Starting of a QPage instance:
     mainPage = new QPage();
 
-    // Signal and slot:
+    // Page Loaded signal and slot:
     QObject::connect(mainPage,
                      SIGNAL(pageLoadedSignal()),
                      this,
                      SLOT(qPageLoadedSlot())
-                     );
-
-    QObject::connect(mainPage,
-                     SIGNAL(closeWindowSignal()),
-                     this,
-                     SLOT(qCloseWindowSlot())
                      );
 
     // Installing of the started QPage instance:

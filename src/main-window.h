@@ -40,24 +40,16 @@ public slots:
     void qDisplayErrorSlot(QString errorMessage)
     {
         QFileReader *resourceReader = new QFileReader(QString(":/error.html"));
+
         QString htmlErrorContents = resourceReader->fileContents;
         htmlErrorContents.replace("ERROR_MESSAGE", errorMessage);
 
         webViewWidget->setHtml(htmlErrorContents);
-        showMaximized();
     }
 
     void setMainWindowTitleSlot(QString title)
     {
         setWindowTitle(title);
-        showMaximized();
-    }
-
-    void closeEvent(QCloseEvent *event)
-    {
-        if (qApp->property("windowCloseRequested").toBool() == true) {
-            event->accept();
-        }
     }
 
 public:

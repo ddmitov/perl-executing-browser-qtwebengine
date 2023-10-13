@@ -134,15 +134,6 @@ public slots:
         QViewWidget::triggerPageAction(QWebEnginePage::SelectAll);
     }
 
-    // ==============================
-    // Close window:
-    // ==============================
-    void qCloseWindowSlot()
-    {
-        qApp->setProperty("windowCloseRequested", true);
-        this->parentWidget()->close();
-    }
-
 public:
 
     QViewWidget();

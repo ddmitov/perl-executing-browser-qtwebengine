@@ -44,16 +44,15 @@ in the documentation of this project are to be interpreted as described in [RFC 
 * [Output from Perl scripts is seamlessly inserted in a web-like user interface.](./doc/SETTINGS.md#perl-scripts-api)
 * Any version of Perl 5 can be used.
 * [Local full paths can be selected and passed to Perl scripts.](./doc/SETTINGS.md#selecting-files-and-folders)  
-* [Optional warning for unsaved data in HTML forms](./doc/SETTINGS.md#html-page-api)
-* [Optional labels for the JavaScript popup boxes](./doc/SETTINGS.md#html-page-api)
-* [Optional labels for the context menus](./doc/SETTINGS.md#html-page-api)
+* [Optional user-provided labels for the JavaScript popup boxes](./doc/SETTINGS.md#html-page-api)
+* [Optional user-provided labels for the context menu](./doc/SETTINGS.md#html-page-api)
 * [Optional icon](./doc/FILES.md)
 
 ## Security
 
 * PEB does not need and does not implement a server process.
 * PEB Perl scripts are executed locally with no sandbox.
-* PEB can not access any web content.
+* PEB can not access web content.
 
 ## Limitations
 

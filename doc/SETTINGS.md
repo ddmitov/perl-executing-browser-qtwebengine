@@ -19,10 +19,6 @@ pebSettings.okLabel = "Custom Ok Label"
 pebSettings.cancelLabel = "Custom Cancel Label"
 pebSettings.yesLabel = "Custom Yes Label"
 pebSettings.noLabel = "Custom No Label"
-
-pebSettings.closeConfirmation =
-  'Text was entered in a form and it is going to be lost!\n' +
-  'Are you sure you want to close the window?'
 ```
 
 The ``pebSettings`` JavaScript object may have the following properties:
@@ -30,12 +26,12 @@ The ``pebSettings`` JavaScript object may have the following properties:
 * **perlInterpreter**  
   ``String`` for the relative path of a Perl interpreter used by PEB  
   The relative path of a Perl interpreter is converted to a full path using the  
-  ``{PEB_executable_directory}/resources/app`` as a root folder.  
+  ``{PEB_executable_directory}/app`` as a root folder.  
   If a relocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
 
 * **cutLabel**  
   ``String`` displayed as a label for the 'Cut' action on context menus.
-This name is mandatory and it is hard-coded in C++ code.  
+
 * **copyLabel**  
   ``String`` displayed as a label for the 'Copy' action on context menus.
 
@@ -43,7 +39,7 @@ This name is mandatory and it is hard-coded in C++ code.
   ``String`` displayed as a label for the 'Paste' action on context menus.
 
 * **selectAllLabel**  
-  ``String`` displayed as a label for the 'Select can be startedAll' action on context menus.
+  ``String`` displayed as a label for the 'Select' action on context menus.
 
 * **okLabel**  
   ``String`` displayed as a label for the 'Ok' button on JavaScript Alert and Prompt popup boxes.
@@ -56,9 +52,6 @@ This name is mandatory and it is hard-coded in C++ code.
 
 * **noLabel**  
   ``String`` displayed as a label for the 'No' button on JavaScript Confirm popup box.
-
-* **closeConfirmation**  
-  ``String`` displayed in a JavaScript Confirm popup box when the close button is pressed, but unsaved data in local HTML forms is detected. If no ``closeConfirmation`` object property is found, PEB shuts down all running Perl scripts and exits.  
 
 ## Perl Scripts API
 
@@ -97,7 +90,7 @@ A JavaScript settings object for a Perl script run by PEB has the following prop
 * **scriptRelativePath**  
   ``String`` for the relative path of a Perl script run by PEB  
   The relative path of a script is converted to a full path using the  
-  ``{PEB_executable_directory}/resources/app`` as a root folder.  
+  ``{PEB_executable_directory}/app`` as a root folder.  
   PEB does not check filename extensions or shebang lines of Perl scripts.  
   Scripts without filename extensions can also be used.  
   *This object property is mandatory.*  

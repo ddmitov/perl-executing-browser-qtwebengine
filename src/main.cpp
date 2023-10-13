@@ -62,19 +62,13 @@ int main(int argc, char **argv)
 
     mainWindow.setWindowIcon(icon);
     mainWindow.setCentralWidget(mainWindow.webViewWidget);
+    mainWindow.showMaximized();
 
     // Signal and slot for setting the main window title:
     QObject::connect(mainWindow.webViewWidget,
                      SIGNAL(titleChanged(QString)),
                      &mainWindow,
                      SLOT(setMainWindowTitleSlot(QString))
-                     );
-
-    // Signal and slot for closing the main window:
-    QObject::connect(&mainWindow,
-                     SIGNAL(startMainWindowClosingSignal()),
-                     mainWindow.webViewWidget->page(),
-                     SLOT(qStartWindowClosingSlot())
                      );
 
     // Start page:

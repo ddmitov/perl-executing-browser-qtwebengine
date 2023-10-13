@@ -41,30 +41,27 @@ class QPage : public QWebEnginePage
 signals:
 
     void pageLoadedSignal();
-    void closeWindowSignal();
 
 public slots:
 
     void qPageLoadedSlot(bool ok)
     {
         if (ok) {
-            if (QPage::url().scheme() == "file") {
-                // Inject all browser-specific Javascript:
-                QFileReader *resourceReader =
-                        new QFileReader(QString(":/peb.js"));
+            // Inject all browser-specific Javascript:
+            QFileReader *resourceReader =
+                    new QFileReader(QString(":/peb.js"));
 
-                QString pebJavaScript = resourceReader->fileContents;
+            QString pebJavaScript = resourceReader->fileContents;
 
-                QPage::runJavaScript(pebJavaScript);
+            QPage::runJavaScript(pebJavaScript);
 
-                QPage::runJavaScript(QString("peb.getPageSettings()"),
-                                     [&](QVariant result){
-                    qGetPageSettings(result);
-                });
+            QPage::runJavaScript(QString("peb.getPageSettings()"),
+                                 [&](QVariant result){
+                qGetPageSettings(result);
+            });
 
-                // Send signal to the html-viewing class that a page is loaded:
-                emit pageLoadedSignal();
-            }
+            // Send signal to the html-viewing class that a page is loaded:
+            emit pageLoadedSignal();
         }
     }
 
@@ -217,98 +214,74 @@ public slots:
 
     void qStartScript(QString scriptObjectName)
     {
-        if (QPage::url().scheme() == "file") {
-            QString scriptSettingsJavaScript =
-                    "peb.getScriptSettings(" + scriptObjectName + ")";
+        QString scriptSettingsJavaScript =
+                "peb.getScriptSettings(" + scriptObjectName + ")";
 
-            QPage::runJavaScript(scriptSettingsJavaScript,
-                                 [scriptObjectName, this]
-                                 (QVariant scriptSettings)
-            {
-                QJsonDocument scriptJsonDocument =
-                        QJsonDocument::fromJson(scriptSettings
-                                                .toString().toUtf8());
+        QPage::runJavaScript(scriptSettingsJavaScript,
+                             [scriptObjectName, this]
+                             (QVariant scriptSettings)
+        {
+            QJsonDocument scriptJsonDocument =
+                    QJsonDocument::fromJson(scriptSettings
+                                            .toString().toUtf8());
 
-                if (!scriptJsonDocument.isEmpty()) {
-                    QJsonObject scriptJsonObject = scriptJsonDocument.object();
+            if (!scriptJsonDocument.isEmpty()) {
+                QJsonObject scriptJsonObject = scriptJsonDocument.object();
 
-                    QScriptHandler *scriptHandler =
-                            new QScriptHandler(scriptJsonObject);
+                QScriptHandler *scriptHandler =
+                        new QScriptHandler(scriptJsonObject);
 
-                    scriptHandler->id = scriptObjectName;
+                scriptHandler->id = scriptObjectName;
 
-                    QObject::connect(scriptHandler,
-                                     SIGNAL(displayScriptOutputSignal(QString,
-                                                                      QString)),
-                                     this,
-                                     SLOT(qDisplayScriptOutputSlot(QString,
-                                                                   QString))
-                                     );
+                QObject::connect(scriptHandler,
+                                 SIGNAL(displayScriptOutputSignal(QString,
+                                                                  QString)),
+                                 this,
+                                 SLOT(qDisplayScriptOutputSlot(QString,
+                                                               QString))
+                                 );
 
-                    QObject::connect(scriptHandler,
-                                     SIGNAL(displayScriptErrorsSignal(QString)),
-                                     this,
-                                     SLOT(qDisplayScriptErrorsSlot(QString))
-                                     );
+                QObject::connect(scriptHandler,
+                                 SIGNAL(displayScriptErrorsSignal(QString)),
+                                 this,
+                                 SLOT(qDisplayScriptErrorsSlot(QString))
+                                 );
 
-                    QString scriptInput =
-                            scriptJsonObject["scriptInput"].toString();
+                QString scriptInput =
+                        scriptJsonObject["scriptInput"].toString();
 
-                    if (scriptInput.length() > 0) {
-                        if (scriptHandler->process.isOpen()) {
-                            scriptHandler->process
-                                    .write(scriptInput.toUtf8());
-                            scriptHandler->process
-                                    .write(QString("\n").toLatin1());
-                        }
+                if (scriptInput.length() > 0) {
+                    if (scriptHandler->process.isOpen()) {
+                        scriptHandler->process
+                                .write(scriptInput.toUtf8());
+                        scriptHandler->process
+                                .write(QString("\n").toLatin1());
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
     void qDisplayScriptOutputSlot(QString id, QString output)
     {
-        if (QPage::url().scheme() == "file") {
-            QString outputInsertionJavaScript =
-                        id + ".stdoutFunction('" + output + "'); null";
+        QString outputInsertionJavaScript =
+                id + ".stdoutFunction('" + output + "'); null";
 
-            QPage::runJavaScript(outputInsertionJavaScript);
-        }
+        QPage::runJavaScript(outputInsertionJavaScript);
     }
 
     void qDisplayScriptErrorsSlot(QString errors)
     {
-        if (QPage::url().scheme() == "file") {
-            if (errors.length() > 0) {
-                errors.replace("\"", "\\\"");
-                errors.replace("\'", "\\'");
-                errors.replace("\n", "\\n");
-                errors.replace("\r", "");
+        if (errors.length() > 0) {
+            errors.replace("\"", "\\\"");
+            errors.replace("\'", "\\'");
+            errors.replace("\n", "\\n");
+            errors.replace("\r", "");
 
-                QString perlScriptErrorMessage =
-                        "console.error('" + errors + "'); null";
+            QString perlScriptErrorMessage =
+                    "console.error('" + errors + "'); null";
 
-                QPage::runJavaScript(perlScriptErrorMessage);
-            }
-        }
-    }
-
-    // ==============================
-    // Page-closing routine:
-    // ==============================
-    void qStartWindowClosingSlot()
-    {
-        if (QPage::url().scheme() == "file") {
-            QPage::runJavaScript(QString("peb.checkUserInputBeforeClose()"),
-                                 [&](QVariant jsResult){
-
-                if (jsResult.toByteArray().length() > 0) {
-                    if (jsResult.toBool() == true) {
-                        emit closeWindowSignal();
-                    }
-                }
-            });
+            QPage::runJavaScript(perlScriptErrorMessage);
         }
     }
 
