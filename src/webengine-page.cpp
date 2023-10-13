@@ -58,7 +58,7 @@ QPage::QPage()
                 SLOT(qPageLoadedSlot(bool))
                 );
 
-    // Default dialog and context menu labels:
+    // Default JavaScript dialog labels:
     okLabel = "Ok";
     cancelLabel = "Cancel";
     yesLabel = "Yes";

@@ -2,7 +2,7 @@
 
 ## Compile-Time Requirements
 
-* Qt development bundle versions 5.6 or higher
+* Qt development bundle versions 5.6 - 5.9
 
 * QtWebEngine libraries and headers  
 
@@ -16,7 +16,7 @@ make
 
 ## Runtime Requirements
 
-* Qt 5 and QtWebEngine libraries
+* Qt 5.6 - 5.9 and QtWebEngine runtime libraries
 
 * Perl 5 distribution - any Linux Perl relocatable or standard distribution
 

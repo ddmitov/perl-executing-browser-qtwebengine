@@ -43,17 +43,19 @@ peb.checkUserInputBeforeClose = function () {
   let textEntered = false
   let close = true
 
-  const textFields = document.getElementsByTagName('textarea')
+  const textAreas = document.getElementsByTagName('textarea')
+  let textAreaIndex = 0
 
-  for (let index = 0; index < textFields.length; index++) {
-    if (textFields[index].value.length > 0) {
+  for (textAreaIndex = 0; textAreaIndex < textAreas.length; textAreaIndex++) {
+    if (textAreas[textAreaIndex].value.length > 0) {
       textEntered = true
     }
   }
 
   const inputBoxes = document.querySelectorAll('input[type=text]')
+  let inputBoxIndex = 0
 
-  for (let index = 0; index < inputBoxes.length; index++) {
+  for (inputBoxIndex = 0; inputBoxIndex < inputBoxes.length; inputBoxIndex++) {
     if (inputBoxes[index].value.length > 0) {
       textEntered = true
     }
