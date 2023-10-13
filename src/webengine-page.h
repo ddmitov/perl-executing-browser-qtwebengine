@@ -154,17 +154,18 @@ public slots:
                 QJsonObject dialogJsonObject = dialogJsonDocument.object();
                 dialogJsonObject["id"] = dialogObjectName;
 
-                qReadDialogSettings(dialogJsonObject);
+                qDisplayDialog(dialogJsonObject);
             }
         });
     }
 
-    void qReadDialogSettings(QJsonObject dialogJsonObject)
+    void qDisplayDialog(QJsonObject dialogJsonObject)
     {
         QString id = dialogJsonObject["id"].toString();
         QString type = dialogJsonObject["type"].toString();
 
         QFileDialog inodesDialog (qApp->activeWindow());
+        inodesDialog.setParent(qApp->activeWindow());
         inodesDialog.setWindowModality(Qt::WindowModal);
         inodesDialog.setViewMode(QFileDialog::Detail);
 

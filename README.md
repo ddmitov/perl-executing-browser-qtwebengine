@@ -52,13 +52,14 @@ in the documentation of this project are to be interpreted as described in [RFC 
 ## Security
 
 * PEB does not need and does not implement a server process.
-* PEB Perl scripts can not be called from web pages.
+* PEB can not access any web content.
 * PEB Perl scripts are executed locally with no sandbox.
 
 ## Limitations
 
 * No Perl scripting inside frames
 * No pop-up windows
+* No access to web content
 * No printing
 * No AppImage support
 

@@ -48,93 +48,53 @@ public slots:
     // ==============================
     void contextMenuEvent(QContextMenuEvent *event)
     {
-        if (QWebEngineView::page()->url().scheme() != "file") {
-            page()->action(QWebEnginePage::CopyImageToClipboard)->
-                    setVisible(false);
-            page()->action(QWebEnginePage::DownloadImageToDisk)->
-                    setVisible(false);
-            page()->action(QWebEnginePage::DownloadImageToDisk)->
-                    setVisible(false);
-            page()->action(QWebEnginePage::DownloadLinkToDisk)->
-                    setVisible(false);
-            page()->action(QWebEnginePage::DownloadMediaToDisk)->
-                    setVisible(false);
-            page()->action(QWebEnginePage::OpenLinkInNewWindow)->
-                    setVisible(false);
-            page()->action(QWebEnginePage::OpenLinkInThisWindow)->
-                    setVisible(false);
+        QWebEngineContextMenuData contextMenuTest =
+                QWebEngineView::page()->contextMenuData();
 
-            QMenu *menu = QWebEngineView::page()->createStandardContextMenu();
-            menu->popup(event->globalPos());
-        }
+        Q_ASSERT(contextMenuTest.isValid());
 
-        if (QWebEngineView::page()->url().scheme() == "file") {
-            QWebEngineContextMenuData contextMenuTest =
-                    QWebEngineView::page()->contextMenuData();
+        if (contextMenuTest.isContentEditable()) {
+            QMenu menu;
 
-            Q_ASSERT(contextMenuTest.isValid());
+            QAction *cutAct = menu
+                    .addAction(qApp->property("cutLabel").toString());
 
-            if (!contextMenuTest.isContentEditable() and
-                    contextMenuTest.selectedText().length() > 0) {
-                QMenu menu;
+            QObject::connect(cutAct,
+                             SIGNAL(triggered()),
+                             this,
+                             SLOT(qCutAction())
+                             );
 
-                QAction *copyAct = menu
-                        .addAction(qApp->property("copyLabel").toString());
+            QAction *copyAct = menu
+                    .addAction(qApp->property("copyLabel").toString());
 
-                QObject::connect(copyAct,
-                                 SIGNAL(triggered()),
-                                 this,
-                                 SLOT(qCopyAction())
-                                 );
+            QObject::connect(copyAct,
+                             SIGNAL(triggered()),
+                             this,
+                             SLOT(qCopyAction())
+                             );
 
-                menu.exec(mapToGlobal(event->pos()));
+            QAction *pasteAct = menu
+                    .addAction(qApp->property("pasteLabel").toString());
 
-                this->focusWidget();
-            }
+            QObject::connect(pasteAct,
+                             SIGNAL(triggered()),
+                             this,
+                             SLOT(qPasteAction())
+                             );
 
-            if (contextMenuTest.isContentEditable()) {
-                QMenu menu;
+            QAction *selectAllAct = menu
+                    .addAction(qApp->property("selectAllLabel").toString());
 
-                QAction *cutAct = menu
-                        .addAction(qApp->property("cutLabel").toString());
+            QObject::connect(selectAllAct,
+                             SIGNAL(triggered()),
+                             this,
+                             SLOT(qSelectAllAction())
+                             );
 
-                QObject::connect(cutAct,
-                                 SIGNAL(triggered()),
-                                 this,
-                                 SLOT(qCutAction())
-                                 );
+            menu.exec(mapToGlobal(event->pos()));
 
-                QAction *copyAct = menu
-                        .addAction(qApp->property("copyLabel").toString());
-
-                QObject::connect(copyAct,
-                                 SIGNAL(triggered()),
-                                 this,
-                                 SLOT(qCopyAction())
-                                 );
-
-                QAction *pasteAct = menu
-                        .addAction(qApp->property("pasteLabel").toString());
-
-                QObject::connect(pasteAct,
-                                 SIGNAL(triggered()),
-                                 this,
-                                 SLOT(qPasteAction())
-                                 );
-
-                QAction *selectAllAct = menu
-                        .addAction(qApp->property("selectAllLabel").toString());
-
-                QObject::connect(selectAllAct,
-                                 SIGNAL(triggered()),
-                                 this,
-                                 SLOT(qSelectAllAction())
-                                 );
-
-                menu.exec(mapToGlobal(event->pos()));
-
-                this->focusWidget();
-            }
+            this->focusWidget();
         }
     }
 

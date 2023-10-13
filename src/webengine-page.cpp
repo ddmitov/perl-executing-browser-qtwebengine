@@ -72,30 +72,35 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
                                     QWebEnginePage::NavigationType navType,
                                     bool isMainFrame)
 {
-    if (url.scheme() == "file" and isMainFrame == true) {
-        if (navType == QWebEnginePage::NavigationTypeLinkClicked) {
-            // Handle filesystem dialogs:
-            if (url.fileName().contains(".dialog")) {
-                qHandleDialogs(url.fileName().replace(".dialog", ""));
+    Q_UNUSED(isMainFrame);
 
-                return false;
-            }
+    // No access to web pages:
+    if (url.scheme() != "file") {
+        return false;
+    }
 
-            // Handle local Perl scripts after local link is clicked:
-            if (url.fileName().contains(".script")) {
-                qStartScript(url.fileName().replace(".script", ""));
+    if (navType == QWebEnginePage::NavigationTypeLinkClicked) {
+        // Handle filesystem dialogs:
+        if (url.fileName().contains(".dialog")) {
+            qHandleDialogs(url.fileName().replace(".dialog", ""));
 
-                return false;
-            }
+            return false;
         }
 
-        // Handle local Perl scripts after local form is submitted:
-        if (navType == QWebEnginePage::NavigationTypeFormSubmitted) {
-            if (url.fileName().contains(".script")) {
-                qStartScript(url.fileName().replace(".script", ""));
+        // Handle local Perl scripts after local link is clicked:
+        if (url.fileName().contains(".script")) {
+            qStartScript(url.fileName().replace(".script", ""));
 
-                return false;
-            }
+            return false;
+        }
+    }
+
+    // Handle local Perl scripts after local form is submitted:
+    if (navType == QWebEnginePage::NavigationTypeFormSubmitted) {
+        if (url.fileName().contains(".script")) {
+            qStartScript(url.fileName().replace(".script", ""));
+
+            return false;
         }
     }
 
