@@ -53,6 +53,22 @@ public slots:
 
         Q_ASSERT(contextMenuTest.isValid());
 
+        if (!contextMenuTest.isContentEditable() and
+                contextMenuTest.selectedText().length() > 0) {
+            QMenu menu;
+
+            QAction *copyAct =
+                    menu.addAction(qApp->property("copyLabel").toString());
+
+            QObject::connect(copyAct,
+                             SIGNAL(triggered()),
+                             this,
+                             SLOT(qCopyAction()));
+
+            menu.exec(mapToGlobal(event->pos()));
+            this->focusWidget();
+        }
+
         if (contextMenuTest.isContentEditable()) {
             QMenu menu;
 
