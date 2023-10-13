@@ -16,7 +16,7 @@ make
 
 ## Runtime Requirements
 
-* Qt 5.6 - 5.9 and QtWebEngine runtime libraries
+* QtWebEngine 5.6 - 5.9 runtime libraries
 
 * Perl 5 distribution - any Linux Perl relocatable or standard distribution
 
