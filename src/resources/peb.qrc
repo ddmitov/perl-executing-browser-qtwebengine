@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>camel.png</file>
-        <file>peb.js</file>
         <file>error.html</file>
     </qresource>
 </RCC>

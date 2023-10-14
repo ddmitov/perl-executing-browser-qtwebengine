@@ -47,21 +47,18 @@ public slots:
     void qPageLoadedSlot(bool ok)
     {
         if (ok) {
-            // Inject all browser-specific Javascript:
-            QFileReader *resourceReader =
-                    new QFileReader(QString(":/peb.js"));
-
-            QString pebJavaScript = resourceReader->fileContents;
-
-            QPage::runJavaScript(pebJavaScript);
-
-            QPage::runJavaScript(QString("peb.getPageSettings()"),
-                                 [&](QVariant result){
-                qGetPageSettings(result);
-            });
-
-            // Send signal to the html-viewing class that a page is loaded:
+            // Send signal that a page is loaded:
             emit pageLoadedSignal();
+
+            // Get page settings:
+            QPage::runJavaScript(QString("JSON.stringify(window.pebSettings)"),
+                                 0,
+                                 [&]
+                                 (QVariant result)
+            {
+                qGetPageSettings(result);
+            }
+            );
         }
     }
 
@@ -135,30 +132,8 @@ public slots:
     // ==============================
     // Filesystem dialogs:
     // ==============================
-    void qHandleDialogs(QString dialogObjectName)
+    QString qDisplayDialog(QJsonObject dialogJsonObject)
     {
-        QString dialogSettingsJavaScript =
-                "peb.getDialogSettings(" + dialogObjectName + ")";
-
-        QPage::runJavaScript(dialogSettingsJavaScript,
-                             [dialogObjectName, this](QVariant dialogSettings)
-        {
-            QJsonDocument dialogJsonDocument =
-                    QJsonDocument::fromJson(
-                        dialogSettings.toString().toUtf8());
-
-            if (!dialogJsonDocument.isEmpty()) {
-                QJsonObject dialogJsonObject = dialogJsonDocument.object();
-                dialogJsonObject["id"] = dialogObjectName;
-
-                qDisplayDialog(dialogJsonObject);
-            }
-        });
-    }
-
-    void qDisplayDialog(QJsonObject dialogJsonObject)
-    {
-        QString id = dialogJsonObject["id"].toString();
         QString type = dialogJsonObject["type"].toString();
 
         QFileDialog inodesDialog (qApp->activeWindow());
@@ -170,12 +145,12 @@ public slots:
             inodesDialog.setFileMode(QFileDialog::AnyFile);
         }
 
-        if (type == "multiple-files") {
-            inodesDialog.setFileMode(QFileDialog::ExistingFiles);
-        }
-
         if (type == "new-file-name") {
             inodesDialog.setAcceptMode(QFileDialog::AcceptSave);
+        }
+
+        if (type == "multiple-files") {
+            inodesDialog.setFileMode(QFileDialog::ExistingFiles);
         }
 
         if (type == "directory") {
@@ -191,21 +166,18 @@ public slots:
         inodesDialog.close();
         inodesDialog.deleteLater();
 
-        if (!selectedInodes.isEmpty()) {
-            QString inodesFormatted;
+        QString inodesFormatted = "";
 
+        if (!selectedInodes.isEmpty()) {
             foreach (QString userSelectedInode, selectedInodes) {
                 inodesFormatted.append(userSelectedInode);
                 inodesFormatted.append(";");
             }
 
             inodesFormatted.replace(QRegularExpression(";$"), "");
-
-            QString outputInsertionJavaScript =
-                    id + ".receiverFunction('" + inodesFormatted + "'); null";
-
-            QPage::runJavaScript(outputInsertionJavaScript);
         }
+
+        return inodesFormatted;
     }
 
     // ==============================
@@ -215,15 +187,15 @@ public slots:
     void qStartScript(QString scriptObjectName)
     {
         QString scriptSettingsJavaScript =
-                "peb.getScriptSettings(" + scriptObjectName + ")";
+                "JSON.stringify(" + scriptObjectName + ")";
 
         QPage::runJavaScript(scriptSettingsJavaScript,
+                             0,
                              [scriptObjectName, this]
                              (QVariant scriptSettings)
         {
             QJsonDocument scriptJsonDocument =
-                    QJsonDocument::fromJson(scriptSettings
-                                            .toString().toUtf8());
+                    QJsonDocument::fromJson(scriptSettings.toString().toUtf8());
 
             if (!scriptJsonDocument.isEmpty()) {
                 QJsonObject scriptJsonObject = scriptJsonDocument.object();
@@ -250,6 +222,12 @@ public slots:
                 QString scriptInput =
                         scriptJsonObject["scriptInput"].toString();
 
+                if (scriptInput == "dialog") {
+                    QJsonObject dialog = scriptJsonObject["dialog"].toObject();
+
+                    scriptInput = qDisplayDialog(dialog);
+                }
+
                 if (scriptInput.length() > 0) {
                     if (scriptHandler->process.isOpen()) {
                         scriptHandler->process
@@ -259,7 +237,8 @@ public slots:
                     }
                 }
             }
-        });
+        }
+        );
     }
 
     void qDisplayScriptOutputSlot(QString id, QString output)
@@ -267,7 +246,7 @@ public slots:
         QString outputInsertionJavaScript =
                 id + ".stdoutFunction('" + output + "'); null";
 
-        QPage::runJavaScript(outputInsertionJavaScript);
+        QPage::runJavaScript(outputInsertionJavaScript, 0);
     }
 
     void qDisplayScriptErrorsSlot(QString errors)
@@ -281,7 +260,7 @@ public slots:
             QString perlScriptErrorMessage =
                     "console.error('" + errors + "'); null";
 
-            QPage::runJavaScript(perlScriptErrorMessage);
+            QPage::runJavaScript(perlScriptErrorMessage, 0);
         }
     }
 

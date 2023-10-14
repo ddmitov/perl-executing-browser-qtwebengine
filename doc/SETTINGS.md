@@ -2,8 +2,7 @@
 
 ## Global Settings API
 
-All global PEB settings are stored in a JavaScript object, which must be named ``pebSettings``.  
-If ``pebSettings`` JavaScript object is not found, the PEB Perl interpreter is the first Perl interpreter on PATH.
+All global PEB settings are stored in a JavaScript object, which must be named ``pebSettings``.
 
 ```javascript
 const pebSettings = {}
@@ -20,6 +19,8 @@ pebSettings.cancelLabel = "Custom Cancel Label"
 pebSettings.yesLabel = "Custom Yes Label"
 pebSettings.noLabel = "Custom No Label"
 ```
+
+If ``pebSettings.perlInterpreter`` is not defined, the PEB Perl interpreter is the first Perl interpreter on PATH.  
 
 The ``pebSettings`` JavaScript object may have the following properties:
 
@@ -85,10 +86,11 @@ example.stdoutFunction = function (stdout) {
 }
 ```
 
-A JavaScript settings object for a Perl script run by PEB has the following properties:
+A JavaScript settings object for a Perl script run by PEB must have the following basic properties:
 
 * **scriptRelativePath**  
   ``String`` for the relative path of a Perl script run by PEB  
+
   The relative path of a script is converted to a full path using the  
   ``{PEB_executable_directory}/app`` as a root folder.  
   PEB does not check filename extensions or shebang lines of Perl scripts.  
@@ -123,27 +125,16 @@ A JavaScript settings object for a Perl script run by PEB has the following prop
   };
   ```
 
-* **inputData**  
-  ``String`` or ``Function`` supplying user data as its return value  
+A JavaScript settings object for a Perl script run by PEB may also have the following additional properties:
+
+* **scriptInput**  
+  ``String``  
+
   ``inputData`` is written on script STDIN.  
 
-  ``inputData`` function example:  
+  ``scriptInput = 'dialog'`` means that a file or directory selection dialog defined by the ``dialog.type`` property will be displayed before starting a Perl script.
 
-  ```javascript
-  example.inputData = function () {
-    return document.getElementById('input-box-id').value
-  }
-  ```
-
-## Files and Folders Dialogs API
-
-Selecting files or folders with their full paths is performed by clicking a pseudo link composed of the name of a JavaScript settings object and a ``.dialog`` extension.  
-
-Selecting files or folders with their full paths is possible only from local HTML files.  
-
-A JavaScript settings object for a filesystem dialog has only two object properties:
-
-* **type**  
+* **dialog.type**  
   ``String`` containing one of the following:
 
   * ``single-file``  
@@ -158,23 +149,3 @@ A JavaScript settings object for a filesystem dialog has only two object propert
   * ``directory``  
   When ``directory`` type of dialog is used, an existing or a new directory may be selected.  
   Any new directory will be immediately created by PEB.
-
-* **receiverFunction**  
-  It is executed by PEB after the user has selected files or folders and takes them as its only argument.  
-
-An example code of a dialog for selecting a single file:  
-
-```html
-<a href="select_file.dialog">Select existing file</a>
-```
-
-```javascript
-const select_file = {}
-
-select_file.type = 'single-file'
-
-select_file.receiverFunction = function (file) {
-  const container = document.getElementById('single-file-test')
-  container.innerText = file
-}
-```

@@ -22,7 +22,6 @@ It is a C++ [Qt 5](https://www.qt.io/) application running local Perl scripts as
 * SETTINGS
   * [Global Settings API](./doc/SETTINGS.md#global-settings-api)
   * [Perl Scripts API](./doc/SETTINGS.md#perl-scripts-api)
-  * [Files and Folders Dialogs API](./doc/SETTINGS.md#files-and-folders-dialogs-api)
 * [History](#history)
 * [Thanks and Credits](./CREDITS.md)
 * [License](./LICENSE.md)
@@ -41,9 +40,9 @@ in the documentation of this project are to be interpreted as described in [RFC 
 ## Features
 
 * No limitation on how long a Perl script can run.
-* [Output from Perl scripts is seamlessly inserted in a web-like user interface.](./doc/SETTINGS.md#perl-scripts-api)
+* [Output from Perl scripts is seamlessly inserted in a web-like user interface.](./doc/SETTINGS.md)
 * Any version of Perl 5 can be used.
-* [Local full paths can be selected and passed to Perl scripts.](./doc/SETTINGS.md#selecting-files-and-folders)  
+* [Local full paths can be selected and passed to Perl scripts.](./doc/SETTINGS.md)  
 * [Optional user-provided labels for the JavaScript popup boxes](./doc/SETTINGS.md#html-page-api)
 * [Optional user-provided labels for the context menu](./doc/SETTINGS.md#html-page-api)
 * [Optional icon](./doc/FILES.md)

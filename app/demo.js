@@ -12,7 +12,7 @@
 // Dimitar D. Mitov, 2018 - 2019, 2023
 // https://github.com/ddmitov/perl-executing-browser-qtwebengine
 
-// Settings objects for Perl scripts:
+// Settings object for perl_info.pl:
 const perlInfo = {}
 
 perlInfo.scriptRelativePath = 'perl_scripts/perl_info.pl'
@@ -24,99 +24,67 @@ perlInfo.stdoutFunction = function (stdout) {
   document.getElementById('perl-info-button').style.display = 'none'
 }
 
+// Settings object for open_file.pl:
 const openFile = {}
 
 openFile.scriptRelativePath = 'perl_scripts/open_file.pl'
+
+openFile.scriptInput = 'dialog'
+
+openFile.dialog = {}
+openFile.dialog.type = 'single-file'
+// openFile.dialog.title = 'Select Single File'
 
 openFile.stdoutFunction = function (stdout) {
   displayTestResult('open-file', stdout)
 }
 
+// Settings object for new_file.pl:
 const newFile = {}
 
 newFile.scriptRelativePath = 'perl_scripts/new_file.pl'
+
+newFile.scriptInput = 'dialog'
+
+newFile.dialog = {}
+newFile.dialog.type = 'new-file-name'
+// newFile.dialog.title = 'New File'
 
 newFile.stdoutFunction = function (stdout) {
   displayTestResult('new-file', stdout)
 }
 
+// Settings object for open_files.pl:
 const openFiles = {}
 
 openFiles.scriptRelativePath = 'perl_scripts/open_files.pl'
+
+openFiles.scriptInput = 'dialog'
+
+openFiles.dialog = {}
+openFiles.dialog.type = 'multiple-files'
+// openFiles.dialog.title = 'Select Multiple Files'
 
 openFiles.stdoutFunction = function (stdout) {
   displayTestResult('open-files', stdout)
 }
 
+// Settings object for open_directory.pl:
 const openDirectory = {}
 
 openDirectory.scriptRelativePath = 'perl_scripts/open_directory.pl'
+
+openDirectory.scriptInput = 'dialog'
+
+openDirectory.dialog = {}
+openDirectory.dialog.type = 'directory'
+// openDirectory.dialog.title = 'Select Directory'
 
 openDirectory.stdoutFunction = function (stdout) {
   displayTestResult('open-directory', stdout)
 }
 
-// Settings objects for filesystem dialogs:
-const selectFile = {}
-
-selectFile.type = 'single-file'
-
-selectFile.receiverFunction = function (fileName) {
-  openFile.inputData = fileName
-
-  clearTestData()
-
-  const form = document.createElement('form')
-  form.setAttribute('action', 'openFile.script')
-  document.body.appendChild(form)
-  form.submit()
-}
-
-const newFilename = {}
-
-newFilename.type = 'new-file-name'
-
-newFilename.receiverFunction = function (fileName) {
-  newFile.inputData = fileName
-
-  clearTestData()
-
-  const form = document.createElement('form')
-  form.setAttribute('action', 'newFile.script')
-  document.body.appendChild(form)
-  form.submit()
-}
-
-const selectFiles = {}
-
-selectFiles.type = 'multiple-files'
-
-selectFiles.receiverFunction = function (fileNames) {
-  openFiles.inputData = fileNames
-
-  clearTestData()
-
-  const form = document.createElement('form')
-  form.setAttribute('action', 'openFiles.script')
-  document.body.appendChild(form)
-  form.submit()
-}
-
-const selectDirectory = {}
-
-selectDirectory.type = 'directory'
-
-selectDirectory.receiverFunction = function (directoryName) {
-  openDirectory.inputData = directoryName
-
-  clearTestData()
-
-  const form = document.createElement('form')
-  form.setAttribute('action', 'openDirectory.script')
-  document.body.appendChild(form)
-  form.submit()
-}
-
+// Helper functions:
 function clearTestData () {
   const container = document.getElementById('filesystem-tests')
 

@@ -80,14 +80,7 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
     }
 
     if (navType == QWebEnginePage::NavigationTypeLinkClicked) {
-        // Handle filesystem dialogs:
-        if (url.fileName().contains(".dialog")) {
-            qHandleDialogs(url.fileName().replace(".dialog", ""));
-
-            return false;
-        }
-
-        // Handle local Perl scripts after local link is clicked:
+        // Handle Perl scripts after link is clicked:
         if (url.fileName().contains(".script")) {
             qStartScript(url.fileName().replace(".script", ""));
 
@@ -95,7 +88,7 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
         }
     }
 
-    // Handle local Perl scripts after local form is submitted:
+    // Handle Perl scripts after form is submitted:
     if (navType == QWebEnginePage::NavigationTypeFormSubmitted) {
         if (url.fileName().contains(".script")) {
             qStartScript(url.fileName().replace(".script", ""));
