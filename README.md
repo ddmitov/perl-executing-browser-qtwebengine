@@ -13,12 +13,8 @@ It is a C++ [Qt 5](https://www.qt.io/) application running local Perl scripts as
 * [Features](#features)
 * [Security](#security)
 * [Limitations](#limitations)
-* REQUIREMENTS
-  * [Compile-Time Requirements](./doc/REQUIREMENTS.md#compile-time-requirements)
-  * [Runtime Requirements](./doc/REQUIREMENTS.md#runtime-requirements)
-* FILES AND FOLDERS
-  * [Application Executable](./doc/FILES.md#application-executable)
-  * [Application Files and Folders](./doc/FILES.md#application-files-and-folders)
+* [Requirements](./doc/REQUIREMENTS.md)
+* [Files and Folders](./doc/FILES.md)
 * SETTINGS
   * [Global Settings API](./doc/SETTINGS.md#global-settings-api)
   * [Perl Scripts API](./doc/SETTINGS.md#perl-scripts-api)
@@ -40,9 +36,9 @@ in the documentation of this project are to be interpreted as described in [RFC 
 ## Features
 
 * No limitation on how long a Perl script can run.
-* [Output from Perl scripts is seamlessly inserted in a web-like user interface.](./doc/SETTINGS.md)
+* Output from Perl scripts is seamlessly inserted in a web-like user interface.
 * Any version of Perl 5 can be used.
-* [Local full paths can be selected and passed to Perl scripts.](./doc/SETTINGS.md)  
+* [Local full paths can be selected and passed to Perl scripts.](./doc/SETTINGS.md#perl-scripts-api)
 * [Optional user-provided labels for the JavaScript popup boxes](./doc/SETTINGS.md#html-page-api)
 * [Optional user-provided labels for the context menu](./doc/SETTINGS.md#html-page-api)
 * [Optional icon](./doc/FILES.md)
