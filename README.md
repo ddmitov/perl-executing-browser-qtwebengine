@@ -16,7 +16,7 @@ It is a C++ [Qt 5](https://www.qt.io/) application running local Perl scripts as
 * [Requirements](./doc/REQUIREMENTS.md)
 * [Files and Folders](./doc/FILES.md)
 * SETTINGS
-  * [Global Settings API](./doc/SETTINGS.md#global-settings-api)
+  * [Page Settings API](./doc/SETTINGS.md#page-settings-api)
   * [Perl Scripts API](./doc/SETTINGS.md#perl-scripts-api)
 * [History](#history)
 * [Thanks and Credits](./CREDITS.md)

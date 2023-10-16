@@ -21,6 +21,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QWebEngineFullScreenRequest>
 
+#include "file-reader.h"
 #include "webengine-view.h"
 
 // ==============================

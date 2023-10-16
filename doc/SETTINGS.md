@@ -1,13 +1,11 @@
 # Perl Executing Browser QtWebEngine - Settings
 
-## Global Settings API
+## Page Settings API
 
-All global PEB settings are stored in a JavaScript object, which must be named ``pebSettings``.
+All optional PEB page settings are stored in a JavaScript object, which must be named ``pebSettings``.
 
 ```javascript
 const pebSettings = {}
-
-pebSettings.perlInterpreter = 'perl/bin/perl'
 
 pebSettings.cutLabel = "Custom Cut Label"
 pebSettings.copyLabel = "Custom Copy Label"
@@ -20,15 +18,7 @@ pebSettings.yesLabel = "Custom Yes Label"
 pebSettings.noLabel = "Custom No Label"
 ```
 
-If ``pebSettings.perlInterpreter`` is not defined, the PEB Perl interpreter is the first Perl interpreter on PATH.  
-
 The ``pebSettings`` JavaScript object may have the following properties:
-
-* **perlInterpreter**  
-  ``String`` for the relative path of a Perl interpreter used by PEB  
-  The relative path of a Perl interpreter is converted to a full path using the  
-  ``{PEB_executable_directory}/app`` as a root folder.  
-  If a relocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
 
 * **cutLabel**  
   ``String`` displayed as a label for the 'Cut' action on context menus.
@@ -73,12 +63,12 @@ There are two methods to start a local Perl script:
   </form>
   ```
 
-An example of a JavaScript settings object for a Perl script run by PEB:  
+A minimal example of a JavaScript settings object for a Perl script run by PEB:  
 
 ```javascript
 const example = {}
 
-example.scriptRelativePath = 'perl/test.pl'
+example.scriptRelativePath = 'relative/path/to/script.pl'
 
 example.stdoutFunction = function (stdout) {
   const container = document.getElementById('tests')
@@ -95,11 +85,6 @@ A JavaScript settings object for a Perl script run by PEB must have the followin
   ``{PEB_executable_directory}/app`` as a root folder.  
   PEB does not check filename extensions or shebang lines of Perl scripts.  
   Scripts without filename extensions can also be used.  
-  *This object property is mandatory.*  
-
-  ```javascript
-  scriptRelativePath = 'relative/path/to/script.pl'
-  ```
 
 * **stdoutFunction**  
   executed every time data is available on STDOUT  
@@ -126,6 +111,13 @@ A JavaScript settings object for a Perl script run by PEB must have the followin
   ```
 
 A JavaScript settings object for a Perl script run by PEB may also have the following additional properties:
+
+* **perlInterpreter**  
+  ``String`` for the relative path of a Perl interpreter used by PEB  
+
+  The relative path of a Perl interpreter is converted to a full path using the  
+  ``{PEB_executable_directory}/app`` as a root folder.  
+  If a relocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
 
 * **scriptInput**  
   ``String``  

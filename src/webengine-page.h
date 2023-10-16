@@ -19,15 +19,11 @@
 
 #include <QFileDialog>
 #include <QInputDialog>
-#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
-#include <QRegularExpression>
-#include <QUrl>
 #include <QWebEnginePage>
 
-#include "file-reader.h"
 #include "script-handler.h"
 
 // ==============================
@@ -47,16 +43,20 @@ public slots:
     void qPageLoadedSlot(bool ok)
     {
         if (ok) {
-            // Send signal that a page is loaded:
+            // Send signal that page is loaded:
             emit pageLoadedSignal();
 
+            QString pageSettingsJavaScript =
+                    "if (typeof pebSettings !== 'undefined') {"
+                        "JSON.stringify(pebSettings)"
+                    "}";
+
             // Get page settings:
-            QPage::runJavaScript(QString("JSON.stringify(window.pebSettings)"),
+            QPage::runJavaScript(pageSettingsJavaScript,
                                  0,
-                                 [&]
-                                 (QVariant result)
+                                 [&](QVariant pageSettingsJsResult)
             {
-                qGetPageSettings(result);
+                qGetPageSettings(pageSettingsJsResult);
             }
             );
         }
@@ -65,66 +65,56 @@ public slots:
     // ==============================
     // Page settings:
     // ==============================
-    void qGetPageSettings(QVariant settingsJsResult) {
-        QJsonDocument settingsJsonDocument =
-                QJsonDocument::fromJson(settingsJsResult.toString().toUtf8());
+    void qGetPageSettings(QVariant pageSettingsJsResult) {
+        QJsonDocument pageSettingsJsonDoc =
+                QJsonDocument::fromJson(
+                    pageSettingsJsResult.toString().toUtf8()
+                    );
 
-        if (!settingsJsonDocument.isEmpty()) {
-            QJsonObject settingsJsonObject = settingsJsonDocument.object();
+        if (!pageSettingsJsonDoc.isEmpty()) {
+            QJsonObject pageSettings = pageSettingsJsonDoc.object();
 
-            // Get Perl interpreter:
-            QString perlInterpreter;
-            QString perlInterpreterSetting =
-                    settingsJsonObject["perlInterpreter"].toString();
-
-            if (perlInterpreterSetting.length() > 0) {
-                perlInterpreter =
-                        qApp->property("appDir").toString() + '/' +
-                        settingsJsonObject["perlInterpreter"].toString();
+            if (pageSettings["okLabel"].toString().length() > 0) {
+                okLabel = pageSettings["okLabel"].toString();
             }
 
-            if (perlInterpreterSetting.length() == 0) {
-                perlInterpreter = "perl";
+            if (pageSettings["cancelLabel"].toString().length() > 0) {
+                cancelLabel = pageSettings["cancelLabel"].toString();
             }
 
-            qApp->setProperty("perlInterpreter", perlInterpreter);
-
-            // Get dialog and context menu labels:
-            if (settingsJsonObject["okLabel"].toString().length() > 0) {
-                okLabel = settingsJsonObject["okLabel"].toString();
+            if (pageSettings["yesLabel"].toString().length() > 0) {
+                yesLabel = pageSettings["yesLabel"].toString();
             }
 
-            if (settingsJsonObject["cancelLabel"].toString().length() > 0) {
-                cancelLabel = settingsJsonObject["cancelLabel"].toString();
+            if (pageSettings["noLabel"].toString().length() > 0) {
+                noLabel = pageSettings["noLabel"].toString();
             }
 
-            if (settingsJsonObject["yesLabel"].toString().length() > 0) {
-                yesLabel = settingsJsonObject["yesLabel"].toString();
+            if (pageSettings["cutLabel"].toString().length() > 0) {
+                qApp->setProperty(
+                            "cutLabel",
+                            pageSettings["cutLabel"].toString()
+                        );
             }
 
-            if (settingsJsonObject["noLabel"].toString().length() > 0) {
-                noLabel = settingsJsonObject["noLabel"].toString();
+            if (pageSettings["copyLabel"].toString().length() > 0) {
+                qApp->setProperty(
+                            "copyLabel",
+                            pageSettings["copyLabel"].toString()
+                        );
             }
 
-            if (settingsJsonObject["cutLabel"].toString().length() > 0) {
-                qApp->setProperty("cutLabel",
-                                  settingsJsonObject["cutLabel"].toString());
+            if (pageSettings["pasteLabel"].toString().length() > 0) {
+                qApp->setProperty(
+                            "pasteLabel",
+                            pageSettings["pasteLabel"].toString()
+                        );
             }
 
-            if (settingsJsonObject["copyLabel"].toString().length() > 0) {
-                qApp->setProperty("copyLabel",
-                                  settingsJsonObject["copyLabel"].toString());
-            }
-
-            if (settingsJsonObject["pasteLabel"].toString().length() > 0) {
-                qApp->setProperty("pasteLabel",
-                                  settingsJsonObject["pasteLabel"].toString());
-            }
-
-            if (settingsJsonObject["selectAllLabel"].toString().length() > 0) {
+            if (pageSettings["selectAllLabel"].toString().length() > 0) {
                 qApp->setProperty(
                             "selectAllLabel",
-                            settingsJsonObject["selectAllLabel"].toString());
+                            pageSettings["selectAllLabel"].toString());
             }
         }
     }
@@ -137,6 +127,7 @@ public slots:
         QString type = dialogJsonObject["type"].toString();
 
         QFileDialog inodesDialog (qApp->activeWindow());
+
         inodesDialog.setParent(qApp->activeWindow());
         inodesDialog.setWindowModality(Qt::WindowModal);
         inodesDialog.setViewMode(QFileDialog::Detail);
@@ -174,7 +165,8 @@ public slots:
                 inodesFormatted.append(";");
             }
 
-            inodesFormatted.replace(QRegularExpression(";$"), "");
+            // Remove the final ";" from the output:
+            inodesFormatted.replace(-1, 1, "");
         }
 
         return inodesFormatted;
@@ -186,13 +178,9 @@ public slots:
 
     void qStartScript(QString scriptObjectName)
     {
-        QString scriptSettingsJavaScript =
-                "JSON.stringify(" + scriptObjectName + ")";
-
-        QPage::runJavaScript(scriptSettingsJavaScript,
+        QPage::runJavaScript("JSON.stringify(" + scriptObjectName + ")",
                              0,
-                             [scriptObjectName, this]
-                             (QVariant scriptSettings)
+                             [scriptObjectName, this](QVariant scriptSettings)
         {
             QJsonDocument scriptJsonDocument =
                     QJsonDocument::fromJson(scriptSettings.toString().toUtf8());
@@ -219,6 +207,7 @@ public slots:
                                  SLOT(qDisplayScriptErrorsSlot(QString))
                                  );
 
+                // Get script input, if any:
                 QString scriptInput =
                         scriptJsonObject["scriptInput"].toString();
 
@@ -230,10 +219,8 @@ public slots:
 
                 if (scriptInput.length() > 0) {
                     if (scriptHandler->process.isOpen()) {
-                        scriptHandler->process
-                                .write(scriptInput.toUtf8());
-                        scriptHandler->process
-                                .write(QString("\n").toLatin1());
+                        scriptHandler->process.write(scriptInput.toUtf8());
+                        scriptHandler->process.write(QString("\n").toLatin1());
                     }
                 }
             }
@@ -243,10 +230,7 @@ public slots:
 
     void qDisplayScriptOutputSlot(QString id, QString output)
     {
-        QString outputInsertionJavaScript =
-                id + ".stdoutFunction('" + output + "'); null";
-
-        QPage::runJavaScript(outputInsertionJavaScript, 0);
+        QPage::runJavaScript(id + ".stdoutFunction('" + output + "')", 0);
     }
 
     void qDisplayScriptErrorsSlot(QString errors)
@@ -257,10 +241,7 @@ public slots:
             errors.replace("\n", "\\n");
             errors.replace("\r", "");
 
-            QString perlScriptErrorMessage =
-                    "console.error('" + errors + "'); null";
-
-            QPage::runJavaScript(perlScriptErrorMessage, 0);
+            QPage::runJavaScript("console.error('" + errors + "')", 0);
         }
     }
 
