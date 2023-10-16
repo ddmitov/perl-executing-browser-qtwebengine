@@ -2,7 +2,7 @@
 
 ## Page Settings API
 
-All optional PEB page settings are stored in a JavaScript object, which must be named ``pebSettings``.
+All optional PEB page settings are stored in a JavaScript object which must be named ``pebSettings``.
 
 ```javascript
 const pebSettings = {}
@@ -81,13 +81,12 @@ A JavaScript settings object for a Perl script run by PEB must have the followin
 * **scriptRelativePath**  
   ``String`` for the relative path of a Perl script run by PEB  
 
-  The relative path of a script is converted to a full path using the  
-  ``{PEB_executable_directory}/app`` as a root folder.  
-  PEB does not check filename extensions or shebang lines of Perl scripts.  
-  Scripts without filename extensions can also be used.  
+  The relative path of a script is converted to a full path using the ``{PEB_executable_directory}/app`` as a root folder.  
+  PEB does not check filename extensions or shebang lines of Perl scripts. Scripts without filename extensions can also be used.  
 
 * **stdoutFunction**  
-  executed every time data is available on STDOUT  
+  ``function`` executed every time data is available on Pel script STDOUT  
+
   The only parameter passed to the ``stdoutFunction`` is the STDOUT ``String``.  
 
   An example of an immediate STDOUT data display without accumulation:
@@ -99,7 +98,7 @@ A JavaScript settings object for a Perl script run by PEB must have the followin
   ```
 
   Please note that many Perl scripts do not give their STDOUT data in a single shot.  
-  If several chunks of output have to be combined, this should be done at JavaScript level:  
+  If several chunks of output have to be combined, this must be done at JavaScript level:  
 
   ```javascript
   let accumulatedOutput
@@ -113,16 +112,16 @@ A JavaScript settings object for a Perl script run by PEB must have the followin
 A JavaScript settings object for a Perl script run by PEB may also have the following additional properties:
 
 * **perlInterpreter**  
-  ``String`` for the relative path of a Perl interpreter used by PEB  
+  ``String`` for the relative path of a relocatable Perl interpreter used by PEB  
 
-  The relative path of a Perl interpreter is converted to a full path using the  
-  ``{PEB_executable_directory}/app`` as a root folder.  
+  The relative path of a relocatable Perl interpreter is converted to a full path using the  
+  ``{PEB_executable_directory}/app`` path as a root folder.  
   If a relocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
 
 * **scriptInput**  
   ``String``  
 
-  ``inputData`` is written on script STDIN.  
+  ``inputData`` is written on Perl script STDIN.  
 
   ``scriptInput = 'dialog'`` means that a file or directory selection dialog defined by the ``dialog.type`` property will be displayed before starting a Perl script.
 
