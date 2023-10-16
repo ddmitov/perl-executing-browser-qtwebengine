@@ -52,10 +52,8 @@ public slots:
     // ==============================
     // Filesystem dialogs:
     // ==============================
-    QString displayInodeDialog(QJsonObject dialogJsonObject)
+    QString displayInodeDialog(QString filesystemInput)
     {
-        QString type = dialogJsonObject["type"].toString();
-
         QFileDialog inodesDialog(qApp->activeWindow());
 
         inodesDialog.setParent(qApp->activeWindow());
@@ -63,19 +61,19 @@ public slots:
         inodesDialog.setWindowModality(Qt::WindowModal);
         inodesDialog.setViewMode(QFileDialog::Detail);
 
-        if (type == "single-file") {
+        if (filesystemInput == "single-file") {
             inodesDialog.setFileMode(QFileDialog::AnyFile);
         }
 
-        if (type == "new-file-name") {
+        if (filesystemInput == "new-file-name") {
             inodesDialog.setAcceptMode(QFileDialog::AcceptSave);
         }
 
-        if (type == "multiple-files") {
+        if (filesystemInput == "multiple-files") {
             inodesDialog.setFileMode(QFileDialog::ExistingFiles);
         }
 
-        if (type == "directory") {
+        if (filesystemInput == "directory") {
             inodesDialog.setFileMode(QFileDialog::Directory);
         }
 
@@ -140,10 +138,11 @@ public slots:
                 QString scriptInput =
                         scriptJsonObject["scriptInput"].toString();
 
-                if (scriptInput == "dialog") {
-                    QJsonObject dialog = scriptJsonObject["dialog"].toObject();
+                QString filesystemInput =
+                        scriptJsonObject["filesystemInput"].toString();
 
-                    scriptInput = displayInodeDialog(dialog);
+                if (filesystemInput.length() > 0) {
+                    scriptInput = displayInodeDialog(filesystemInput);
                 }
 
                 if (scriptInput.length() > 0) {

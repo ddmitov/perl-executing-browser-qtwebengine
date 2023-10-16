@@ -21,6 +21,7 @@ perlInfo.stdoutFunction = function (stdout) {
   const newElement = document.createElement('pre')
   newElement.innerHTML = stdout
   document.getElementById('perl-info-output').appendChild(newElement)
+
   document.getElementById('perl-info-button').style.display = 'none'
 }
 
@@ -29,14 +30,10 @@ const openFile = {}
 
 openFile.scriptRelativePath = 'perl_scripts/open_file.pl'
 
-openFile.scriptInput = 'dialog'
-
-openFile.dialog = {}
-openFile.dialog.type = 'single-file'
-// openFile.dialog.title = 'Select Single File'
+openFile.filesystemInput = 'single-file'
 
 openFile.stdoutFunction = function (stdout) {
-  displayTestResult('open-file', stdout)
+  displayTestResult(stdout)
 }
 
 // Settings object for new_file.pl:
@@ -44,14 +41,10 @@ const newFile = {}
 
 newFile.scriptRelativePath = 'perl_scripts/new_file.pl'
 
-newFile.scriptInput = 'dialog'
-
-newFile.dialog = {}
-newFile.dialog.type = 'new-file-name'
-// newFile.dialog.title = 'New File'
+newFile.filesystemInput = 'new-file-name'
 
 newFile.stdoutFunction = function (stdout) {
-  displayTestResult('new-file', stdout)
+  displayTestResult(stdout)
 }
 
 // Settings object for open_files.pl:
@@ -59,14 +52,10 @@ const openFiles = {}
 
 openFiles.scriptRelativePath = 'perl_scripts/open_files.pl'
 
-openFiles.scriptInput = 'dialog'
-
-openFiles.dialog = {}
-openFiles.dialog.type = 'multiple-files'
-// openFiles.dialog.title = 'Select Multiple Files'
+openFiles.filesystemInput = 'multiple-files'
 
 openFiles.stdoutFunction = function (stdout) {
-  displayTestResult('open-files', stdout)
+  displayTestResult(stdout)
 }
 
 // Settings object for open_directory.pl:
@@ -74,36 +63,25 @@ const openDirectory = {}
 
 openDirectory.scriptRelativePath = 'perl_scripts/open_directory.pl'
 
-openDirectory.scriptInput = 'dialog'
-
-openDirectory.dialog = {}
-openDirectory.dialog.type = 'directory'
-// openDirectory.dialog.title = 'Select Directory'
+openDirectory.filesystemInput = 'directory'
 
 openDirectory.stdoutFunction = function (stdout) {
-  displayTestResult('open-directory', stdout)
+  displayTestResult(stdout)
 }
 
 // Helper functions:
+function displayTestResult (stdout) {
+  clearTestData()
+
+  const newElement = document.createElement('pre')
+  newElement.innerHTML = stdout
+  document.getElementById('filesystem-tests').appendChild(newElement)
+}
+
 function clearTestData () {
   const container = document.getElementById('filesystem-tests')
 
   while (container.firstChild) {
     container.removeChild(container.firstChild)
-  }
-}
-
-function displayTestResult (id, stdout) {
-  const existingElement = document.getElementById(id)
-
-  if (existingElement === null) {
-    clearTestData()
-
-    const newElement = document.createElement('pre')
-    newElement.id = id
-    newElement.innerHTML = stdout
-    document.getElementById('filesystem-tests').appendChild(newElement)
-  } else {
-    existingElement.innerHTML = existingElement.innerHTML + stdout
   }
 }

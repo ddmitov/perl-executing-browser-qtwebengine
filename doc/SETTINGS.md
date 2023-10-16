@@ -74,9 +74,9 @@ A JavaScript settings object for a Perl script run by PEB may also have the foll
 
   ``scriptInput`` is written on Perl script STDIN.  
 
-  ``scriptInput = 'dialog'`` means that a file or directory selection dialog defined by the ``dialog.type`` property will be displayed before starting a Perl script.
+  If ``filesystemInput`` is defined, a file or directory selection dialog will be displayed before starting a Perl script and the sleceted files or folders will be the Perl script input.
 
-* **dialog.type**  
+* **filesystemInput**  
   ``String`` containing one of the following:
 
   * ``single-file``  
