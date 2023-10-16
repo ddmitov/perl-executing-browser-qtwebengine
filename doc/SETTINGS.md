@@ -1,6 +1,6 @@
 # Perl Executing Browser QtWebEngine - Settings
 
-Every Perl script run by PEB must have a JavaScript settings object with an arbitrary name and fixed-name object properties. The name of the JavaScript settings object with a ``.script`` extension forms a pseudo link used to start the corresponding Perl script.  
+Every Perl script run by PEB must have a JavaScript settings object with an arbitrary object name and fixed-name object properties. The name of the JavaScript settings object with a ``.script`` extension forms a pseudo link used to start the corresponding Perl script.  
 
 There are two methods to start a local Perl script:  
 
@@ -67,7 +67,7 @@ A JavaScript settings object for a Perl script run by PEB may also have the foll
 * **perlInterpreter**  
   ``String`` for the relative path of a relocatable Perl interpreter used by PEB  
 
-  The relative path of a relocatable Perl interpreter is converted to a full path using the ``{PEB_executable_directory}/app`` path as a root folder. If a relocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
+  The relative path of a relocatable Perl interpreter is converted to a full path using the ``{PEB_executable_directory}/app`` path as a root folder. If a relTo compile PEB ocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
 
 * **scriptInput**  
   ``String``  
