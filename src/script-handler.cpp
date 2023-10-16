@@ -21,13 +21,14 @@
 // ==============================
 // SCRIPT HANDLER CONSTRUCTOR:
 // ==============================
-QScriptHandler::QScriptHandler(QJsonObject scriptJsonObject)
+QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
     : QObject(0)
 {
-    id = scriptJsonObject["id"].toString();
+    // Script ID:
+    id = scriptId;
 
     // Set Perl script full path:
-    scriptFullFilePath =
+    QString scriptFullFilePath =
             qApp->property("appDir").toString() + "/" +
             scriptJsonObject["scriptRelativePath"].toString();
 

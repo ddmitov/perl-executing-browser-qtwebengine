@@ -30,6 +30,7 @@ class QFileReader : public QObject
 public:
 
     explicit QFileReader(QString filePath);
+
     QString fileContents;
 };
 

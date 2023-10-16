@@ -48,13 +48,13 @@ public slots:
 
 private:
 
-    QString scriptFullFilePath;
+    QString id;
 
 public:
 
-    QScriptHandler(QJsonObject);
+    QScriptHandler(QString, QJsonObject);
+
     QProcess process;
-    QString id;
 };
 
 #endif // SCRIPT_HANDLER_H

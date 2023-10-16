@@ -22,6 +22,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
+#include <QRegExp>
 #include <QWebEnginePage>
 
 #include "script-handler.h"
@@ -122,13 +123,14 @@ public slots:
     // ==============================
     // Filesystem dialogs:
     // ==============================
-    QString qDisplayDialog(QJsonObject dialogJsonObject)
+    QString displayInodeDialog(QJsonObject dialogJsonObject)
     {
         QString type = dialogJsonObject["type"].toString();
 
-        QFileDialog inodesDialog (qApp->activeWindow());
+        QFileDialog inodesDialog(qApp->activeWindow());
 
         inodesDialog.setParent(qApp->activeWindow());
+        inodesDialog.setOption(QFileDialog::DontUseNativeDialog);
         inodesDialog.setWindowModality(Qt::WindowModal);
         inodesDialog.setViewMode(QFileDialog::Detail);
 
@@ -165,8 +167,8 @@ public slots:
                 inodesFormatted.append(";");
             }
 
-            // Remove the final ";" from the output:
-            inodesFormatted.replace(-1, 1, "");
+            // Remove the final ";" from filesystem dialog output:
+            inodesFormatted.replace(QRegExp(";$"), "");
         }
 
         return inodesFormatted;
@@ -189,9 +191,7 @@ public slots:
                 QJsonObject scriptJsonObject = scriptJsonDocument.object();
 
                 QScriptHandler *scriptHandler =
-                        new QScriptHandler(scriptJsonObject);
-
-                scriptHandler->id = scriptObjectName;
+                        new QScriptHandler(scriptObjectName, scriptJsonObject);
 
                 QObject::connect(scriptHandler,
                                  SIGNAL(displayScriptOutputSignal(QString,
@@ -214,7 +214,7 @@ public slots:
                 if (scriptInput == "dialog") {
                     QJsonObject dialog = scriptJsonObject["dialog"].toObject();
 
-                    scriptInput = qDisplayDialog(dialog);
+                    scriptInput = displayInodeDialog(dialog);
                 }
 
                 if (scriptInput.length() > 0) {

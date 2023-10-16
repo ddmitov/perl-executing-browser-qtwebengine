@@ -27,9 +27,12 @@ QFileReader::QFileReader(QString filePath)
     : QObject(0)
 {
     QString fileName(filePath);
+
     QFile file(fileName);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
+
     QTextStream fileStream(&file);
     fileContents = fileStream.readAll();
+
     file.close();
 }

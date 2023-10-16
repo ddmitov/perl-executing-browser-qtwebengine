@@ -19,7 +19,6 @@
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
-#include <QWebEngineFullScreenRequest>
 
 #include "file-reader.h"
 #include "webengine-view.h"
@@ -56,6 +55,7 @@ public slots:
 public:
 
     QWebEngineView *webViewWidget;
+
     explicit QMainBrowserWindow(QWidget *parent = 0);
 };
 
