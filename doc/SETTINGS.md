@@ -74,7 +74,7 @@ A JavaScript settings object for a Perl script run by PEB may also have the foll
 
   ``scriptInput`` is written on the Perl script STDIN.  
 
-  If ``filesystemInput`` is defined, a file or directory selection dialog will be displayed before starting the Perl script and the sleceted files or folders are written on the Perl script STDIN.
+  If ``filesystemInput`` is defined, a file or directory selection dialog is displayed before starting the Perl script and the selected files or folders are written on the Perl script STDIN.
 
 * **filesystemInput**  
   ``String`` containing one of the following:
