@@ -1,6 +1,6 @@
 # Perl Executing Browser QtWebEngine - Settings
 
-Every Perl script run by PEB must have a JavaScript settings object with an arbitrary name and fixed object properties. The name of the JavaScript settings object with a ``.script`` extension forms a pseudo link used to start the corresponding Perl script.  
+Every Perl script run by PEB must have a JavaScript settings object with an arbitrary name and fixed-name object properties. The name of the JavaScript settings object with a ``.script`` extension forms a pseudo link used to start the corresponding Perl script.  
 
 There are two methods to start a local Perl script:  
 

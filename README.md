@@ -34,9 +34,9 @@ in the documentation of this project are to be interpreted as described in [RFC 
 ## Features
 
 * No limitation on how long a Perl script can run.
-* Output from Perl scripts is seamlessly inserted in a web-like user interface.
+* [Output from Perl scripts is seamlessly inserted in a web-like user interface.](./doc/SETTINGS.md)
 * Any version of Perl 5 can be used.
-* [Local full paths can be selected and passed to Perl scripts.](./doc/SETTINGS.md#perl-scripts-api)
+* [Local full paths can be selected and passed to Perl scripts.](./doc/SETTINGS.md)
 * [Optional icon](./doc/FILES.md)
 
 ## Security

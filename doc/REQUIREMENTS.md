@@ -4,9 +4,9 @@
 
 * Qt development bundle versions 5.9 - 5.12
 
-* QtWebEngine libraries and headers  
+* QtWebEngine headers and libraries
 
-To compile PEB run the following commands in the root directory of the PEB project:
+Run the following commands in the root directory of the PEB project to compile PEB:
 
 ```bash
 cd src
