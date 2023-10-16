@@ -1,12 +1,6 @@
-# Perl Executing Browser QtWebEngine - Files and Folders
+# Perl Executing Browser QtWebEngine - Application Directory
 
-## Application Executable
-
-The executable binary file of the browser, ``peb`` by default, can be renamed with no restrictions or additional adjustments. It can take the name of any PEB-based application it is going to run.
-
-## Application Directory
-
-PEB is created to work from any directory without installation and all file paths used by PEB are relative to the directory of the PEB executable, labeled as ``{PEB_executable_directory}`` within this documentation.  
+PEB is created to work from any directory and all file paths used by PEB are relative to the directory of the PEB executable, labeled as ``{PEB_executable_directory}`` within this documentation.  
 
 A minimal ``{PEB_executable_directory}`` looks like this:
 

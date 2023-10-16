@@ -47,9 +47,15 @@ public slots:
         webViewWidget->setHtml(htmlErrorContents);
     }
 
-    void setMainWindowTitleSlot(QString title)
+    void qSetMainWindowTitleSlot(QString title)
     {
         setWindowTitle(title);
+    }
+
+    void closeEvent(QCloseEvent *event)
+    {
+        this->webViewWidget->page()->deleteLater();
+        event->accept();
     }
 
 public:

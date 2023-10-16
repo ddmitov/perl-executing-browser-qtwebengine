@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     QObject::connect(mainWindow.webViewWidget,
                      SIGNAL(titleChanged(QString)),
                      &mainWindow,
-                     SLOT(setMainWindowTitleSlot(QString))
+                     SLOT(qSetMainWindowTitleSlot(QString))
                      );
 
     // Start page:
