@@ -71,7 +71,7 @@ const example = {}
 example.scriptRelativePath = 'relative/path/to/script.pl'
 
 example.stdoutFunction = function (stdout) {
-  const container = document.getElementById('tests')
+  const container = document.getElementById('DOM-element-id')
   container.innerText = stdout
 }
 ```
@@ -114,14 +114,13 @@ A JavaScript settings object for a Perl script run by PEB may also have the foll
 * **perlInterpreter**  
   ``String`` for the relative path of a relocatable Perl interpreter used by PEB  
 
-  The relative path of a relocatable Perl interpreter is converted to a full path using the  
-  ``{PEB_executable_directory}/app`` path as a root folder.  
+  The relative path of a relocatable Perl interpreter is converted to a full path using the ``{PEB_executable_directory}/app`` path as a root folder.  
   If a relocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
 
 * **scriptInput**  
   ``String``  
 
-  ``inputData`` is written on Perl script STDIN.  
+  ``scriptInput`` is written on Perl script STDIN.  
 
   ``scriptInput = 'dialog'`` means that a file or directory selection dialog defined by the ``dialog.type`` property will be displayed before starting a Perl script.
 
