@@ -33,12 +33,12 @@ example.stdoutFunction = function (stdout) {
 A JavaScript settings object for a Perl script run by PEB must have the following basic properties:
 
 * **scriptRelativePath**  
-  ``String`` for the relative path of a Perl script run by PEB  
+  ``String`` for the relative path of the Perl script run by PEB  
 
-  The relative path of a script is converted to a full path using the ``{PEB_executable_directory}/app`` as a root folder. PEB does not check filename extensions or shebang lines of Perl scripts. Scripts without filename extensions can also be used.  
+  The relative path of the script is converted to a full path using the ``{PEB_executable_directory}/app`` directory as a root folder. PEB does not check filename extensions or shebang lines of Perl scripts. Scripts without filename extensions can also be used.  
 
 * **stdoutFunction**  
-  ``function`` executed every time data is available on Pel script STDOUT  
+  ``function`` executed every time data is available on the Perl script STDOUT  
 
   The only parameter passed to the ``stdoutFunction`` is the STDOUT ``String``.  
 
@@ -72,21 +72,21 @@ A JavaScript settings object for a Perl script run by PEB may also have the foll
 * **scriptInput**  
   ``String``  
 
-  ``scriptInput`` is written on Perl script STDIN.  
+  ``scriptInput`` is written on the Perl script STDIN.  
 
-  If ``filesystemInput`` is defined, a file or directory selection dialog will be displayed before starting a Perl script and the sleceted files or folders will be the Perl script input.
+  If ``filesystemInput`` is defined, a file or directory selection dialog will be displayed before starting the Perl script and the sleceted files or folders are written on the Perl script STDIN.
 
 * **filesystemInput**  
   ``String`` containing one of the following:
 
   * ``single-file``  
-  The actual opening of an existing file is performed by a Perl script and not by PEB.  
+  The actual opening of an existing file is performed by the Perl script and not by PEB.  
 
   * ``multiple-files``  
   When multiple files are selected, different filenames are separated by a semicolon ``;``  
 
   * ``new-file-name``  
-  The actual creation of a new file is performed by a Perl script and not by PEB.  
+  The actual creation of a new file is performed by the Perl script and not by PEB.  
 
   * ``directory``  
   When ``directory`` type of dialog is used, an existing or a new directory may be selected.  
