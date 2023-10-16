@@ -46,77 +46,6 @@ public slots:
         if (ok) {
             // Send signal that page is loaded:
             emit pageLoadedSignal();
-
-            QString pageSettingsJavaScript =
-                    "if (typeof pebSettings !== 'undefined') {"
-                        "JSON.stringify(pebSettings)"
-                    "}";
-
-            // Get page settings:
-            QPage::runJavaScript(pageSettingsJavaScript,
-                                 0,
-                                 [&](QVariant pageSettingsJsResult)
-            {
-                qGetPageSettings(pageSettingsJsResult);
-            }
-            );
-        }
-    }
-
-    // ==============================
-    // Page settings:
-    // ==============================
-    void qGetPageSettings(QVariant pageSettingsJsResult) {
-        QJsonDocument pageSettingsJsonDoc =
-                QJsonDocument::fromJson(
-                    pageSettingsJsResult.toString().toUtf8()
-                    );
-
-        if (!pageSettingsJsonDoc.isEmpty()) {
-            QJsonObject pageSettings = pageSettingsJsonDoc.object();
-
-            if (pageSettings["okLabel"].toString().length() > 0) {
-                okLabel = pageSettings["okLabel"].toString();
-            }
-
-            if (pageSettings["cancelLabel"].toString().length() > 0) {
-                cancelLabel = pageSettings["cancelLabel"].toString();
-            }
-
-            if (pageSettings["yesLabel"].toString().length() > 0) {
-                yesLabel = pageSettings["yesLabel"].toString();
-            }
-
-            if (pageSettings["noLabel"].toString().length() > 0) {
-                noLabel = pageSettings["noLabel"].toString();
-            }
-
-            if (pageSettings["cutLabel"].toString().length() > 0) {
-                qApp->setProperty(
-                            "cutLabel",
-                            pageSettings["cutLabel"].toString()
-                        );
-            }
-
-            if (pageSettings["copyLabel"].toString().length() > 0) {
-                qApp->setProperty(
-                            "copyLabel",
-                            pageSettings["copyLabel"].toString()
-                        );
-            }
-
-            if (pageSettings["pasteLabel"].toString().length() > 0) {
-                qApp->setProperty(
-                            "pasteLabel",
-                            pageSettings["pasteLabel"].toString()
-                        );
-            }
-
-            if (pageSettings["selectAllLabel"].toString().length() > 0) {
-                qApp->setProperty(
-                            "selectAllLabel",
-                            pageSettings["selectAllLabel"].toString());
-            }
         }
     }
 
@@ -266,7 +195,7 @@ protected:
         alert.setWindowModality(Qt::WindowModal);
         alert.setWindowTitle(title());
         alert.setText(msg);
-        alert.setButtonText(QMessageBox::Ok, okLabel);
+        alert.setButtonText(QMessageBox::Ok, "OK");
         alert.setDefaultButton(QMessageBox::Ok);
 
         alert.exec();
@@ -287,8 +216,8 @@ protected:
         messageBox.setWindowTitle(title());
         messageBox.setText(msg);
         messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        messageBox.setButtonText(QMessageBox::Yes, yesLabel);
-        messageBox.setButtonText(QMessageBox::No, noLabel);
+        messageBox.setButtonText(QMessageBox::Yes, "Yes");
+        messageBox.setButtonText(QMessageBox::No, "No");
 
         return QMessageBox::Yes == messageBox.exec();
     }
@@ -312,8 +241,8 @@ protected:
         prompt.setLabelText(msg);
         prompt.setInputMode(QInputDialog::TextInput);
         prompt.setTextValue(defaultValue);
-        prompt.setOkButtonText(okLabel);
-        prompt.setCancelButtonText(cancelLabel);
+        prompt.setOkButtonText("OK");
+        prompt.setCancelButtonText("Cancel");
 
         if (prompt.exec() == QDialog::Accepted) {
             *result = prompt.textValue();
@@ -324,13 +253,6 @@ protected:
 
         return ok;
     }
-
-private:
-
-    QString okLabel;
-    QString cancelLabel;
-    QString yesLabel;
-    QString noLabel;
 
 public:
 

@@ -26,7 +26,6 @@
 QPage::QPage()
     : QWebEnginePage()
 {
-    // QWebEnginePage settings:
     QWebEngineSettings::globalSettings()->
             setDefaultTextEncoding(QString("utf-8"));
 
@@ -57,12 +56,6 @@ QPage::QPage()
                 this,
                 SLOT(qPageLoadedSlot(bool))
                 );
-
-    // Default JavaScript dialog labels:
-    okLabel = "Ok";
-    cancelLabel = "Cancel";
-    yesLabel = "Yes";
-    noLabel = "No";
 }
 
 // ==============================
@@ -79,8 +72,8 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
         return false;
     }
 
+    // Handle Perl scripts after link is clicked:
     if (navType == QWebEnginePage::NavigationTypeLinkClicked) {
-        // Handle Perl scripts after link is clicked:
         if (url.fileName().contains(".script")) {
             qStartScript(url.fileName().replace(".script", ""));
 

@@ -27,7 +27,7 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
     // Script ID:
     id = scriptId;
 
-    // Set Perl script full path:
+    // Perl script full path:
     QString scriptFullFilePath =
             qApp->property("appDir").toString() + "/" +
             scriptJsonObject["scriptRelativePath"].toString();
@@ -45,7 +45,7 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
                      SLOT(qScriptErrorsSlot())
                      );
 
-    // Set Perl script working directory:
+    // Perl script working directory:
     process.setWorkingDirectory(qApp->property("appDir").toString());
 
     // Get Perl interpreter:

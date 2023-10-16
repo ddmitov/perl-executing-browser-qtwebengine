@@ -23,13 +23,6 @@
 QViewWidget::QViewWidget()
     : QWebEngineView(0)
 {
-    // Default labels for the context menu:
-    qApp->setProperty("cutLabel", "Cut");
-    qApp->setProperty("copyLabel", "Copy");
-    qApp->setProperty("pasteLabel", "Paste");
-    qApp->setProperty("selectAllLabel", "Select All");
-
-    // Starting of a QPage instance:
     mainPage = new QPage();
 
     // Page Loaded signal and slot:
@@ -39,6 +32,5 @@ QViewWidget::QViewWidget()
                      SLOT(qPageLoadedSlot())
                      );
 
-    // Installing of the started QPage instance:
     setPage(mainPage);
 }

@@ -1,51 +1,5 @@
 # Perl Executing Browser QtWebEngine - Settings
 
-## Page Settings API
-
-All optional PEB page settings are stored in a JavaScript object which must be named ``pebSettings``.
-
-```javascript
-const pebSettings = {}
-
-pebSettings.cutLabel = "Custom Cut Label"
-pebSettings.copyLabel = "Custom Copy Label"
-pebSettings.pasteLabel = "Custom Paste Label"
-pebSettings.selectAllLabel = "Custom Select All Label"
-
-pebSettings.okLabel = "Custom Ok Label"
-pebSettings.cancelLabel = "Custom Cancel Label"
-pebSettings.yesLabel = "Custom Yes Label"
-pebSettings.noLabel = "Custom No Label"
-```
-
-The ``pebSettings`` JavaScript object may have the following properties:
-
-* **cutLabel**  
-  ``String`` displayed as a label for the 'Cut' action on context menus.
-
-* **copyLabel**  
-  ``String`` displayed as a label for the 'Copy' action on context menus.
-
-* **pasteLabel**  
-  ``String`` displayed as a label for the 'Paste' action on context menus.
-
-* **selectAllLabel**  
-  ``String`` displayed as a label for the 'Select' action on context menus.
-
-* **okLabel**  
-  ``String`` displayed as a label for the 'Ok' button on JavaScript Alert and Prompt popup boxes.
-
-* **cancelLabel**  
-  ``String`` displayed as a label for the 'Cancel' button on JavaScript Prompt popup box.
-
-* **yesLabel**  
-  ``String`` displayed as a label for the 'Yes' button on JavaScript Confirm popup box.
-
-* **noLabel**  
-  ``String`` displayed as a label for the 'No' button on JavaScript Confirm popup box.
-
-## Perl Scripts API
-
 Every Perl script run by PEB must have a JavaScript settings object with an arbitrary name and fixed object properties. The name of the JavaScript settings object with a ``.script`` extension forms a pseudo link used to start the corresponding Perl script.  
 
 There are two methods to start a local Perl script:  

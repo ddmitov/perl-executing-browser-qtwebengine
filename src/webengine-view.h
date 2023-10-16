@@ -18,7 +18,6 @@
 #define VIEW_H
 
 #include <QContextMenuEvent>
-#include <QDesktopWidget>
 #include <QMenu>
 #include <QWebEngineView>
 #include <QtWebEngineWidgets>
@@ -57,8 +56,7 @@ public slots:
                 contextMenuTest.selectedText().length() > 0) {
             QMenu menu;
 
-            QAction *copyAct =
-                    menu.addAction(qApp->property("copyLabel").toString());
+            QAction *copyAct = menu.addAction(QString("Copy"));
 
             QObject::connect(copyAct,
                              SIGNAL(triggered()),
@@ -72,8 +70,7 @@ public slots:
         if (contextMenuTest.isContentEditable()) {
             QMenu menu;
 
-            QAction *cutAct = menu
-                    .addAction(qApp->property("cutLabel").toString());
+            QAction *cutAct = menu.addAction(QString("Cut"));
 
             QObject::connect(cutAct,
                              SIGNAL(triggered()),
@@ -81,8 +78,7 @@ public slots:
                              SLOT(qCutAction())
                              );
 
-            QAction *copyAct = menu
-                    .addAction(qApp->property("copyLabel").toString());
+            QAction *copyAct = menu.addAction(QString("Copy"));
 
             QObject::connect(copyAct,
                              SIGNAL(triggered()),
@@ -90,8 +86,7 @@ public slots:
                              SLOT(qCopyAction())
                              );
 
-            QAction *pasteAct = menu
-                    .addAction(qApp->property("pasteLabel").toString());
+            QAction *pasteAct = menu.addAction(QString("Paste"));
 
             QObject::connect(pasteAct,
                              SIGNAL(triggered()),
@@ -99,8 +94,7 @@ public slots:
                              SLOT(qPasteAction())
                              );
 
-            QAction *selectAllAct = menu
-                    .addAction(qApp->property("selectAllLabel").toString());
+            QAction *selectAllAct = menu.addAction(QString("Select All"));
 
             QObject::connect(selectAllAct,
                              SIGNAL(triggered()),

@@ -15,9 +15,7 @@ It is a C++ [Qt 5](https://www.qt.io/) application running local Perl scripts as
 * [Limitations](#limitations)
 * [Requirements](./doc/REQUIREMENTS.md)
 * [Files and Folders](./doc/FILES.md)
-* SETTINGS
-  * [Page Settings API](./doc/SETTINGS.md#page-settings-api)
-  * [Perl Scripts API](./doc/SETTINGS.md#perl-scripts-api)
+* [Settings](./doc/SETTINGS.md)
 * [History](#history)
 * [Thanks and Credits](./CREDITS.md)
 * [License](./LICENSE.md)
@@ -39,15 +37,13 @@ in the documentation of this project are to be interpreted as described in [RFC 
 * Output from Perl scripts is seamlessly inserted in a web-like user interface.
 * Any version of Perl 5 can be used.
 * [Local full paths can be selected and passed to Perl scripts.](./doc/SETTINGS.md#perl-scripts-api)
-* [Optional user-provided labels for the JavaScript popup boxes](./doc/SETTINGS.md#html-page-api)
-* [Optional user-provided labels for the context menu](./doc/SETTINGS.md#html-page-api)
 * [Optional icon](./doc/FILES.md)
 
 ## Security
 
 * PEB does not need and does not implement a server process.
 * PEB Perl scripts are executed locally with no sandbox.
-* PEB can not access web content.
+* PEB does not access web content.
 
 ## Limitations
 
