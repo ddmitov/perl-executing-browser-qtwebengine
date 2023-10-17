@@ -43,8 +43,9 @@ in the documentation of this project are to be interpreted as described in [RFC 
 
 ## Security
 
-* PEB does not need and does not implement a server process.
-* PEB Perl scripts are executed locally with no sandbox.
+* PEB does not need, does not implement and does not use a server process.
+* PEB Perl scripts are only local scripts.
+* PEB Perl scripts are executed with no sandbox.
 * PEB does not access web content.
 
 ## Limitations
