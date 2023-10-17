@@ -2,7 +2,7 @@
 
 Every Perl script run by PEB must have a JavaScript configuration object with an arbitrary object name and fixed-name object properties. The name of the JavaScript configuration object with a ``.script`` extension forms a pseudo link used to start the corresponding Perl script.  
 
-There are two methods to start a Perl script:  
+There are two methods to start a Perl script in PEB:  
 
 * **Click a pseudo link:**  
   ```html
