@@ -13,11 +13,11 @@
 # https://github.com/ddmitov/perl-executing-browser-qtwebengine
 
 lessThan (QT_MAJOR_VERSION, 5) {
-    error ("Perl Executing Browser QtWebEngine requires minimal Qt version 5.6.")
+    error ("Perl Executing Browser QtWebEngine requires minimal Qt version 5.9.")
 }
 
-lessThan (QT_MINOR_VERSION, 6) {
-    error ("Perl Executing Browser QtWebEngine requires minimal Qt version 5.6.")
+lessThan (QT_MINOR_VERSION, 9) {
+    error ("Perl Executing Browser QtWebEngine requires minimal Qt version 5.9.")
 }
 
 # Binary basics:
