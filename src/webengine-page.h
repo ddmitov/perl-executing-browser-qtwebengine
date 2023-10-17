@@ -29,7 +29,6 @@
 
 // ==============================
 // WEB PAGE CLASS DEFINITION:
-// (QTWEBENGINE VERSION)
 // ==============================
 class QPage : public QWebEnginePage
 {

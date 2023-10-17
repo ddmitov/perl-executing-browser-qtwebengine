@@ -35,7 +35,7 @@ A JavaScript configuration object for a Perl script run by PEB must have the fol
 * **scriptRelativePath**  
   ``String`` for the relative path of the Perl script run by PEB  
 
-  The relative path of the script is converted to a full path using the ``{PEB_executable_directory}/app`` directory as a root folder. PEB does not check filename extensions or shebang lines of Perl scripts. Scripts without filename extensions can also be used.  
+  The relative path of the script is converted to a full path using the [PEB Application Directory](./doc/application-directory.md) as a root folder. PEB does not check filename extensions or shebang lines of Perl scripts. Scripts without filename extensions can also be used.  
 
 * **stdoutFunction**  
   ``function`` executed every time data is available on the Perl script STDOUT  
@@ -65,9 +65,9 @@ A JavaScript configuration object for a Perl script run by PEB must have the fol
 A JavaScript configuration object for a Perl script run by PEB may also have the following additional properties:
 
 * **perlInterpreter**  
-  ``String`` for the relative path of a relocatable Perl interpreter used by PEB  
+  ``String`` for the relative path of a [relocatable](https://github.com/skaji/relocatable-perl) Perl interpreter used by PEB  
 
-  The relative path of a relocatable Perl interpreter is converted to a full path using the ``{PEB_executable_directory}/app`` path as a root folder. If a relTo compile PEB ocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
+  The relative path of a relocatable Perl interpreter is converted to a full path using the [PEB Application Directory](./doc/application-directory.md) as a root folder. If a relTo compile PEB ocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
 
 * **scriptInput**  
   ``String``  

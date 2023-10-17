@@ -25,7 +25,6 @@
 
 // ==============================
 // MAIN WINDOW CLASS DEFINITION:
-// (QTWEBENGINE VERSION)
 // ==============================
 class QMainBrowserWindow : public QMainWindow
 {

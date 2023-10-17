@@ -6,7 +6,7 @@ PEB Application Directory looks like this:
 
 ```bash
 .
-├── {PEB_executable}
+├── peb
 └── app
     ├── index.html
     └── app.png

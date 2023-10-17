@@ -20,8 +20,7 @@
 #include "webengine-page.h"
 
 // ==============================
-// LOCAL PAGE CLASS CONSTRUCTOR:
-// (QTWEBENGINE VERSION)
+// PAGE CLASS CONSTRUCTOR:
 // ==============================
 QPage::QPage()
     : QWebEnginePage()

@@ -18,7 +18,6 @@
 
 // ==============================
 // VIEW CLASS CONSTRUCTOR:
-// (QTWEBENGINE VERSION)
 // ==============================
 QViewWidget::QViewWidget()
     : QWebEngineView(0)
