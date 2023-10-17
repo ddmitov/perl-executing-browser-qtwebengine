@@ -14,8 +14,6 @@
  https://github.com/ddmitov/perl-executing-browser-qtwebengine
 */
 
-#include <QtGlobal>
-
 #include "main-window.h"
 
 // ==============================
@@ -25,4 +23,11 @@ QMainBrowserWindow::QMainBrowserWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     webViewWidget = new QViewWidget();
+
+    // Signal and slot for setting the title of the main window:
+    QObject::connect(this->webViewWidget,
+                     SIGNAL(titleChanged(QString)),
+                     this,
+                     SLOT(qSetMainWindowTitleSlot(QString))
+                     );
 }

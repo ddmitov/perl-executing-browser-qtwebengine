@@ -38,11 +38,10 @@ A JavaScript configuration object for a Perl script run by PEB must have the fol
   The relative path of the script is converted to a full path using the [PEB Application Directory](./doc/application-directory.md) as a root folder. PEB does not check filename extensions or shebang lines of Perl scripts. Scripts without filename extensions can also be used.  
 
 * **stdoutFunction**  
-  ``function`` executed every time data is available on the Perl script STDOUT  
-
+  ``function`` executed by PEB every time data is available on the STDOUT of a Perl script  
   The only parameter passed to the ``stdoutFunction`` is the STDOUT ``String``.  
 
-  An example of an immediate STDOUT data display without accumulation:
+  An example of a ``stdoutFunction`` displaying immediately STDOUT data:
 
   ```javascript
   example.stdoutFunction = function (stdout) {

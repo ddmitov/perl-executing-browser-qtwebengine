@@ -15,7 +15,6 @@
 */
 
 #include <QWebEngineSettings>
-#include <QWebEngineProfile>
 
 #include "webengine-page.h"
 
@@ -47,18 +46,10 @@ QPage::QPage()
             setAttribute(
                 QWebEngineSettings::XSSAuditingEnabled, true
                 );
-
-    // Signal and slot for actions taken after page is loaded:
-    QObject::connect(
-                this,
-                SIGNAL(loadFinished(bool)),
-                this,
-                SLOT(qPageLoadedSlot(bool))
-                );
 }
 
 // ==============================
-// Special URLs handling:
+// Navigation Handling:
 // ==============================
 bool QPage::acceptNavigationRequest(const QUrl &url,
                                     QWebEnginePage::NavigationType navType,
@@ -71,7 +62,7 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
         return false;
     }
 
-    // Handle Perl scripts after link is clicked:
+    // Start Perl script after pseudo link is clicked:
     if (navType == QWebEnginePage::NavigationTypeLinkClicked) {
         if (url.fileName().contains(".script")) {
             qStartScript(url.fileName().replace(".script", ""));
@@ -80,7 +71,7 @@ bool QPage::acceptNavigationRequest(const QUrl &url,
         }
     }
 
-    // Handle Perl scripts after form is submitted:
+    // Start Perl script after form is submitted to a pseudo link:
     if (navType == QWebEnginePage::NavigationTypeFormSubmitted) {
         if (url.fileName().contains(".script")) {
             qStartScript(url.fileName().replace(".script", ""));

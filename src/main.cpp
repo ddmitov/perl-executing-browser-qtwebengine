@@ -14,7 +14,7 @@
  https://github.com/ddmitov/perl-executing-browser-qtwebengine
 */
 
-#include <QtWidgets/QApplication>
+#include <QApplication>
 #include <QTextCodec>
 #include <QtGlobal>
 
@@ -63,13 +63,6 @@ int main(int argc, char **argv)
     mainWindow.setWindowIcon(icon);
     mainWindow.setCentralWidget(mainWindow.webViewWidget);
     mainWindow.showMaximized();
-
-    // Signal and slot for setting the main window title:
-    QObject::connect(mainWindow.webViewWidget,
-                     SIGNAL(titleChanged(QString)),
-                     &mainWindow,
-                     SLOT(qSetMainWindowTitleSlot(QString))
-                     );
 
     // Start page:
     QString startPageFilePath = applicationDirName + "/index.html";

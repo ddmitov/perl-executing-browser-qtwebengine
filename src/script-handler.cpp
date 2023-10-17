@@ -14,6 +14,7 @@
  https://github.com/ddmitov/perl-executing-browser-qtwebengine
 */
 
+#include <QApplication>
 #include <QJsonObject>
 
 #include "script-handler.h"

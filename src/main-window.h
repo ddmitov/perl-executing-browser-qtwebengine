@@ -17,8 +17,7 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
+#include <QMainWindow>
 
 #include "file-reader.h"
 #include "webengine-view.h"
@@ -29,10 +28,6 @@
 class QMainBrowserWindow : public QMainWindow
 {
     Q_OBJECT
-
-signals:
-
-    void startMainWindowClosingSignal();
 
 public slots:
 

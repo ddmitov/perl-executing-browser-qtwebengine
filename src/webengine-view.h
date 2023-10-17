@@ -34,14 +34,6 @@ class QViewWidget : public QWebEngineView
 public slots:
 
     // ==============================
-    // Action taken after page is loaded:
-    // ==============================
-    void qPageLoadedSlot()
-    {
-        setWindowTitle(QViewWidget::title());
-    }
-
-    // ==============================
     // Context menu:
     // ==============================
     void contextMenuEvent(QContextMenuEvent *event)

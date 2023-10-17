@@ -24,12 +24,5 @@ QViewWidget::QViewWidget()
 {
     mainPage = new QPage();
 
-    // Page Loaded signal and slot:
-    QObject::connect(mainPage,
-                     SIGNAL(pageLoadedSignal()),
-                     this,
-                     SLOT(qPageLoadedSlot())
-                     );
-
     setPage(mainPage);
 }

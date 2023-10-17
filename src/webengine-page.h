@@ -17,6 +17,7 @@
 #ifndef PAGE_H
 #define PAGE_H
 
+#include <QApplication>
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QJsonDocument>
@@ -34,19 +35,7 @@ class QPage : public QWebEnginePage
 {
     Q_OBJECT
 
-signals:
-
-    void pageLoadedSignal();
-
 public slots:
-
-    void qPageLoadedSlot(bool ok)
-    {
-        if (ok) {
-            // Send signal that page is loaded:
-            emit pageLoadedSignal();
-        }
-    }
 
     // ==============================
     // Filesystem dialogs:
