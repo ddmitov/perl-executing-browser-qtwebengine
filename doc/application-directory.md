@@ -2,6 +2,8 @@
 
 PEB is created to work from any directory and all file paths used by PEB are relative to the directory of the PEB executable.  
 
+The PEB Application Directory must be named ``app`` and it must be located in the directory of the PEB executable.
+
 PEB Application Directory looks like this:
 
 ```bash
@@ -12,9 +14,8 @@ PEB Application Directory looks like this:
     └── app.png
 ```
 
-The PEB Application Directory must be named ``app`` and it must be located in the directory of the PEB executable.
-
-All Perl scripts started by PEB must be located within the PEB Application Directory and its subdirectories. The working directory of all PEB Perl scripts is the PEB Application Directory.
+All Perl scripts started by PEB must be located within the PEB Application Directory and its subdirectories.  
+The working directory of all PEB Perl scripts is the PEB Application Directory.
 
 When started, PEB is trying to find the following files in its Application Directory:
 
@@ -23,7 +24,7 @@ When started, PEB is trying to find the following files in its Application Direc
 
   If start page is missing, an error message is displayed.  
 
-* **Icon:**
+* **Icon:**  
   Icon pathname must be: ``{PEB Application Directory}/app/app.png``  
 
   Icon file is optional.  
