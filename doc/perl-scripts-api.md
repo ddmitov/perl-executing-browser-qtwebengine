@@ -66,7 +66,7 @@ A JavaScript configuration object for a Perl script run by PEB may also have the
 * **perlInterpreter**  
   ``String`` for the relative path of a [relocatable](https://github.com/skaji/relocatable-perl) Perl interpreter used by PEB  
 
-  The relative path of a relocatable Perl interpreter is converted to a full path using the [PEB Application Directory](./doc/application-directory.md) as a root folder. If a relTo compile PEB ocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
+  The relative path of a relocatable Perl interpreter is converted to a full path using the [PEB Application Directory](./doc/application-directory.md) as a root folder. If a relocatable Perl interpreter is not configured, PEB will use the first Perl interpreter on PATH.  
 
 * **scriptInput**  
   ``String``  
