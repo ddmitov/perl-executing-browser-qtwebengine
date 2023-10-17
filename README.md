@@ -2,7 +2,7 @@
 
 Perl Executing Browser QtWebEngine is a Linux version of the [Perl Executing Browser](https://github.com/ddmitov/perl-executing-browser) using [QtWebEngine](https://wiki.qt.io/QtWebEngine).
 
-Perl Executing Browser (PEB) is a [Perl 5](https://www.perl.org/) HTML user interface.  
+Perl Executing Browser (PEB) is an HTML user interface for [Perl 5](https://www.perl.org/) desktop applications.  
 It is a C++ [Qt 5](https://www.qt.io/) program running local Perl scripts as child processes without server.  
 
 ![PEB Screenshot](./doc/screenshot.png "PEB Screenshot")  
