@@ -23,7 +23,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
-#include <QRegExp>
 #include <QWebEnginePage>
 
 #include "script-handler.h"
@@ -49,44 +48,36 @@ public slots:
         inodesDialog.setWindowModality(Qt::WindowModal);
         inodesDialog.setViewMode(QFileDialog::Detail);
 
-        if (filesystemInput == "single-file") {
+        if (filesystemInput == "{existing-file}") {
             inodesDialog.setFileMode(QFileDialog::AnyFile);
         }
 
-        if (filesystemInput == "new-file-name") {
+        if (filesystemInput == "{new-file}") {
             inodesDialog.setAcceptMode(QFileDialog::AcceptSave);
         }
 
-        if (filesystemInput == "multiple-files") {
-            inodesDialog.setFileMode(QFileDialog::ExistingFiles);
-        }
-
-        if (filesystemInput == "directory") {
+        if (filesystemInput == "{directory}") {
             inodesDialog.setFileMode(QFileDialog::Directory);
         }
 
-        QStringList selectedInodes;
+        QString selectedInode;
 
         if (inodesDialog.exec()) {
-            selectedInodes = inodesDialog.selectedFiles();
+            QStringList selectedInodes = inodesDialog.selectedFiles();
+
+            if (!selectedInodes.isEmpty()) {
+                selectedInode = "";
+            }
+
+            if (!selectedInodes.isEmpty()) {
+                selectedInode = selectedInodes[0];
+            }
         }
 
         inodesDialog.close();
         inodesDialog.deleteLater();
 
-        QString inodesFormatted = "";
-
-        if (!selectedInodes.isEmpty()) {
-            foreach (QString userSelectedInode, selectedInodes) {
-                inodesFormatted.append(userSelectedInode);
-                inodesFormatted.append(";");
-            }
-
-            // Remove the final ";" from filesystem dialog output:
-            inodesFormatted.replace(QRegExp(";$"), "");
-        }
-
-        return inodesFormatted;
+        return selectedInode;
     }
 
     // ==============================
@@ -122,15 +113,27 @@ public slots:
                                  SLOT(qDisplayScriptErrorsSlot(QString))
                                  );
 
-                // Get script input, if any:
+                // Get any script input:
                 QString scriptInput =
                         scriptJsonObject["scriptInput"].toString();
 
-                QString filesystemInput =
-                        scriptJsonObject["filesystemInput"].toString();
+                if (scriptInput.contains("{existing-file}")) {
+                    QString existingFile =
+                            displayInodeDialog("{existing-file}");
 
-                if (filesystemInput.length() > 0) {
-                    scriptInput = displayInodeDialog(filesystemInput);
+                    scriptInput.replace("{existing-file}", existingFile);
+                }
+
+                if (scriptInput.contains("{new-file}")) {
+                    QString newFile = displayInodeDialog("{new-file}");
+
+                    scriptInput.replace("{new-file}", newFile);
+                }
+
+                if (scriptInput.contains("{directory}")) {
+                    QString directory = displayInodeDialog("{directory}");
+
+                    scriptInput.replace("{directory}", directory);
                 }
 
                 if (scriptInput.length() > 0) {

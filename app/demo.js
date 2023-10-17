@@ -30,7 +30,7 @@ const openFile = {}
 
 openFile.scriptRelativePath = 'perl_scripts/open_file.pl'
 
-openFile.filesystemInput = 'single-file'
+openFile.scriptInput = '{existing-file}'
 
 openFile.stdoutFunction = function (stdout) {
   displayTestResult(stdout)
@@ -41,20 +41,9 @@ const newFile = {}
 
 newFile.scriptRelativePath = 'perl_scripts/new_file.pl'
 
-newFile.filesystemInput = 'new-file-name'
+newFile.scriptInput = '{new-file}'
 
 newFile.stdoutFunction = function (stdout) {
-  displayTestResult(stdout)
-}
-
-// Settings object for open_files.pl:
-const openFiles = {}
-
-openFiles.scriptRelativePath = 'perl_scripts/open_files.pl'
-
-openFiles.filesystemInput = 'multiple-files'
-
-openFiles.stdoutFunction = function (stdout) {
   displayTestResult(stdout)
 }
 
@@ -63,7 +52,7 @@ const openDirectory = {}
 
 openDirectory.scriptRelativePath = 'perl_scripts/open_directory.pl'
 
-openDirectory.filesystemInput = 'directory'
+openDirectory.scriptInput = '{directory}'
 
 openDirectory.stdoutFunction = function (stdout) {
   displayTestResult(stdout)

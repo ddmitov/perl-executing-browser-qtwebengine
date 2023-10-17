@@ -38,7 +38,7 @@ A JavaScript configuration object for a Perl script run by PEB must have the fol
   The relative path of the script is converted to a full path using the [PEB Application Directory](./doc/application-directory.md) as a root folder. PEB does not check filename extensions or shebang lines of Perl scripts. Scripts without filename extensions can also be used.  
 
 * **stdoutFunction**  
-  ``function`` executed by PEB every time data is available on the STDOUT of a Perl script  
+  ``function`` executed by PEB every time data is available on the STDOUT of the Perl script  
   The only parameter passed to the ``stdoutFunction`` is the STDOUT ``String``.  
 
   An example of a ``stdoutFunction`` displaying immediately STDOUT data:
@@ -71,22 +71,16 @@ A JavaScript configuration object for a Perl script run by PEB may also have the
 * **scriptInput**  
   ``String``  
 
-  ``scriptInput`` is written on the Perl script STDIN.  
+  ``scriptInput`` string is written on the STDIN of the Perl script.  
 
-  If ``filesystemInput`` is defined, a file or directory selection dialog is displayed before starting the Perl script and the selected files or folders are written on the Perl script STDIN.
+  If any of the following special tags is included in the ``scriptInput`` string, a file or directory selection dialog is presented to the user and the tag is replaced with the user-selected file or folder before starting the Perl script.
 
-* **filesystemInput**  
-  ``String`` containing one of the following:
-
-  * ``single-file``  
+  * ``{existing-file}``  
   The actual opening of an existing file is performed by the Perl script and not by PEB.  
 
-  * ``multiple-files``  
-  When multiple files are selected, different filenames are separated by a semicolon ``;``  
-
-  * ``new-file-name``  
+  * ``{new-file}``  
   The actual creation of a new file is performed by the Perl script and not by PEB.  
 
-  * ``directory``  
+  * ``{directory}``  
   When ``directory`` type of dialog is used, an existing or a new directory may be selected.  
   Any new directory will be immediately created by PEB.
