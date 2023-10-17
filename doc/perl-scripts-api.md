@@ -1,6 +1,6 @@
-# Perl Executing Browser QtWebEngine - Settings
+# Perl Executing Browser QtWebEngine - Perl Scripts API
 
-Every Perl script run by PEB must have a JavaScript settings object with an arbitrary object name and fixed-name object properties. The name of the JavaScript settings object with a ``.script`` extension forms a pseudo link used to start the corresponding Perl script.  
+Every Perl script run by PEB must have a JavaScript configuration object with an arbitrary object name and fixed-name object properties. The name of the JavaScript configuration object with a ``.script`` extension forms a pseudo link used to start the corresponding Perl script.  
 
 There are two methods to start a local Perl script:  
 
@@ -17,7 +17,7 @@ There are two methods to start a local Perl script:
   </form>
   ```
 
-A minimal example of a JavaScript settings object for a Perl script run by PEB:  
+A minimal example of a JavaScript configuration object for a Perl script run by PEB:  
 
 ```javascript
 const example = {}
@@ -30,7 +30,7 @@ example.stdoutFunction = function (stdout) {
 }
 ```
 
-A JavaScript settings object for a Perl script run by PEB must have the following basic properties:
+A JavaScript configuration object for a Perl script run by PEB must have the following basic properties:
 
 * **scriptRelativePath**  
   ``String`` for the relative path of the Perl script run by PEB  
@@ -62,7 +62,7 @@ A JavaScript settings object for a Perl script run by PEB must have the followin
   };
   ```
 
-A JavaScript settings object for a Perl script run by PEB may also have the following additional properties:
+A JavaScript configuration object for a Perl script run by PEB may also have the following additional properties:
 
 * **perlInterpreter**  
   ``String`` for the relative path of a relocatable Perl interpreter used by PEB  

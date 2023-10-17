@@ -18,6 +18,6 @@ make
 
 * QtWebEngine 5.9 - 5.12 runtime libraries
 
-* Perl 5 distribution - any Linux Perl relocatable or standard distribution
+* Perl 5 - any Linux Perl [relocatable](https://github.com/skaji/relocatable-perl) or standard distribution
 
   PEB will use the first Perl on PATH if a relocatable Perl distribution is not available.

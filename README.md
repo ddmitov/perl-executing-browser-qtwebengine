@@ -11,15 +11,15 @@ It is a C++ [Qt 5](https://www.qt.io/) application running local Perl scripts as
 
 * [Design Objectives](#design-objectives)
 * [Features](#features)
+* [Requirements](./doc/requirements.md)
 * [Security](#security)
 * [Limitations](#limitations)
-* [Requirements](./doc/REQUIREMENTS.md)
-* [Files and Folders](./doc/FILES.md)
-* [Settings](./doc/SETTINGS.md)
+* [Application Directory](./doc/application-directory.md)
+* [Perl Scripts API](./doc/perl-scripts-api.md)
 * [History](#history)
 * [Thanks and Credits](./CREDITS.md)
 * [License](./LICENSE.md)
-* [Authors](#authors)
+* [Author](#author)
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",  
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY" and "OPTIONAL"  
@@ -27,17 +27,19 @@ in the documentation of this project are to be interpreted as described in [RFC 
 
 ## Design Objectives
 
-* **1. Easy graphical user interface for Perl 5 desktop applications**  
-* **2. Secure solution with no server process**  
+* **1. Easy graphical user interface for Perl 5 desktop applications**
+* **2. Secure solution with no server process**
 * **3. Maximal reuse of existing web technologies and standards**
 
 ## Features
 
-* No limitation on how long a Perl script can run.
-* [Output from Perl scripts is seamlessly inserted in a web-like user interface.](./doc/SETTINGS.md)
+* No limitation on how long a Perl script can run
 * Any version of Perl 5 can be used.
-* [Local full paths can be selected and passed to Perl scripts.](./doc/SETTINGS.md)
-* [Optional icon](./doc/FILES.md)
+* [Output from Perl scripts is seamlessly inserted in a web-like user interface.](./doc/perl-scripts-api.md)
+* [Local full paths can be selected and passed to Perl scripts.](./doc/perl-scripts-api.md)
+* [Optional icon](./doc/application-directory.md)
+
+## [Requirements](./doc/requirements.md)
 
 ## Security
 
@@ -53,6 +55,10 @@ in the documentation of this project are to be interpreted as described in [RFC 
 * No pop-up windows
 * No printing
 * No AppImage support
+
+## [Application Directory](./doc/application-directory.md)
+
+## [Perl Scripts API](./doc/perl-scripts-api.md)
 
 ## History
 
