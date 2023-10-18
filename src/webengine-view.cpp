@@ -17,7 +17,7 @@
 #include <webengine-view.h>
 
 // ==============================
-// VIEW CLASS CONSTRUCTOR:
+// VIEW CLASS CONSTRUCTOR
 // ==============================
 QViewWidget::QViewWidget()
     : QWebEngineView(0)

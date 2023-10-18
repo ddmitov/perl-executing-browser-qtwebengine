@@ -20,7 +20,7 @@
 #include "file-reader.h"
 
 // ==============================
-// FILE READER CONSTRUCTOR:
+// FILE READER CONSTRUCTOR
 // Usefull for both files inside binary resources and files on disk
 // ==============================
 QFileReader::QFileReader(QString filePath)

@@ -23,7 +23,7 @@
 #include "webengine-view.h"
 
 // ==============================
-// MAIN WINDOW CLASS DEFINITION:
+// MAIN WINDOW CLASS DEFINITION
 // ==============================
 class QMainBrowserWindow : public QMainWindow
 {
@@ -31,6 +31,7 @@ class QMainBrowserWindow : public QMainWindow
 
 public slots:
 
+    // Slot for displaying of HTML error messages:
     void qDisplayErrorSlot(QString errorMessage)
     {
         QFileReader *resourceReader = new QFileReader(QString(":/error.html"));
@@ -41,11 +42,13 @@ public slots:
         webViewWidget->setHtml(htmlErrorContents);
     }
 
+    // Slot for setting the title of the main window:
     void qSetMainWindowTitleSlot(QString title)
     {
         setWindowTitle(title);
     }
 
+    // Main window close event slot:
     void closeEvent(QCloseEvent *event)
     {
         this->webViewWidget->page()->deleteLater();

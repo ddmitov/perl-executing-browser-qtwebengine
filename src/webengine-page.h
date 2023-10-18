@@ -18,7 +18,6 @@
 #define PAGE_H
 
 #include <QApplication>
-#include <QFileDialog>
 #include <QInputDialog>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -28,7 +27,7 @@
 #include "script-handler.h"
 
 // ==============================
-// WEB PAGE CLASS DEFINITION:
+// WEB PAGE CLASS DEFINITION
 // ==============================
 class QPage : public QWebEnginePage
 {
@@ -37,58 +36,14 @@ class QPage : public QWebEnginePage
 public slots:
 
     // ==============================
-    // Filesystem dialogs:
+    // Perl Scripts Handling
     // ==============================
-    QString displayInodeDialog(QString filesystemInput)
-    {
-        QFileDialog inodesDialog(qApp->activeWindow());
-
-        inodesDialog.setParent(qApp->activeWindow());
-        inodesDialog.setOption(QFileDialog::DontUseNativeDialog);
-        inodesDialog.setWindowModality(Qt::WindowModal);
-        inodesDialog.setViewMode(QFileDialog::Detail);
-
-        if (filesystemInput == "{existing-file}") {
-            inodesDialog.setFileMode(QFileDialog::AnyFile);
-        }
-
-        if (filesystemInput == "{new-file}") {
-            inodesDialog.setAcceptMode(QFileDialog::AcceptSave);
-        }
-
-        if (filesystemInput == "{directory}") {
-            inodesDialog.setFileMode(QFileDialog::Directory);
-        }
-
-        QString selectedInode;
-
-        if (inodesDialog.exec()) {
-            QStringList selectedInodes = inodesDialog.selectedFiles();
-
-            if (!selectedInodes.isEmpty()) {
-                selectedInode = "";
-            }
-
-            if (!selectedInodes.isEmpty()) {
-                selectedInode = selectedInodes[0];
-            }
-        }
-
-        inodesDialog.close();
-        inodesDialog.deleteLater();
-
-        return selectedInode;
-    }
-
-    // ==============================
-    // Perl scripts:
-    // ==============================
-
     void qStartScript(QString scriptObjectName)
     {
         QPage::runJavaScript("JSON.stringify(" + scriptObjectName + ")",
                              0,
-                             [scriptObjectName, this](QVariant scriptSettings)
+                             [scriptObjectName, this]
+                             (QVariant scriptSettings)
         {
             QJsonDocument scriptJsonDocument =
                     QJsonDocument::fromJson(scriptSettings.toString().toUtf8());
@@ -112,46 +67,18 @@ public slots:
                                  this,
                                  SLOT(qDisplayScriptErrorsSlot(QString))
                                  );
-
-                // Get any script input:
-                QString scriptInput =
-                        scriptJsonObject["scriptInput"].toString();
-
-                if (scriptInput.contains("{existing-file}")) {
-                    QString existingFile =
-                            displayInodeDialog("{existing-file}");
-
-                    scriptInput.replace("{existing-file}", existingFile);
-                }
-
-                if (scriptInput.contains("{new-file}")) {
-                    QString newFile = displayInodeDialog("{new-file}");
-
-                    scriptInput.replace("{new-file}", newFile);
-                }
-
-                if (scriptInput.contains("{directory}")) {
-                    QString directory = displayInodeDialog("{directory}");
-
-                    scriptInput.replace("{directory}", directory);
-                }
-
-                if (scriptInput.length() > 0) {
-                    if (scriptHandler->process.isOpen()) {
-                        scriptHandler->process.write(scriptInput.toUtf8());
-                        scriptHandler->process.write(QString("\n").toLatin1());
-                    }
-                }
             }
         }
         );
     }
 
+    // Perl script STDOUT slot:
     void qDisplayScriptOutputSlot(QString id, QString output)
     {
         QPage::runJavaScript(id + ".stdoutFunction('" + output + "')", 0);
     }
 
+    // Perl script STDERR slot:
     void qDisplayScriptErrorsSlot(QString errors)
     {
         if (errors.length() > 0) {
@@ -166,14 +93,16 @@ public slots:
 
 protected:
 
+    // Navigation:
     bool acceptNavigationRequest(const QUrl &url,
                                  QWebEnginePage::NavigationType navType,
                                  bool isMainFrame
                                  ) override;
 
     // ==============================
-    // JavaScript Alert:
+    // JavaScript Popup Boxes
     // ==============================
+    // Alert:
     virtual void javaScriptAlert(const QUrl &url, const QString &msg)
     override
     {
@@ -191,9 +120,7 @@ protected:
         alert.exec();
     }
 
-    // ==============================
-    // JavaScript Confirm:
-    // ==============================
+    // Confirm:
     virtual bool javaScriptConfirm(const QUrl &url, const QString &msg)
     override
     {
@@ -212,9 +139,7 @@ protected:
         return QMessageBox::Yes == messageBox.exec();
     }
 
-    // ==============================
-    // JavaScript Prompt:
-    // ==============================
+    // Prompt:
     virtual bool javaScriptPrompt(const QUrl &url, const QString &msg,
                                   const QString &defaultValue, QString *result)
     override

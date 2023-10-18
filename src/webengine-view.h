@@ -25,7 +25,7 @@
 #include "webengine-page.h"
 
 // ==============================
-// VIEW CLASS DEFINITION:
+// VIEW CLASS DEFINITION
 // ==============================
 class QViewWidget : public QWebEngineView
 {
@@ -34,7 +34,7 @@ class QViewWidget : public QWebEngineView
 public slots:
 
     // ==============================
-    // Context menu:
+    // Context Menu
     // ==============================
     void contextMenuEvent(QContextMenuEvent *event)
     {

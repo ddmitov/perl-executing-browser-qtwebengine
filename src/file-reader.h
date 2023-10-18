@@ -20,7 +20,7 @@
 #include <QObject>
 
 // ==============================
-// FILE READER CLASS DEFINITION:
+// FILE READER CLASS DEFINITION
 // Usefull for both files inside binary resources and files on disk
 // ==============================
 class QFileReader : public QObject

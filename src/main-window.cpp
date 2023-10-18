@@ -17,7 +17,7 @@
 #include "main-window.h"
 
 // ==============================
-// MAIN WINDOW CLASS CONSTRUCTOR:
+// MAIN WINDOW CLASS CONSTRUCTOR
 // ==============================
 QMainBrowserWindow::QMainBrowserWindow(QWidget *parent)
     : QMainWindow(parent)

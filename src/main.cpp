@@ -21,7 +21,7 @@
 #include "main-window.h"
 
 // ==============================
-// APPLICATION DEFINITION:
+// APPLICATION DEFINITION
 // ==============================
 int main(int argc, char **argv)
 {
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
     }
 
     // ==============================
-    // MAIN WINDOW INITIALIZATION:
+    // MAIN WINDOW INITIALIZATION
     // ==============================
     QMainBrowserWindow mainWindow;
 

@@ -20,7 +20,7 @@
 #include "script-handler.h"
 
 // ==============================
-// SCRIPT HANDLER CONSTRUCTOR:
+// SCRIPT HANDLER CONSTRUCTOR
 // ==============================
 QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
     : QObject(0)
@@ -28,12 +28,12 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
     // Script ID:
     id = scriptId;
 
-    // Perl script full path:
+    // Script full path:
     QString scriptFullFilePath =
             qApp->property("appDir").toString() + "/" +
             scriptJsonObject["scriptRelativePath"].toString();
 
-    // Signals and slots for Perl script STDOUT and STDERR:
+    // Signals and slots for script STDOUT and STDERR:
     QObject::connect(&process,
                      SIGNAL(readyReadStandardOutput()),
                      this,
@@ -46,10 +46,10 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
                      SLOT(qScriptErrorsSlot())
                      );
 
-    // Perl script working directory:
+    // Script working directory:
     process.setWorkingDirectory(qApp->property("appDir").toString());
 
-    // Get Perl interpreter:
+    // Perl interpreter:
     QString perlInterpreterSetting =
             scriptJsonObject["perlInterpreter"].toString();
 
@@ -65,8 +65,35 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
         perlInterpreter = "perl";
     }
 
-    // Start Perl script:
+    // Start script:
     process.start(perlInterpreter,
                   QStringList() << scriptFullFilePath,
                   QProcess::Unbuffered | QProcess::ReadWrite);
+
+    // Get script input, if any:
+    QString scriptInput = scriptJsonObject["scriptInput"].toString();
+
+    if (scriptInput.length() > 0) {
+        QStringList tagList;
+
+        tagList.append("{existing-file}");
+        tagList.append("{new-file}");
+        tagList.append("{directory}");
+
+        foreach (QString tag, tagList) {
+            while (scriptInput.contains(tag)) {
+                QString replacement = displayInodeDialog(tag);
+
+                scriptInput.replace(scriptInput.indexOf(tag),
+                                    tag.size(),
+                                    replacement
+                                    );
+            }
+        }
+
+        if (process.isOpen()) {
+            process.write(scriptInput.toUtf8());
+            process.write(QString("\n").toLatin1());
+        }
+    }
 }

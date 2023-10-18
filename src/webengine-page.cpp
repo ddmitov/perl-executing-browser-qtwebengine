@@ -19,7 +19,7 @@
 #include "webengine-page.h"
 
 // ==============================
-// PAGE CLASS CONSTRUCTOR:
+// PAGE CLASS CONSTRUCTOR
 // ==============================
 QPage::QPage()
     : QWebEnginePage()
@@ -48,9 +48,7 @@ QPage::QPage()
                 );
 }
 
-// ==============================
-// Navigation Handling:
-// ==============================
+// Navigation:
 bool QPage::acceptNavigationRequest(const QUrl &url,
                                     QWebEnginePage::NavigationType navType,
                                     bool isMainFrame)

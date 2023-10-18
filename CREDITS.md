@@ -18,6 +18,10 @@ https://doc.qt.io/qt-5/qtwebenginewidgets-qtwebkitportingguide.html
 https://doc.qt.io/qt-5/qwebenginepage.html#runJavaScript  
 https://doc.qt.io/qt-5/qtwebengine-webenginewidgets-simplebrowser-example.html#adding-context-menu-items  
 
+https://www.qtcentre.org/threads/51965-How-to-return-QString-from-function
+
+https://forum.qt.io/topic/110568/qwebengine-not-cleaning-up-chromium-processes-and-get-a-warning
+
 ## Perl 5
 
 https://github.com/skaji/relocatable-perl  

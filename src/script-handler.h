@@ -17,10 +17,12 @@
 #ifndef SCRIPT_HANDLER_H
 #define SCRIPT_HANDLER_H
 
+#include <QApplication>
+#include <QFileDialog>
 #include <QProcess>
 
 // ==============================
-// SCRIPT HANDLER:
+// SCRIPT HANDLER
 // ==============================
 class QScriptHandler : public QObject
 {
@@ -33,12 +35,56 @@ signals:
 
 public slots:
 
+    // Filesystem dialogs:
+    QString displayInodeDialog(QString filesystemInput)
+    {
+        QFileDialog inodesDialog(qApp->activeWindow());
+
+        inodesDialog.setParent(qApp->activeWindow());
+        inodesDialog.setOption(QFileDialog::DontUseNativeDialog);
+        inodesDialog.setWindowModality(Qt::WindowModal);
+        inodesDialog.setViewMode(QFileDialog::Detail);
+
+        if (filesystemInput == "{existing-file}") {
+            inodesDialog.setFileMode(QFileDialog::AnyFile);
+        }
+
+        if (filesystemInput == "{new-file}") {
+            inodesDialog.setAcceptMode(QFileDialog::AcceptSave);
+        }
+
+        if (filesystemInput == "{directory}") {
+            inodesDialog.setFileMode(QFileDialog::Directory);
+        }
+
+        QString selectedInode;
+
+        if (inodesDialog.exec()) {
+            QStringList selectedInodes = inodesDialog.selectedFiles();
+
+            if (!selectedInodes.isEmpty()) {
+                selectedInode = "";
+            }
+
+            if (!selectedInodes.isEmpty()) {
+                selectedInode = selectedInodes[0];
+            }
+        }
+
+        inodesDialog.close();
+        inodesDialog.deleteLater();
+
+        return selectedInode;
+    }
+
+    // Perl script STDOUT slot:
     void qScriptOutputSlot()
     {
         QString scriptOutput = process.readAllStandardOutput();
         emit displayScriptOutputSignal(this->id, scriptOutput);
     }
 
+    // Perl script STDERR slot:
     void qScriptErrorsSlot()
     {
         QString scriptErrors = process.readAllStandardError();
