@@ -84,5 +84,4 @@ A JavaScript configuration object for a Perl script run by PEB may also have the
   The actual creation of a new file is performed by the Perl script and not by PEB.  
 
   * ``{directory}``  
-  When ``directory`` type of dialog is used, an existing or a new directory may be selected.  
-  Any new directory will be immediately created by PEB.
+  When ``directory`` type of dialog is used, an existing directory may be selected or a new directory may be created and then selected; the new directory will be immediately created by PEB.
