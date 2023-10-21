@@ -34,7 +34,7 @@ in the documentation of this project are to be interpreted as described in [RFC 
 ## Features
 
 * No limitation on how long a Perl script can run
-* Any version of Perl 5 can be used.
+* Any version of a [relocatable](https://github.com/skaji/relocatable-perl) or standard Perl 5 distribution can be used.
 * [Output from Perl scripts is seamlessly inserted in a web-like user interface.](./doc/perl-scripts-api.md)
 * [Local full paths can be selected and passed to Perl scripts.](./doc/perl-scripts-api.md)
 * [Optional icon](./doc/application-directory.md)
