@@ -52,6 +52,7 @@ in the documentation of this project are to be interpreted as described in [RFC 
 
 * No access to web content
 * No Perl scripting inside frames
+* No JavaScript Alert, Confirm and Prompt
 * Minimal context menu
 * No pop-up windows
 * No printing

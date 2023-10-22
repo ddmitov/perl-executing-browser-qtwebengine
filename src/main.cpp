@@ -55,13 +55,11 @@ int main(int argc, char **argv)
         QApplication::setWindowIcon(icon);
     }
 
-    // ==============================
-    // MAIN WINDOW INITIALIZATION
-    // ==============================
+    // Main window initialization:
     QMainBrowserWindow mainWindow;
 
     mainWindow.setWindowIcon(icon);
-    mainWindow.setCentralWidget(mainWindow.webViewWidget);
+    mainWindow.setCentralWidget(mainWindow.mainViewWidget);
     mainWindow.showMaximized();
 
     // Start page:
@@ -69,7 +67,7 @@ int main(int argc, char **argv)
     QFile startPageFile(startPageFilePath);
 
     if (startPageFile.exists()) {
-        mainWindow.webViewWidget->setUrl(
+        mainWindow.mainViewWidget->setUrl(
                     QUrl::fromLocalFile(startPageFilePath));
     }
 

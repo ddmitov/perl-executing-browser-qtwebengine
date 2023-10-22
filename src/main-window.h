@@ -39,7 +39,7 @@ public slots:
         QString htmlErrorContents = resourceReader->fileContents;
         htmlErrorContents.replace("ERROR_MESSAGE", errorMessage);
 
-        webViewWidget->setHtml(htmlErrorContents);
+        mainViewWidget->setHtml(htmlErrorContents);
     }
 
     // Slot for setting the title of the main window:
@@ -51,13 +51,13 @@ public slots:
     // Main window close event slot:
     void closeEvent(QCloseEvent *event)
     {
-        this->webViewWidget->page()->deleteLater();
+        this->mainViewWidget->page()->deleteLater();
         event->accept();
     }
 
 public:
 
-    QWebEngineView *webViewWidget;
+    QWebEngineView *mainViewWidget;
 
     explicit QMainBrowserWindow(QWidget *parent = 0);
 };

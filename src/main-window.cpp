@@ -22,10 +22,10 @@
 QMainBrowserWindow::QMainBrowserWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    webViewWidget = new QViewWidget();
+    mainViewWidget = new QViewWidget();
 
     // Signal and slot for setting the title of the main window:
-    QObject::connect(this->webViewWidget,
+    QObject::connect(this->mainViewWidget,
                      SIGNAL(titleChanged(QString)),
                      this,
                      SLOT(qSetMainWindowTitleSlot(QString))

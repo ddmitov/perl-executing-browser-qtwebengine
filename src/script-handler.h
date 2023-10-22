@@ -18,6 +18,7 @@
 #define SCRIPT_HANDLER_H
 
 #include <QApplication>
+#include <QDebug>
 #include <QFileDialog>
 #include <QProcess>
 
@@ -31,7 +32,6 @@ class QScriptHandler : public QObject
 signals:
 
     void displayScriptOutputSignal(QString id, QString output);
-    void displayScriptErrorsSignal(QString errors);
 
 public slots:
 
@@ -81,14 +81,16 @@ public slots:
     void qScriptOutputSlot()
     {
         QString scriptOutput = process.readAllStandardOutput();
+
         emit displayScriptOutputSignal(this->id, scriptOutput);
     }
 
     // Perl script STDERR slot:
     void qScriptErrorsSlot()
     {
-        QString scriptErrors = process.readAllStandardError();
-        emit displayScriptErrorsSignal(scriptErrors);
+        QString scriptError = process.readAllStandardError();
+
+        qDebug() << "Perl Script Error:" << scriptError;
     }
 
 private:

@@ -47,36 +47,3 @@ QPage::QPage()
                 QWebEngineSettings::XSSAuditingEnabled, true
                 );
 }
-
-// Navigation:
-bool QPage::acceptNavigationRequest(const QUrl &url,
-                                    QWebEnginePage::NavigationType navType,
-                                    bool isMainFrame)
-{
-    Q_UNUSED(isMainFrame);
-
-    // No access to web pages:
-    if (url.scheme() != "file") {
-        return false;
-    }
-
-    // Start Perl script after pseudo link is clicked:
-    if (navType == QWebEnginePage::NavigationTypeLinkClicked) {
-        if (url.fileName().contains(".script")) {
-            qStartScript(url.fileName().replace(".script", ""));
-
-            return false;
-        }
-    }
-
-    // Start Perl script after form is submitted to a pseudo link:
-    if (navType == QWebEnginePage::NavigationTypeFormSubmitted) {
-        if (url.fileName().contains(".script")) {
-            qStartScript(url.fileName().replace(".script", ""));
-
-            return false;
-        }
-    }
-
-    return true;
-}
