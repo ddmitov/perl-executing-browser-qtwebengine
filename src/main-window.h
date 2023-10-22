@@ -17,9 +17,10 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
+#include <QFile>
 #include <QMainWindow>
+#include <QTextStream>
 
-#include "file-reader.h"
 #include "webengine-view.h"
 
 // ==============================
@@ -34,9 +35,14 @@ public slots:
     // Slot for displaying of HTML error messages:
     void qDisplayErrorSlot(QString errorMessage)
     {
-        QFileReader *resourceReader = new QFileReader(QString(":/error.html"));
+        QFile htmlErrorFile(QString(":/error.html"));
+        htmlErrorFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
-        QString htmlErrorContents = resourceReader->fileContents;
+        QTextStream htmlErrorStream(&htmlErrorFile);
+        QString htmlErrorContents = htmlErrorStream.readAll();
+
+        htmlErrorFile.close();
+
         htmlErrorContents.replace("ERROR_MESSAGE", errorMessage);
 
         mainViewWidget->setHtml(htmlErrorContents);

@@ -111,25 +111,29 @@ protected:
             const QString &sourceID)
     override
     {
-        QString messageType;
-
         if (level == QWebEnginePage::InfoMessageLevel) {
-            messageType = "JavaScript Info";
+            qInfo() << "JavaScript Info"
+                    << sourceID
+                    << "Line"
+                    << lineNumber
+                    << message;
         }
 
         if (level == QWebEnginePage::WarningMessageLevel) {
-            messageType = "JavaScript Warning";
+            qWarning() << "JavaScript Warning"
+                       << sourceID
+                       << "Line"
+                       << lineNumber
+                       << message;
         }
 
         if (level == QWebEnginePage::ErrorMessageLevel) {
-            messageType = "JavaScript Error";
+            qDebug() << "JavaScript Error"
+                     << sourceID
+                     << "Line"
+                     << lineNumber
+                     << message;
         }
-
-        qDebug() << messageType
-                 << sourceID
-                 << "Line"
-                 << lineNumber
-                 << message;
     }
 
     // Disable JavaScript Alert:
@@ -138,6 +142,8 @@ protected:
     {
         Q_UNUSED(url);
         Q_UNUSED(msg);
+
+        qInfo() << "JavaScript Alert is disabled.";
     }
 
     // Disable JavaScript Confirm:
@@ -146,6 +152,8 @@ protected:
     {
         Q_UNUSED(url);
         Q_UNUSED(msg);
+
+        qInfo() << "JavaScript Confirm is disabled.";
 
         return false;
     }
@@ -161,6 +169,8 @@ protected:
         Q_UNUSED(msg);
         Q_UNUSED(defaultValue);
         Q_UNUSED(result);
+
+        qInfo() << "JavaScript Prompt is disabled.";
 
         return false;
     }
