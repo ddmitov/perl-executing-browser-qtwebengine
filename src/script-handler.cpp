@@ -77,9 +77,9 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
     // Define regular expressions for file and directory selection tags:
     QStringList tags;
 
-    tags.append("(\\{\"(existing-file)\":\"([a-zA-Z\\s]{1,})\"\\})");
-    tags.append("(\\{\"(new-file)\":\"([a-zA-Z\\s]{1,})\"\\})");
-    tags.append("(\\{\"(directory)\":\"([a-zA-Z\\s]{1,})\"\\})");
+    tags.append("(\\{\"(existing-file)\":\"([a-zA-Z0-9\\s]{1,})\"\\})");
+    tags.append("(\\{\"(new-file)\":\"([a-zA-Z0-9\\s]{1,})\"\\})");
+    tags.append("(\\{\"(directory)\":\"([a-zA-Z0-9\\s]{1,})\"\\})");
 
     // Process script input, if any:
     if (scriptInput.length() > 0) {

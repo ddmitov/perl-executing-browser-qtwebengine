@@ -75,9 +75,9 @@ A JavaScript configuration object for a Perl script run by PEB may also have the
 
   If any of the following special tags is included in the ``scriptInput`` string, a file or directory selection dialog is presented to the user and the tag is replaced with the user-selected file or folder before starting the Perl script. Any number and combination of special tags may be included in the ``scriptInput`` string.  
 
-  All file or directory selection special tags are JSON-compatible snippets with the dialog type as element name and the dialog title as element value.  
+  All file or directory selection tags are JSON-compatible snippets with the dialog type as element name and the dialog title as element value. The acceptable element names are ``existing-file``, ``new-file`` and ``directory``, the element values are text labels which must match the regular expression ``[a-zA-Z0-9\\s]{1,}`` meaning that one or more instances of lowercase or uppercase letters, numbers or spaces are all allowed in any combination.  
 
-  Special tags for selecting file or folder:  
+  Special tags for file or folder selection:  
 
   * ``{"existing-file":"Your Dialog Title"}``  
   The actual opening of an existing file is performed by the Perl script and not by PEB.  
@@ -86,4 +86,4 @@ A JavaScript configuration object for a Perl script run by PEB may also have the
   The actual creation of a new file is performed by the Perl script and not by PEB.  
 
   * ``{"directory":"Your Dialog Title"}``  
-  When ``directory`` type of dialog is used, an existing directory may be selected or a new directory may be created and then selected; the new directory will be immediately created by PEB.
+  When ``directory`` type of dialog is used, an existing directory may be selected or a new directory may be created and then selected; any new directory will be immediately created by PEB.
