@@ -30,7 +30,7 @@ const openFile = {}
 
 openFile.scriptRelativePath = 'perl_scripts/open_file.pl'
 
-openFile.scriptInput = '{existing-file}'
+openFile.scriptInput = '{"existing-file":"Select File"}'
 
 openFile.stdoutFunction = function (stdout) {
   displayTestResult(stdout)
@@ -41,7 +41,7 @@ const newFile = {}
 
 newFile.scriptRelativePath = 'perl_scripts/new_file.pl'
 
-newFile.scriptInput = '{new-file}'
+newFile.scriptInput = '{"new-file":"New File Name"}'
 
 newFile.stdoutFunction = function (stdout) {
   displayTestResult(stdout)
@@ -52,7 +52,7 @@ const openDirectory = {}
 
 openDirectory.scriptRelativePath = 'perl_scripts/open_directory.pl'
 
-openDirectory.scriptInput = '{directory}'
+openDirectory.scriptInput = '{"directory":"Select Directory"}'
 
 openDirectory.stdoutFunction = function (stdout) {
   displayTestResult(stdout)

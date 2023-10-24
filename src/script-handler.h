@@ -36,7 +36,7 @@ signals:
 public slots:
 
     // Filesystem dialogs:
-    QString displayInodeDialog(QString filesystemInput)
+    QString displayInodeDialog(QString inputType, QString dialogTitle)
     {
         QFileDialog inodesDialog(qApp->activeWindow());
 
@@ -45,15 +45,17 @@ public slots:
         inodesDialog.setWindowModality(Qt::WindowModal);
         inodesDialog.setViewMode(QFileDialog::Detail);
 
-        if (filesystemInput == "{existing-file}") {
+        inodesDialog.setWindowTitle(dialogTitle);
+
+        if (inputType == "existing-file") {
             inodesDialog.setFileMode(QFileDialog::AnyFile);
         }
 
-        if (filesystemInput == "{new-file}") {
+        if (inputType == "new-file") {
             inodesDialog.setAcceptMode(QFileDialog::AcceptSave);
         }
 
-        if (filesystemInput == "{directory}") {
+        if (inputType == "directory") {
             inodesDialog.setFileMode(QFileDialog::Directory);
         }
 
@@ -62,7 +64,7 @@ public slots:
         if (inodesDialog.exec()) {
             QStringList selectedInodes = inodesDialog.selectedFiles();
 
-            if (!selectedInodes.isEmpty()) {
+            if (selectedInodes.isEmpty()) {
                 selectedInode = "";
             }
 

@@ -16,6 +16,7 @@
 
 #include <QApplication>
 #include <QJsonObject>
+#include <QRegularExpressionMatchIterator>
 
 #include "script-handler.h"
 
@@ -73,24 +74,42 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
     // Get script input, if any:
     QString scriptInput = scriptJsonObject["scriptInput"].toString();
 
+    // Define regular expressions for file and directory selection tags:
+    QStringList tags;
+
+    tags.append("(\\{\"(existing-file)\":\"([a-zA-Z\\s]{1,})\"\\})");
+    tags.append("(\\{\"(new-file)\":\"([a-zA-Z\\s]{1,})\"\\})");
+    tags.append("(\\{\"(directory)\":\"([a-zA-Z\\s]{1,})\"\\})");
+
+    // Process script input, if any:
     if (scriptInput.length() > 0) {
-        QStringList tagList;
+        // Replace file and directory selection tags
+        // with user-selected files and directories:
+        foreach (QString tag, tags) {
+            QRegularExpression tagRegExp(tag);
 
-        tagList.append("{existing-file}");
-        tagList.append("{new-file}");
-        tagList.append("{directory}");
+            QRegularExpressionMatchIterator regExpIterator =
+                    tagRegExp.globalMatch(scriptInput);
 
-        foreach (QString tag, tagList) {
-            while (scriptInput.contains(tag)) {
-                QString replacement = displayInodeDialog(tag);
+            while (regExpIterator.hasNext()) {
+                QRegularExpressionMatch match = regExpIterator.next();
 
-                scriptInput.replace(scriptInput.indexOf(tag),
-                                    tag.size(),
+                QString extractedTag = match.captured(1);
+                QString inputType = match.captured(2);
+                QString dialogTitle = match.captured(3);
+
+                QString replacement = displayInodeDialog(inputType,
+                                                         dialogTitle
+                                                         );
+
+                scriptInput.replace(scriptInput.indexOf(extractedTag),
+                                    extractedTag.size(),
                                     replacement
                                     );
             }
         }
 
+        // Write script input to script STDIN:
         if (process.isOpen()) {
             process.write(scriptInput.toUtf8());
             process.write(QString("\n").toLatin1());
