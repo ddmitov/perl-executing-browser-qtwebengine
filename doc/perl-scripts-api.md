@@ -73,7 +73,7 @@ A JavaScript configuration object for a Perl script run by PEB may also have the
 
   The ``scriptInput`` string is written to the STDIN of the Perl script.  
 
-  If any of the following special tags is included in the ``scriptInput`` string, a file or directory selection dialog is presented to the user and the tag is replaced with the user-selected file or folder before starting the Perl script. Any number and combination of special tags may be included in the ``scriptInput`` string.  
+  If any of the following special tags is included in the ``scriptInput`` string, a file or directory selection dialog is presented to the user and the tag is replaced with the user-selected file or folder path before starting the Perl script. Any number and combination of special tags may be included in the ``scriptInput`` string.  
 
   All file or directory selection tags are JSON-compatible snippets with the dialog type as element name and the dialog title as element value. The acceptable element names are ``existing-file``, ``new-file`` and ``directory``, the element values are text labels which must match the regular expression ``[a-zA-Z0-9\\s]{1,}`` meaning that one or more instances of lowercase or uppercase letters, numbers or spaces are all allowed in any combination.  
 
