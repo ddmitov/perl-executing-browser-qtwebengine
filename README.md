@@ -11,7 +11,7 @@ It is a C++ [Qt 5](https://www.qt.io/) program running local Perl scripts as chi
 
 * [Design Objectives](#design-objectives)
 * [Features](#features)
-* [Requirements](./doc/requirements.md)
+* [Requirements](#requirements)
 * [Security](#security)
 * [Limitations](#limitations)
 * [Application Directory](./doc/application-directory.md)
@@ -39,22 +39,43 @@ in the documentation of this project are to be interpreted as described in [RFC 
 * [Local full paths can be selected and passed to Perl scripts.](./doc/perl-scripts-api.md)
 * [Optional icon](./doc/application-directory.md)
 
-## [Requirements](./doc/requirements.md)
+## Requirements
+
+### Compile-Time Requirements
+
+* Qt development bundle versions 5.9 - 5.12
+
+* QtWebEngine headers and libraries
+
+Run the following commands in the root directory of the PEB project to compile PEB:
+
+```bash
+cd src
+qmake -qt=qt5
+make
+```
+
+### Runtime Requirements
+
+* QtWebEngine 5.9 - 5.12 runtime libraries
+
+* Perl 5 - any Linux Perl [relocatable](https://github.com/skaji/relocatable-perl) or standard distribution
+
+  PEB will use the first Perl on PATH if a relocatable Perl distribution is not available.
 
 ## Security
 
 * PEB does does not implement and does not use a server process.
+* PEB Perl scripts are only local scripts executed with no sandbox.
 * PEB does not access web content.
-* PEB Perl scripts are only local scripts.
-* PEB Perl scripts are executed with no sandbox.
 
 ## Limitations
 
 * No access to web content
 * No Perl scripting inside frames
 * No JavaScript Alert, Confirm and Prompt
-* Minimal context menu
 * No pop-up windows
+* Minimal context menu
 * No printing
 * No AppImage support
 
