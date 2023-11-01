@@ -92,7 +92,10 @@ public slots:
     {
         QString scriptError = process.readAllStandardError();
 
-        qDebug() << "Perl Script Error:" << scriptError;
+        scriptError.replace("\"", "'");
+        scriptError.replace("\n", " ");
+
+        qDebug() << scriptError;
     }
 
 private:

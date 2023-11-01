@@ -14,6 +14,7 @@ It is a C++ [Qt 5](https://www.qt.io/) program running local Perl scripts as chi
 * [Requirements](#requirements)
 * [Security](#security)
 * [Limitations](#limitations)
+* [Logging](#logging)
 * [Application Directory](./doc/application-directory.md)
 * [Perl Scripts API](./doc/perl-scripts-api.md)
 * [History](#history)
@@ -78,6 +79,10 @@ make
 * Minimal context menu
 * No printing
 * No AppImage support
+
+## Logging
+
+PEB has unified logging of all JavaScript and Perl errors in the command-line console.
 
 ## [Application Directory](./doc/application-directory.md)
 

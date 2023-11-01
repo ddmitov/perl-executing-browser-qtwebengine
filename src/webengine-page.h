@@ -112,24 +112,21 @@ protected:
     override
     {
         if (level == QWebEnginePage::InfoMessageLevel) {
-            qInfo() << "JavaScript Info"
-                    << sourceID
+            qInfo() << sourceID
                     << "Line"
                     << lineNumber
                     << message;
         }
 
         if (level == QWebEnginePage::WarningMessageLevel) {
-            qWarning() << "JavaScript Warning"
-                       << sourceID
+            qWarning() << sourceID
                        << "Line"
                        << lineNumber
                        << message;
         }
 
         if (level == QWebEnginePage::ErrorMessageLevel) {
-            qDebug() << "JavaScript Error"
-                     << sourceID
+            qDebug() << sourceID
                      << "Line"
                      << lineNumber
                      << message;
