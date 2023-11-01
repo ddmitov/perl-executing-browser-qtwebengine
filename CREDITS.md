@@ -40,8 +40,6 @@ https://bootswatch.com/
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet  
 https://github.com/IQAndreas/markdown-licenses  
 
-https://stackoverflow.com/questions/23989232/is-there-a-way-to-represent-a-directory-tree-in-a-github-readme-md  
-
 ## Icon
 
 http://www.iconarchive.com/show/animal-icons-by-jen/Camel-icon.html  

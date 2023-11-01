@@ -27,20 +27,36 @@ int main(int argc, char **argv)
 {
     QApplication application(argc, argv);
 
-    // Application version:
+    application.setApplicationName("Perl Executing Browser QtWebEngine");
     application.setApplicationVersion("1.1.0");
 
     // UTF-8 encoding application-wide:
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF8"));
 
-    // Application directory:
-    QString browserDirectory = application.applicationDirPath().toLatin1();
-    QString applicationDirName = browserDirectory + "/app";
+    // Command-line argument:
+    const QStringList arguments = QCoreApplication::arguments();
 
-    application.setProperty("appDir", applicationDirName);
+    // Application directory:
+    QString browserDirectoryName = application.applicationDirPath().toLatin1();
+    QString applicationDirectoryName;
+
+    if (arguments.length() > 1) {
+        QString applicationDirectoryNameCommandLine = arguments.at(1);
+        QDir applicationDirectory(applicationDirectoryNameCommandLine);
+
+        if (applicationDirectory.exists()) {
+            applicationDirectoryName = applicationDirectoryNameCommandLine;
+        } else {
+            applicationDirectoryName = browserDirectoryName + "/app";
+        }
+    } else {
+        applicationDirectoryName = browserDirectoryName + "/app";
+    }
+
+    application.setProperty("appDir", applicationDirectoryName);
 
     // Application icon:
-    QString iconPathName = applicationDirName + "/app.png";
+    QString iconPathName = applicationDirectoryName + "/app.png";
 
     QPixmap icon(32, 32);
     QFile iconFile(iconPathName);
@@ -63,7 +79,7 @@ int main(int argc, char **argv)
     mainWindow.showMaximized();
 
     // Start page:
-    QString startPageFilePath = applicationDirName + "/index.html";
+    QString startPageFilePath = applicationDirectoryName + "/index.html";
     QFile startPageFile(startPageFilePath);
 
     if (startPageFile.exists()) {
@@ -72,7 +88,7 @@ int main(int argc, char **argv)
     }
 
     if (!startPageFile.exists()) {
-        mainWindow.qDisplayErrorSlot(QString("No start page is found."));
+        mainWindow.qDisplayError(QString("No start page is found."));
     }
 
     return application.exec();

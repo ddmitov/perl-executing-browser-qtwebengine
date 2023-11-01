@@ -1,32 +1,30 @@
 # Perl Executing Browser QtWebEngine - Application Directory
 
-PEB is created to work from any directory and all file paths used by PEB are relative to the directory of the PEB executable.  
+PEB is created to work from any directory and all file paths used by PEB are relative to the PEB Application Directory.  
 
-The PEB Application Directory must be named ``app`` and it must be located in the directory of the PEB executable.
+The PEB Application Directory must be one of the following:
 
-PEB Application Directory looks like this:
+* an existing directory submitted as a full path in the only command-line argument of PEB
 
-```bash
-.
-├── peb
-└── app
-    ├── index.html
-    └── app.png
-```
+* an existing directory named ``app`` and located in the directory of the PEB executable
 
 All Perl scripts started by PEB must be located within the PEB Application Directory and its subdirectories.  
-The working directory of all PEB Perl scripts is the PEB Application Directory.
+
+The working directory of all PEB Perl scripts is the PEB Application Directory.  
 
 When started, PEB is trying to find the following files in its Application Directory:
 
 * **Start Page:**  
-  Start page pathname must be: ``{PEB Application Directory}/app/index.html``  
+  Start page pathname must be: ``{PEB Application Directory}/index.html``  
+
+  Start page is required.  
 
   If start page is missing, an error message is displayed.  
 
 * **Icon:**  
-  Icon pathname must be: ``{PEB Application Directory}/app/app.png``  
+  Icon pathname must be: ``{PEB Application Directory}/app.png``  
 
   Icon file is optional.  
-  If icon file is found on application startup, it is used as application icon.  
-  If icon file is not found, the default icon embedded in the resources of the PEB binary is used.
+
+  If icon file is found when PEB is started, it is used as an application icon.  
+  If icon file is not found, the default icon embedded in the resources of the PEB binary is used as an application icon.
