@@ -24,4 +24,4 @@ if [ ! -e "$(pwd)/peb" ]; then
 fi
 
 # DEB file generation:
-dpkg-deb --build --root-owner-group deb peb.deb
+dpkg-deb --build --root-owner-group deb peb-1.1.0-x86_64.deb

@@ -32,22 +32,6 @@ class QMainBrowserWindow : public QMainWindow
 
 public slots:
 
-    // Function for displaying of HTML error messages:
-    void qDisplayError(QString errorMessage)
-    {
-        QFile htmlErrorFile(QString(":/error.html"));
-        htmlErrorFile.open(QIODevice::ReadOnly | QIODevice::Text);
-
-        QTextStream htmlErrorStream(&htmlErrorFile);
-        QString htmlErrorContents = htmlErrorStream.readAll();
-
-        htmlErrorFile.close();
-
-        htmlErrorContents.replace("ERROR_MESSAGE", errorMessage);
-
-        mainViewWidget->setHtml(htmlErrorContents);
-    }
-
     // Slot for setting the title of the main window:
     void qSetMainWindowTitleSlot(QString title)
     {

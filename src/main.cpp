@@ -37,26 +37,19 @@ int main(int argc, char **argv)
     const QStringList arguments = QCoreApplication::arguments();
 
     // Application directory:
-    QString browserDirectoryName = application.applicationDirPath().toLatin1();
-    QString applicationDirectoryName;
+    QString browserDirectoryPath = application.applicationDirPath().toLatin1();
+    QString applicationDirectoryPath;
 
     if (arguments.length() > 1) {
-        QString applicationDirectoryNameCommandLine = arguments.at(1);
-        QDir applicationDirectory(applicationDirectoryNameCommandLine);
-
-        if (applicationDirectory.exists()) {
-            applicationDirectoryName = applicationDirectoryNameCommandLine;
-        } else {
-            applicationDirectoryName = browserDirectoryName + "/app";
-        }
+        applicationDirectoryPath = arguments.at(1);
     } else {
-        applicationDirectoryName = browserDirectoryName + "/app";
+        applicationDirectoryPath = browserDirectoryPath + "/app";
     }
 
-    application.setProperty("appDir", applicationDirectoryName);
+    application.setProperty("appDir", applicationDirectoryPath);
 
     // Application icon:
-    QString iconPathName = applicationDirectoryName + "/app.png";
+    QString iconPathName = applicationDirectoryPath + "/app.png";
 
     QPixmap icon(32, 32);
     QFile iconFile(iconPathName);
@@ -71,25 +64,30 @@ int main(int argc, char **argv)
         QApplication::setWindowIcon(icon);
     }
 
-    // Main window initialization:
-    QMainBrowserWindow mainWindow;
-
-    mainWindow.setWindowIcon(icon);
-    mainWindow.setCentralWidget(mainWindow.mainViewWidget);
-    mainWindow.showMaximized();
-
     // Start page:
-    QString startPageFilePath = applicationDirectoryName + "/index.html";
+    QString startPageFilePath = applicationDirectoryPath + "/index.html";
     QFile startPageFile(startPageFilePath);
 
     if (startPageFile.exists()) {
+        QMainBrowserWindow mainWindow;
+
+        mainWindow.setWindowIcon(icon);
+        mainWindow.setCentralWidget(mainWindow.mainViewWidget);
+        mainWindow.showMaximized();
+
         mainWindow.mainViewWidget->setUrl(
                     QUrl::fromLocalFile(startPageFilePath));
+
+        return application.exec();
     }
 
     if (!startPageFile.exists()) {
-        mainWindow.qDisplayError(QString("No start page is found."));
-    }
+        QMessageBox msgBox;
+        msgBox.setWindowIcon(icon);
+        msgBox.setWindowTitle("Perl Executing Browser");
+        msgBox.setText("No Perl Executing Browser start page is found.");
+        msgBox.exec();
 
-    return application.exec();
+        application.exit();
+    }
 }
