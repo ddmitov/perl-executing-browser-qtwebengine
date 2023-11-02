@@ -92,7 +92,7 @@ public slots:
     {
         QString scriptError = process.readAllStandardError();
 
-        scriptError.replace("\"", "'");
+        scriptError.replace("\"", " ");
         scriptError.replace("\n", " ");
 
         qDebug() << scriptError;

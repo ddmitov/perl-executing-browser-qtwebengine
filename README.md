@@ -14,9 +14,10 @@ It is a C++ [Qt 5](https://www.qt.io/) program running local Perl scripts as chi
 * [Requirements](#requirements)
 * [Security](#security)
 * [Limitations](#limitations)
-* [Logging](#logging)
 * [Application Directory](./doc/application-directory.md)
 * [Perl Scripts API](./doc/perl-scripts-api.md)
+* [Ubuntu Package](#ubuntu-package)
+* [Logging](#logging)
 * [History](#history)
 * [Thanks and Credits](./CREDITS.md)
 * [License](./LICENSE.md)
@@ -80,13 +81,28 @@ make
 * No printing
 * No AppImage support
 
-## Logging
-
-PEB has unified logging of all JavaScript and Perl errors in the command-line console.
-
 ## [Application Directory](./doc/application-directory.md)
 
 ## [Perl Scripts API](./doc/perl-scripts-api.md)
+
+## Ubuntu Package
+
+PEB can be packed as an Ubuntu .deb package using the included ``makedeb.sh`` script.  
+PEB can be installed from an Ubuntu .deb package using the command:  
+
+```bash
+sudo dpkg -i peb-*-x86_64.deb
+```
+
+When PEB is installed system-wide, it can be used as a runtime for PEB-based applications. In this scenario PEB must be started with a PEB Application Directory as its only command-line argument:  
+
+```bash
+peb /full/path/to/application-directory
+```
+
+## Logging
+
+PEB has unified logging of all JavaScript and Perl errors in the command-line console.
 
 ## History
 
