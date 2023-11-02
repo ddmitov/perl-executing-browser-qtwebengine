@@ -24,6 +24,9 @@ QMainBrowserWindow::QMainBrowserWindow(QWidget *parent)
 {
     mainViewWidget = new QViewWidget();
 
+    setCentralWidget(mainViewWidget);
+    showMaximized();
+
     // Signal and slot for setting the title of the main window:
     QObject::connect(this->mainViewWidget,
                      SIGNAL(titleChanged(QString)),

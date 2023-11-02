@@ -61,7 +61,8 @@ int main(int argc, char **argv)
         // Set the embedded default icon
         // in case no external icon file is found:
         icon.load(":/camel.png");
-        QApplication::setWindowIcon(icon);
+
+        application.setWindowIcon(icon);
     }
 
     // Start page:
@@ -71,10 +72,6 @@ int main(int argc, char **argv)
     if (startPageFile.exists()) {
         QMainBrowserWindow mainWindow;
 
-        mainWindow.setWindowIcon(icon);
-        mainWindow.setCentralWidget(mainWindow.mainViewWidget);
-        mainWindow.showMaximized();
-
         mainWindow.mainViewWidget->setUrl(
                     QUrl::fromLocalFile(startPageFilePath));
 
@@ -83,7 +80,7 @@ int main(int argc, char **argv)
 
     if (!startPageFile.exists()) {
         QMessageBox msgBox;
-        msgBox.setWindowIcon(icon);
+
         msgBox.setWindowTitle("Perl Executing Browser");
         msgBox.setText("No Perl Executing Browser start page is found.");
         msgBox.exec();

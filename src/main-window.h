@@ -17,9 +17,7 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
-#include <QFile>
 #include <QMainWindow>
-#include <QTextStream>
 
 #include "webengine-view.h"
 
