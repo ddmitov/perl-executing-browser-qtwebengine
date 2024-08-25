@@ -28,9 +28,10 @@ QMainBrowserWindow::QMainBrowserWindow(QWidget *parent)
     showMaximized();
 
     // Signal and slot for setting the title of the main window:
-    QObject::connect(this->mainViewWidget,
-                     SIGNAL(titleChanged(QString)),
-                     this,
-                     SLOT(qSetMainWindowTitleSlot(QString))
-                     );
+    QObject::connect(
+        this->mainViewWidget,
+        SIGNAL(titleChanged(QString)),
+        this,
+        SLOT(qSetMainWindowTitleSlot(QString))
+    );
 }

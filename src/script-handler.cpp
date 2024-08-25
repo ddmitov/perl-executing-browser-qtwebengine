@@ -35,17 +35,19 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
             scriptJsonObject["scriptRelativePath"].toString();
 
     // Signals and slots for script STDOUT and STDERR:
-    QObject::connect(&process,
-                     SIGNAL(readyReadStandardOutput()),
-                     this,
-                     SLOT(qScriptOutputSlot())
-                     );
+    QObject::connect(
+        &process,
+        SIGNAL(readyReadStandardOutput()),
+        this,
+        SLOT(qScriptOutputSlot())
+    );
 
-    QObject::connect(&process,
-                     SIGNAL(readyReadStandardError()),
-                     this,
-                     SLOT(qScriptErrorsSlot())
-                     );
+    QObject::connect(
+        &process,
+        SIGNAL(readyReadStandardError()),
+        this,
+        SLOT(qScriptErrorsSlot())
+    );
 
     // Script working directory:
     process.setWorkingDirectory(qApp->property("appDir").toString());
@@ -58,8 +60,8 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
 
     if (perlInterpreterSetting.length() > 0) {
         perlInterpreter =
-                qApp->property("appDir").toString() + '/' +
-                scriptJsonObject["perlInterpreter"].toString();
+            qApp->property("appDir").toString() + '/' +
+            scriptJsonObject["perlInterpreter"].toString();
     }
 
     if (perlInterpreterSetting.length() == 0) {
@@ -67,9 +69,11 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
     }
 
     // Start script:
-    process.start(perlInterpreter,
-                  QStringList() << scriptFullFilePath,
-                  QProcess::Unbuffered | QProcess::ReadWrite);
+    process.start(
+        perlInterpreter,
+        QStringList() << scriptFullFilePath,
+        QProcess::Unbuffered | QProcess::ReadWrite
+    );
 
     // Get script input, if any:
     QString scriptInput = scriptJsonObject["scriptInput"].toString();
@@ -95,17 +99,19 @@ QScriptHandler::QScriptHandler(QString scriptId, QJsonObject scriptJsonObject)
                 QRegularExpressionMatch match = regExpIterator.next();
 
                 QString extractedTag = match.captured(1);
-                QString inputType = match.captured(2);
-                QString dialogTitle = match.captured(3);
+                QString inputType    = match.captured(2);
+                QString dialogTitle  = match.captured(3);
 
-                QString replacement = displayInodeDialog(inputType,
-                                                         dialogTitle
-                                                         );
+                QString replacement = displayInodeDialog(
+                    inputType,
+                    dialogTitle
+                );
 
-                scriptInput.replace(scriptInput.indexOf(extractedTag),
-                                    extractedTag.size(),
-                                    replacement
-                                    );
+                scriptInput.replace(
+                    scriptInput.indexOf(extractedTag),
+                    extractedTag.size(),
+                    replacement
+                );
             }
         }
 

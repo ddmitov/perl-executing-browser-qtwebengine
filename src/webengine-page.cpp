@@ -25,25 +25,19 @@ QPage::QPage()
     : QWebEnginePage()
 {
     QWebEngineSettings::globalSettings()->
-            setDefaultTextEncoding(QString("utf-8"));
+        setDefaultTextEncoding(QString("utf-8"));
 
     QWebEngineSettings::globalSettings()->
-            setAttribute(
-                QWebEngineSettings::JavascriptCanOpenWindows, false
-                );
+        setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, false);
 
     QWebEngineSettings::globalSettings()->
-            setAttribute(
-                QWebEngineSettings::LocalContentCanAccessRemoteUrls, false
-                );
+        setAttribute(
+            QWebEngineSettings::LocalContentCanAccessRemoteUrls, false
+        );
 
     QWebEngineSettings::globalSettings()->
-            setAttribute(
-                QWebEngineSettings::JavascriptEnabled, true
-                );
+        setAttribute(QWebEngineSettings::JavascriptEnabled, true);
 
     QWebEngineSettings::globalSettings()->
-            setAttribute(
-                QWebEngineSettings::XSSAuditingEnabled, true
-                );
+        setAttribute(QWebEngineSettings::XSSAuditingEnabled, true);
 }

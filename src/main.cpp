@@ -58,8 +58,7 @@ int main(int argc, char **argv)
         icon.load(iconPathName);
         QApplication::setWindowIcon(icon);
     } else {
-        // Set the embedded default icon
-        // in case no external icon file is found:
+        // Use the embedded default icon if no external icon file is found:
         icon.load(":/camel.png");
 
         application.setWindowIcon(icon);
@@ -73,7 +72,8 @@ int main(int argc, char **argv)
         QMainBrowserWindow mainWindow;
 
         mainWindow.mainViewWidget->setUrl(
-                    QUrl::fromLocalFile(startPageFilePath));
+            QUrl::fromLocalFile(startPageFilePath)
+        );
 
         return application.exec();
     }

@@ -45,7 +45,7 @@ in the documentation of this project are to be interpreted as described in [RFC 
 
 ### Compile-Time Requirements
 
-* Qt development bundle versions 5.9 - 5.12
+* Qt development bundle versions 5.9 - 5.15
 
 * QtWebEngine headers and libraries
 

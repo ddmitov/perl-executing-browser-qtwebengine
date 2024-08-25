@@ -36,13 +36,14 @@ public slots:
     // Start Perl Script:
     void qStartScript(QString scriptObjectName)
     {
-        QPage::runJavaScript("JSON.stringify(" + scriptObjectName + ")",
-                             0,
-                             [=]
-                             (QVariant scriptSettings)
+        QPage::runJavaScript(
+            "JSON.stringify(" + scriptObjectName + ")",
+            0,
+            [=]
+            (QVariant scriptSettings)
         {
             QJsonDocument scriptJsonDocument =
-                    QJsonDocument::fromJson(scriptSettings.toString().toUtf8());
+                QJsonDocument::fromJson(scriptSettings.toString().toUtf8());
 
             if (!scriptJsonDocument.isEmpty()) {
                 QJsonObject scriptJsonObject = scriptJsonDocument.object();
@@ -50,13 +51,12 @@ public slots:
                 QScriptHandler *scriptHandler =
                         new QScriptHandler(scriptObjectName, scriptJsonObject);
 
-                QObject::connect(scriptHandler,
-                                 SIGNAL(displayScriptOutputSignal(QString,
-                                                                  QString)),
-                                 this,
-                                 SLOT(qDisplayScriptOutputSlot(QString,
-                                                               QString))
-                                 );
+                QObject::connect(
+                    scriptHandler,
+                    SIGNAL(displayScriptOutputSignal(QString, QString)),
+                    this,
+                    SLOT(qDisplayScriptOutputSlot(QString, QString))
+                );
             }
         }
         );

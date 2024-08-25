@@ -1,8 +1,8 @@
 Section: misc
 Priority: optional
 Homepage: <https://github.com/ddmitov/perl-executing-browser-qtwebengine>
-Package: peb
-Version: 1.1.0
+Package: peb-qtwebengine
+Version: 1.0.0
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Depends: libqt5webengine5 (>= 5.9), perl
 Architecture: amd64
