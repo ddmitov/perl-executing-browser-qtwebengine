@@ -14,40 +14,15 @@
  https://github.com/ddmitov/perl-executing-browser-qtwebengine
 */
 
-#ifndef MAIN_WINDOW_H
-#define MAIN_WINDOW_H
-
-#include <QMainWindow>
-
-#include "view.h"
+#include <view.h>
 
 // ==============================
-// MAIN WINDOW CLASS DEFINITION
+// VIEW CLASS CONSTRUCTOR
 // ==============================
-class QMainBrowserWindow : public QMainWindow
+QViewWidget::QViewWidget()
+    : QWebEngineView(0)
 {
-    Q_OBJECT
+    mainPage = new QPage();
 
-public slots:
-
-    // Slot for setting the title of the main window:
-    void qSetMainWindowTitleSlot(QString title)
-    {
-        setWindowTitle(title);
-    }
-
-    // Main window close event slot:
-    void closeEvent(QCloseEvent *event)
-    {
-        this->mainViewWidget->page()->deleteLater();
-        event->accept();
-    }
-
-public:
-
-    QWebEngineView *mainViewWidget;
-
-    explicit QMainBrowserWindow(QWidget *parent = 0);
-};
-
-#endif // MAIN_WINDOW_H
+    setPage(mainPage);
+}

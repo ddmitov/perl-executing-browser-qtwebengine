@@ -33,15 +33,15 @@ SOURCES += \
     main.cpp \
     main-window.cpp \
     script-handler.cpp \
-    webengine-page.cpp \
-    webengine-view.cpp
+    page.cpp \
+    view.cpp
 
 # Header files:
 HEADERS += \
     script-handler.h \
     main-window.h \
-    webengine-page.h \
-    webengine-view.h
+    page.h \
+    view.h
 
 # Resources:
 RESOURCES += resources/peb.qrc
