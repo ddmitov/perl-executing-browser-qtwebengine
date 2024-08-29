@@ -1,5 +1,3 @@
-build-peb-*/
-resources/app/perl
 src/tmp
 
 .qmake.stash

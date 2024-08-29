@@ -7,6 +7,10 @@ It is a C++ [Qt 5](https://www.qt.io/) program running local Perl scripts as chi
 
 ![PEB Screenshot](./doc/screenshot.png "PEB Screenshot")  
 
+## 2024 Note
+
+Perl Executing Browser QtWebEngine is now merged with the [Perl Executing Browser](https://github.com/ddmitov/perl-executing-browser).
+
 ## Contents
 
 * [Design Objectives](#design-objectives)
