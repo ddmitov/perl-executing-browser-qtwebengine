@@ -18,7 +18,7 @@
 #include <QTextCodec>
 #include <QtGlobal>
 
-#include "main-window.h"
+#include "window.h"
 
 // ==============================
 // APPLICATION DEFINITION

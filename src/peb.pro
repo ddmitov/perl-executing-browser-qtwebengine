@@ -31,7 +31,7 @@ QT += widgets webenginewidgets
 # Source files:
 SOURCES += \
     main.cpp \
-    main-window.cpp \
+    window.cpp \
     script-handler.cpp \
     page.cpp \
     view.cpp
@@ -39,7 +39,7 @@ SOURCES += \
 # Header files:
 HEADERS += \
     script-handler.h \
-    main-window.h \
+    window.h \
     page.h \
     view.h
 
