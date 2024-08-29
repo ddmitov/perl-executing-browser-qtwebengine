@@ -37,13 +37,21 @@ int main(int argc, char **argv)
     const QStringList arguments = QCoreApplication::arguments();
 
     // Application directory:
-    QString browserDirectoryPath = application.applicationDirPath().toLatin1();
     QString applicationDirectoryPath;
 
     if (arguments.length() > 1) {
-        applicationDirectoryPath = arguments.at(1);
+        QFileInfo applicationDirectoryArgument(arguments.at(1));
+
+        if (applicationDirectoryArgument.isRelative()){
+            applicationDirectoryPath = QDir::currentPath() + "/app";
+        }
+
+        if (!applicationDirectoryArgument.isRelative()){
+            applicationDirectoryPath = arguments.at(1);
+        }
+
     } else {
-        applicationDirectoryPath = browserDirectoryPath + "/app";
+        applicationDirectoryPath = QDir::currentPath() + "/app";
     }
 
     application.setProperty("appDir", applicationDirectoryPath);

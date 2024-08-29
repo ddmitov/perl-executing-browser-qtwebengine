@@ -14,6 +14,8 @@ Their expertise, effort and good are highly appreciated!
 https://github.com/OtterBrowser/otter-browser/blob/master/src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp  
 https://github.com/OtterBrowser/otter-browser/blob/master/src/modules/backends/web/qtwebengine/QtWebEnginePage.h  
 
+https://doc.qt.io/qt-5/qdir.html#current
+https://doc.qt.io/qt-5/qfileinfo.html#isRelative
 https://doc.qt.io/qt-5/qtwebenginewidgets-qtwebkitportingguide.html  
 https://doc.qt.io/qt-5/qwebenginepage.html#runJavaScript  
 https://doc.qt.io/qt-5/qtwebengine-webenginewidgets-simplebrowser-example.html#adding-context-menu-items  

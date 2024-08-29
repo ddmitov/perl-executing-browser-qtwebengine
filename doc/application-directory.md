@@ -4,9 +4,9 @@ PEB is created to work from any directory and all file paths used by PEB are rel
 
 The PEB Application Directory must be one of the following:
 
-* an existing directory submitted as a full path in the only command-line argument of PEB
+* an existing directory submitted as a full or relative path in the only command-line argument of PEB
 
-* an existing directory named ``app`` and located in the directory of the PEB executable
+* an existing directory named ``app`` and located in the current working directory of PEB
 
 All Perl scripts started by PEB must be located within the PEB Application Directory and its subdirectories.  
 
